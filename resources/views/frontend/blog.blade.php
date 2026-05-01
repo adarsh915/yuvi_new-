@@ -36,24 +36,14 @@
       <div class="filter-group">
         <button class="filter-btn active" data-filter="all">
           <span class="dot"></span> All Articles
-          <span class="filter-count" id="count-all">6</span>
+          <span class="filter-count" id="count-all">{{ $blogs->count() }}</span>
         </button>
-        <button class="filter-btn" data-filter="fertility">
-          <span class="dot"></span> Fertility
-          <span class="filter-count">2</span>
+        @foreach($categories as $cat)
+        <button class="filter-btn" data-filter="{{ strtolower($cat->category) }}">
+          <span class="dot"></span> {{ ucwords($cat->category) }}
+          <span class="filter-count">{{ $cat->total }}</span>
         </button>
-        <button class="filter-btn" data-filter="pregnancy">
-          <span class="dot"></span> Pregnancy
-          <span class="filter-count">1</span>
-        </button>
-        <button class="filter-btn" data-filter="wellness">
-          <span class="dot"></span> Wellness
-          <span class="filter-count">1</span>
-        </button>
-        <button class="filter-btn" data-filter="treatments">
-          <span class="dot"></span> Treatments
-          <span class="filter-count">2</span>
-        </button>
+        @endforeach
       </div>
       <hr class="sidebar-divider">
       <div class="sidebar-note">
@@ -67,142 +57,42 @@
     <div>
       <div class="grid-header reveal">
         <h2>Recent Articles</h2>
-        <span id="visibleCount">Showing 6 articles</span>
+        <span id="visibleCount">Showing {{ $blogs->count() }} articles</span>
       </div>
 
       <div class="grid" id="blogGrid">
 
-        <!-- Article 1 -->
-        <article class="card reveal" data-category="fertility">
+        @forelse($blogs as $blog)
+        <article class="card reveal" data-category="{{ strtolower($blog->category) }}">
           <div class="card-img">
-            <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=700"
-              alt="IVF Protocols">
+            @if($blog->image)
+              <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
+            @else
+              <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=700" alt="{{ $blog->title }}">
+            @endif
           </div>
           <div class="card-body">
-            <span class="card-tag" style="color:var(--crimson);">FERTILITY</span>
-            <h3 class="card-title">Understanding Modern IVF Protocols</h3>
-            <p style="color:var(--slate); font-size:0.9rem; margin-bottom:1rem; line-height:1.6;">A comprehensive dive
-              into how individualized ovarian stimulation protocols are turning complex cases into success stories.</p>
-            <div class="card-hashtags"><span>#IVFSuccess</span> <span>#Fertility</span> <span>#MedTech</span></div>
+            <span class="card-tag" style="color:var(--crimson);">{{ strtoupper($blog->category) }}</span>
+            <h3 class="card-title">{{ $blog->title }}</h3>
+            <p style="color:var(--slate); font-size:0.9rem; margin-bottom:1rem; line-height:1.6;">{{ $blog->excerpt }}</p>
+            <div class="card-hashtags">
+                @if($blog->tags)
+                    @foreach(explode(',', $blog->tags) as $tag)
+                        <span>{{ trim($tag) }}</span>
+                    @endforeach
+                @endif
+            </div>
             <div class="card-meta"
               style="justify-content:space-between; border-top:1px solid rgba(184,36,48,0.1); padding-top:1.2rem; margin-top:auto;">
-              <span class="card-meta-item">Oct 12, 2023</span>
-              <a href="{{ route('frontend.blogDetails') }}"
+              <span class="card-meta-item">{{ $blog->created_at->format('M d, Y') }}</span>
+              <a href="{{ route('frontend.blogDetails', $blog->slug) }}"
                 style="text-decoration:none; color:var(--blue); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:0.4rem;">Read
                 Article &rarr;</a>
             </div>
           </div>
         </article>
-
-        <!-- Article 2 -->
-        <article class="card reveal" data-category="pregnancy">
-          <div class="card-img">
-            <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&q=80&w=700"
-              alt="PCOS Care">
-          </div>
-          <div class="card-body">
-            <span class="card-tag" style="color:var(--crimson);">PREGNANCY</span>
-            <h3 class="card-title">Managing PCOS For Conception</h3>
-            <p style="color:var(--slate); font-size:0.9rem; margin-bottom:1rem; line-height:1.6;">Managing severe PCOS
-              requires a structured multidisciplinary approach ranging from lifestyle diets to medical interventions.
-            </p>
-            <div class="card-hashtags"><span>#PCOS</span> <span>#Wellness</span> <span>#Conception</span></div>
-            <div class="card-meta"
-              style="justify-content:space-between; border-top:1px solid rgba(184,36,48,0.1); padding-top:1.2rem; margin-top:auto;">
-              <span class="card-meta-item">Nov 04, 2023</span>
-              <a href="{{ route('frontend.blogDetails') }}"
-                style="text-decoration:none; color:var(--blue); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:0.4rem;">Read
-                Article &rarr;</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Article 3 -->
-        <article class="card reveal" data-category="wellness">
-          <div class="card-img">
-            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=700"
-              alt="Nutrition">
-          </div>
-          <div class="card-body">
-            <span class="card-tag" style="color:var(--crimson);">WELLNESS</span>
-            <h3 class="card-title">The Ultimate Guide to Pre-Pregnancy Nutrition</h3>
-            <p style="color:var(--slate); font-size:0.9rem; margin-bottom:1.5rem; line-height:1.6;">Discover the
-              holistic diet changes that both partners can make to naturally boost reproductive capacity and health.</p>
-            <div class="card-meta"
-              style="justify-content:space-between; border-top:1px solid rgba(184,36,48,0.1); padding-top:1.2rem; margin-top:auto;">
-              <span class="card-meta-item">Dec 18, 2023</span>
-              <a href="{{ route('frontend.blogDetails') }}"
-                style="text-decoration:none; color:var(--blue); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:0.4rem;">Read
-                Article &rarr;</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Article 4 -->
-        <article class="card reveal" data-category="treatments">
-          <div class="card-img">
-            <img src="https://images.unsplash.com/photo-1542385151-efd9000785a0?auto=format&fit=crop&q=80&w=700"
-              alt="Ovarian Reserve">
-          </div>
-          <div class="card-body">
-            <span class="card-tag" style="color:var(--crimson);">TREATMENTS</span>
-            <h3 class="card-title">Decoding Ovarian Reserve Tests</h3>
-            <p style="color:var(--slate); font-size:0.9rem; margin-bottom: 1.5rem; line-height:1.6;">Understanding what
-              AMH and AFC values actually mean for your personal biological clock and family planning decisions.</p>
-            <div class="card-meta"
-              style="justify-content:space-between; border-top:1px solid rgba(184,36,48,0.1); padding-top:1.2rem; margin-top:auto;">
-              <span class="card-meta-item">Jan 02, 2024</span>
-              <a href="{{ route('frontend.blogDetails') }}"
-                style="text-decoration:none; color:var(--blue); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:0.4rem;">Read
-                Article &rarr;</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Article 5 -->
-        <article class="card reveal" data-category="fertility">
-          <div class="card-img">
-            <img src="https://images.unsplash.com/photo-1576091160550-2173bdd99602?auto=format&fit=crop&q=80&w=700"
-              alt="Male Fertility">
-          </div>
-          <div class="card-body">
-            <span class="card-tag" style="color:var(--crimson);">FERTILITY</span>
-            <h3 class="card-title">Male Fertility Myths Busted</h3>
-            <p style="color:var(--slate); font-size:0.9rem; margin-bottom: 1.5rem; line-height:1.6;">Dr. Yuvi breaks
-              down common misconceptions and explains new ICSI/TESA options for severe male factor infertility.</p>
-            <div class="card-meta"
-              style="justify-content:space-between; border-top:1px solid rgba(184,36,48,0.1); padding-top:1.2rem; margin-top:auto;">
-              <span class="card-meta-item">Feb 15, 2024</span>
-              <a href="{{ route('frontend.blogDetails') }}"
-                style="text-decoration:none; color:var(--blue); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:0.4rem;">Read
-                Article &rarr;</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Article 6 -->
-        <article class="card reveal" data-category="treatments">
-          <div class="card-img">
-            <img src="https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format&fit=crop&q=80&w=700"
-              alt="Multi-cycle Support">
-          </div>
-          <div class="card-body">
-            <span class="card-tag" style="color:var(--crimson);">TREATMENTS</span>
-            <h3 class="card-title">The Multi-cycle Journey</h3>
-            <p style="color:var(--slate); font-size:0.9rem; margin-bottom: 1.5rem; line-height:1.6;">A compassionate
-              look into how endurance and advancing lab technology unite to overcome early IVF treatment failures.</p>
-            <div class="card-meta"
-              style="justify-content:space-between; border-top:1px solid rgba(184,36,48,0.1); padding-top:1.2rem; margin-top:auto;">
-              <span class="card-meta-item">Mar 10, 2024</span>
-              <a href="{{ route('frontend.blogDetails') }}"
-                style="text-decoration:none; color:var(--blue); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:0.4rem;">Read
-                Article &rarr;</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Empty State -->
-        <div class="empty-state" id="emptyState">
+        @empty
+        <div class="empty-state" style="display: flex;" id="emptyState">
           <div class="empty-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f84ae" stroke-width="1.5"
               stroke-linecap="round" stroke-linejoin="round">
@@ -212,8 +102,9 @@
             </svg>
           </div>
           <h3>No articles found</h3>
-          <p>Try selecting a different category.</p>
+          <p>We haven't published any articles yet. Please check back later!</p>
         </div>
+        @endforelse
 
       </div>
     </div>

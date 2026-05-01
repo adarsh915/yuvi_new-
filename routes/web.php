@@ -4,6 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CategoryController;
+
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\ContactFieldController;
+use App\Http\Controllers\StoryController;
+use App\Http\Controllers\FaqController;
 
 // Frontend Routes
 Route::name('frontend.')->group(function () {
@@ -11,27 +19,85 @@ Route::name('frontend.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/about', 'about')->name('about');
         Route::get('/blog', 'blog')->name('blog');
-        Route::get('/blog-details', 'blogDetails')->name('blogDetails');
+        Route::get('/blog/{slug}', 'blogDetails')->name('blogDetails');
         Route::get('/contact', 'contact')->name('contact');
         Route::post('/contact/submit', 'contactSubmit')->name('contact.submit');
         Route::get('/faq', 'faq')->name('faq');
         Route::get('/gallery', 'gallery')->name('gallery');
         Route::get('/privacy-policy', 'privacyPolicy')->name('privacyPolicy');
         Route::get('/quiz', 'quiz')->name('quiz');
-        Route::get('/service-detail', 'serviceDetail')->name('serviceDetail');
+        Route::post('/quiz/submit', 'quizSubmit')->name('quiz.submit');
+        Route::get('/service-detail/{slug}', 'serviceDetail')->name('serviceDetail');
         Route::get('/services', 'services')->name('services');
         Route::get('/success-stories', 'successStories')->name('successStories');
     });
 });
 
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->controller(DashboardController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/leads', 'leads')->name('leads');
-    Route::get('/faqs', 'faqs')->name('faqs');
-    Route::get('/stories', 'stories')->name('stories');
-    Route::get('/settings', 'settings')->name('settings');
-    Route::post('/settings/update', 'settingsUpdate')->name('settings.update');
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/leads', 'leads')->name('leads');
+        Route::get('/leads/{lead}', 'leadDetails')->name('leads.details');
+        Route::get('/settings', 'settings')->name('settings');
+        Route::post('/settings/update', 'settingsUpdate')->name('settings.update');
+    });
+
+    Route::controller(FaqController::class)->prefix('faqs')->group(function () {
+        Route::get('/', 'index')->name('faqs');
+        Route::post('/store', 'store')->name('faqs.store');
+        Route::put('/{faq}', 'update')->name('faqs.update');
+        Route::delete('/{faq}', 'destroy')->name('faqs.destroy');
+    });
+
+    Route::controller(StoryController::class)->prefix('stories')->group(function () {
+        Route::get('/', 'index')->name('stories');
+        Route::post('/store', 'store')->name('stories.store');
+        Route::put('/{story}', 'update')->name('stories.update');
+        Route::delete('/{story}', 'destroy')->name('stories.destroy');
+    });
+
+    Route::controller(QuizController::class)->prefix('quiz')->group(function () {
+        Route::get('/questions', 'index')->name('quiz.questions');
+        Route::post('/questions', 'store')->name('quiz.questions.store');
+        Route::put('/questions/{quizQuestion}', 'update')->name('quiz.questions.update');
+        Route::delete('/questions/{quizQuestion}', 'destroy')->name('quiz.questions.destroy');
+        Route::get('/submissions', 'submissions')->name('quiz.submissions');
+        Route::get('/submissions/{submission}', 'submissionDetails')->name('quiz.submissions.details');
+        Route::delete('/submissions/{submission}', 'destroySubmission')->name('quiz.submissions.destroy');
+    });
+
+    Route::controller(BlogController::class)->prefix('blogs')->group(function () {
+        Route::get('/', 'index')->name('blogs');
+        Route::get('/create', 'create')->name('blogs.create');
+        Route::post('/store', 'store')->name('blogs.store');
+        Route::get('/{blog}/edit', 'edit')->name('blogs.edit');
+        Route::put('/{blog}', 'update')->name('blogs.update');
+        Route::delete('/{blog}', 'destroy')->name('blogs.destroy');
+    });
+
+    Route::controller(CategoryController::class)->prefix('categories')->group(function () {
+        Route::get('/', 'index')->name('categories');
+        Route::post('/store', 'store')->name('categories.store');
+        Route::put('/{category}', 'update')->name('categories.update');
+        Route::delete('/{category}', 'destroy')->name('categories.destroy');
+    });
+
+    Route::controller(ContactFieldController::class)->prefix('contact-fields')->group(function () {
+        Route::get('/', 'index')->name('contact.fields');
+        Route::post('/', 'store')->name('contact.fields.store');
+        Route::put('/{contactField}', 'update')->name('contact.fields.update');
+        Route::delete('/{contactField}', 'destroy')->name('contact.fields.destroy');
+    });
+
+    Route::controller(ServiceController::class)->prefix('services')->group(function () {
+        Route::get('/', 'index')->name('services');
+        Route::get('/create', 'create')->name('services.create');
+        Route::post('/store', 'store')->name('services.store');
+        Route::get('/{service}/edit', 'edit')->name('services.edit');
+        Route::put('/{service}', 'update')->name('services.update');
+        Route::delete('/{service}', 'destroy')->name('services.destroy');
+    });
 });
 
 // Authentication

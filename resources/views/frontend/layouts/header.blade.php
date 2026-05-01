@@ -152,7 +152,11 @@
 <nav class="nav" id="mainNav">
     <div class="nav-inner">
         <a href="{{ route('frontend.index') }}" class="brand">
-            <img src="{{ asset('assets/frontend/img/logo.png') }}" alt="Dr Yuvraj Jadeja"
+            @php 
+                $hLogo = $siteSettings['header_logo'] ?? 'assets/frontend/img/logo.png';
+                $hLogoPath = str_contains($hLogo, 'settings/') ? asset('storage/'.$hLogo) : asset($hLogo);
+            @endphp
+            <img src="{{ $hLogoPath }}" alt="Dr Yuvraj Jadeja"
                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <span style="display:none;font-family:'DM Serif Display',serif;font-size:1.35rem;">DR. <span
                     style="color:var(--crimson)">YUVI</span></span>

@@ -41,30 +41,27 @@
 
     <div class="services-grid">
 
-      <!-- 1. IVF -->
-      <article class="service-card reveal" data-category="ivf">
+      @forelse($services as $service)
+      <article class="service-card reveal" data-category="{{ $service->accent_class }}">
         <div class="card-img">
-          <div class="card-accent ivf"></div>
-          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=700"
-            alt="IVF & Assisted Reproduction">
+          <div class="card-accent {{ $service->accent_class }}"></div>
+          <img src="{{ asset('storage/' . $service->listing_image) }}" alt="{{ $service->title }}">
           <div class="card-img-overlay"></div>
-
-          <span class="card-num">01 / 06</span>
+          <span class="card-num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }} / {{ str_pad($services->count(), 2, '0', STR_PAD_LEFT) }}</span>
         </div>
         <div class="card-body">
-          <span class="card-tag">IVF & ART</span>
-          <h3 class="card-title">IVF & Assisted Reproduction</h3>
-          <p class="card-desc">Comprehensive ART solutions including IUI, Conventional IVF, ICSI, and laser-assisted
-            hatching — designed with transparent success rate reporting and individualized protocols.</p>
+          <span class="card-tag">{{ $service->category_tag }}</span>
+          <h3 class="card-title">{{ $service->title }}</h3>
+          <p class="card-desc">{{ $service->short_description }}</p>
           <div class="card-pills">
-            <span class="pill">IUI</span>
-            <span class="pill">IVF / ICSI</span>
-            <span class="pill">Laser Hatching</span>
-            <span class="pill">Embryo Transfer</span>
-            <span class="pill">PGT-A Testing</span>
+            @if($service->hero_pills && is_array($service->hero_pills))
+                @foreach($service->hero_pills as $pill)
+                    <span class="pill">{{ $pill }}</span>
+                @endforeach
+            @endif
           </div>
           <div class="card-footer">
-            <a href="{{ route('frontend.serviceDetail') }}?s=ivf" class="card-link">
+            <a href="{{ route('frontend.serviceDetail', $service->slug) }}" class="card-link">
               Learn More
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -75,173 +72,11 @@
           </div>
         </div>
       </article>
-
-      <!-- 2. PCOS -->
-      <article class="service-card reveal" data-category="pcos">
-        <div class="card-img">
-          <div class="card-accent pcos"></div>
-          <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=700"
-            alt="PCOS & Metabolic Health">
-          <div class="card-img-overlay"></div>
-
-          <span class="card-num">02 / 06</span>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Wellness First</span>
-          <h3 class="card-title">PCOS & Metabolic Health</h3>
-          <p class="card-desc">Holistic management of polycystic ovarian syndrome through data-driven lifestyle plans,
-            hormonal therapy, and targeted interventions that restore natural cycles.</p>
-          <div class="card-pills">
-            <span class="pill">Hormonal Therapy</span>
-            <span class="pill">Ovulation Induction</span>
-            <span class="pill">Nutrition Plans</span>
-          </div>
-          <div class="card-footer">
-            <a href="{{ route('frontend.serviceDetail') }}?s=pcos" class="card-link">
-              Learn More
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <span class="availability"><span class="availability-dot"></span>Accepting</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- 3. Male Fertility -->
-      <article class="service-card reveal" data-category="male">
-        <div class="card-img">
-          <div class="card-accent male"></div>
-          <img src="https://images.unsplash.com/photo-1579875465779-30841dc72e8b?auto=format&fit=crop&q=80&w=700"
-            alt="Male Factor Fertility">
-          <div class="card-img-overlay"></div>
-
-          <span class="card-num">03 / 06</span>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Andrology</span>
-          <h3 class="card-title">Male Factor Fertility</h3>
-          <p class="card-desc">Precision diagnostics and surgical intervention for male infertility — including advanced
-            sperm retrieval techniques and comprehensive andrology workups.</p>
-          <div class="card-pills">
-            <span class="pill">TESA / Micro-TESE</span>
-            <span class="pill">Semen Analysis</span>
-            <span class="pill">DNA Fragmentation</span>
-          </div>
-          <div class="card-footer">
-            <a href="{{ route('frontend.serviceDetail') }}?s=male" class="card-link">
-              Learn More
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <span class="availability"><span class="availability-dot"></span>Accepting</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- 4. High-Risk Obstetrics -->
-      <article class="service-card reveal" data-category="obstetrics">
-        <div class="card-img">
-          <div class="card-accent obs"></div>
-          <img src="https://images.unsplash.com/photo-1532706302136-347336b002ec?auto=format&fit=crop&q=80&w=700"
-            alt="High-Risk Obstetrics">
-          <div class="card-img-overlay"></div>
-
-          <span class="card-num">04 / 06</span>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Obstetrics</span>
-          <h3 class="card-title">High-Risk Obstetrics</h3>
-          <p class="card-desc">Specialized, compassionate care for complex pregnancies — ensuring the highest standards
-            of monitoring and safety for both mother and child throughout every trimester.</p>
-          <div class="card-pills">
-            <span class="pill">Fetal Monitoring</span>
-            <span class="pill">Preeclampsia Care</span>
-            <span class="pill">Twin Pregnancies</span>
-          </div>
-          <div class="card-footer">
-            <a href="{{ route('frontend.serviceDetail') }}?s=obstetrics" class="card-link">
-              Learn More
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <span class="availability"><span class="availability-dot"></span>Accepting</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- 5. Fertility Preservation -->
-      <article class="service-card reveal" data-category="preservation">
-        <div class="card-img">
-          <div class="card-accent pres"></div>
-          <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1600&q=80"
-            alt="Fertility Preservation">
-          <div class="card-img-overlay"></div>
-
-          <span class="card-num">05 / 06</span>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Preservation</span>
-          <h3 class="card-title">Fertility Preservation</h3>
-          <p class="card-desc">Secure egg and embryo cryopreservation for individuals choosing to plan their family on
-            their own timeline — including oncofertility for cancer patients.</p>
-          <div class="card-pills">
-            <span class="pill">Egg Freezing</span>
-            <span class="pill">Embryo Cryo</span>
-            <span class="pill">Oncofertility</span>
-          </div>
-          <div class="card-footer">
-            <a href="{{ route('frontend.serviceDetail') }}?s=preservation" class="card-link">
-              Learn More
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <span class="availability"><span class="availability-dot"></span>Accepting</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- 6. Gynae Endoscopy -->
-      <article class="service-card reveal" data-category="surgical">
-        <div class="card-img">
-          <div class="card-accent surg"></div>
-          <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=700"
-            alt="Gynae Endoscopy">
-          <div class="card-img-overlay"></div>
-
-          <span class="card-num">06 / 06</span>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">Surgical</span>
-          <h3 class="card-title">Gynae Endoscopy</h3>
-          <p class="card-desc">Advanced laparoscopic and hysteroscopic surgeries for uterine anomalies, endometriosis,
-            fibroids, and polyps — performed with minimal invasion and maximum precision for faster recovery.</p>
-          <div class="card-pills">
-            <span class="pill">Laparoscopy</span>
-            <span class="pill">Hysteroscopy</span>
-            <span class="pill">Endometriosis</span>
-            <span class="pill">Fibroid Removal</span>
-            <span class="pill">Septum Correction</span>
-          </div>
-          <div class="card-footer">
-            <a href="{{ route('frontend.serviceDetail') }}?s=endoscopy" class="card-link">
-              Learn More
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <span class="availability"><span class="availability-dot"></span>Accepting</span>
-          </div>
-        </div>
-      </article>
+      @empty
+      <div class="col-12 text-center py-5">
+          <p>No services found at the moment. Please check back later.</p>
+      </div>
+      @endforelse
 
     </div>
   </section>

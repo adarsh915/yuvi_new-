@@ -116,29 +116,8 @@
 
 
     // ── QUIZ DATA ──
-    const quizQuestions = [
-      { id: "trying_over_1yr", sec: "f", q: "Have you had unprotected intercourse for more than a year without becoming pregnant?" },
-      { id: "over_35_6mo", sec: "f", q: "Are you nearing or over 35, and have had unprotected intercourse for 6 months without becoming pregnant?" },
-      { id: "pelvic_infection_std", sec: "f", q: "Do you have a history of pelvic infection or a sexually transmitted disease?" },
-      { id: "clomid_no_pregnancy", sec: "f", q: "Have you been treated with Clomid without becoming pregnant?" },
-      { id: "over_38_future_preg", sec: "f", q: "Are you 38 years or older and contemplating a pregnancy in the future?" },
-      { id: "endometriosis_history", sec: "f", q: "Do you have a personal or family history of endometriosis and would like to get pregnant some day?" },
-      { id: "uterine_abnormality", sec: "f", q: "Have you been diagnosed with a uterine abnormality or structural defect?" },
-      { id: "two_miscarriages", sec: "f", q: "Have you had two or more miscarriages or chemical pregnancies?" },
-      { id: "pcos_insulin", sec: "f", q: "Do you have a diagnosis of PCOS, PCOD, or insulin resistance?" },
-      { id: "irregular_cycles", sec: "f", q: "Are your menstrual cycles irregular (longer than 35 days from start to start)?" },
-      { id: "cancer_fertility", sec: "f", q: "Have you been recently diagnosed with cancer, or have a family history of cancer, and would like to maintain reproductive potential?" },
-      { id: "early_menopause_family", sec: "f", q: "Do you have a family history of early menopause (occurring before age 45)?" },
-      { id: "fibroids_conceive", sec: "f", q: "Have you been diagnosed with uterine fibroids and would like to conceive in the future?" },
-      { id: "heavy_painful_periods", sec: "f", q: "Do you have especially heavy or painful menstrual periods?" },
-      { id: "hair_acne_discharge", sec: "f", q: "Do you have unexplained extra hair growth, acne, or breast discharge?" },
-      { id: "bad_eggs", sec: "f", q: 'Have you been told you have "bad eggs" and would still like to have a baby?' },
-      { id: "menopausal_conceive", sec: "f", q: "Has anyone told you that you are menopausal, but you would still like to conceive?" },
-      { id: "family_birth_defect", sec: "f", q: "Do you or your husband have a family history of an inherited birth defect, and you would like a child without this problem?" },
-      { id: "genetic_carrier", sec: "f", q: "Are you or your partner carriers of genetic mutations (Cystic Fibrosis, Sickle Cell, Thalassemia, Fragile X, etc.) you don't want to pass on?" },
-      { id: "male_testicular_trauma", sec: "m", q: "Has your male partner had any type of testicular trauma, defect, or surgery?" },
-      { id: "male_ejaculation_issues", sec: "m", q: "Has your male partner had problems with ejaculation, general infections, or erections?" }
-    ];
+    const quizQuestions = @json($questions);
+
 
     let quizSteps = [];
     let currentQuizStep = 0;
@@ -166,7 +145,7 @@
       const container = document.getElementById('quizRows');
       container.innerHTML = '';
       qs.forEach(q => {
-        const isFemale = q.sec === 'f';
+        const isFemale = q.gender === 'f';
         const genderBadge = isFemale
           ? '<span class="q-gender-badge badge-female">Question for Female</span>'
           : '<span class="q-gender-badge badge-male">Question for Male</span>';
@@ -175,7 +154,7 @@
         row.className = 'quiz-row';
         row.innerHTML =
           '<div class="quiz-row-main">' +
-          '<span class="quiz-row-text">' + q.q + '</span>' +
+          '<span class="quiz-row-text">' + q.question + '</span>' +
           '<div class="quiz-row-footer">' + genderBadge + '</div>' +
           '</div>' +
           '<div class="quiz-row-opts">' +
@@ -211,6 +190,7 @@
 
     function quizCheckComplete() {
       const qs = quizSteps[currentQuizStep];
+      if (!qs) return;
       const done = qs.every(q => quizAnswers[q.id]);
       document.getElementById('quizBtnNext').disabled = !done;
       document.getElementById('quizNavInfo').textContent = done ? 'All answered ✓' : 'Answer all questions to continue';
@@ -249,29 +229,48 @@
     function submitLead() {
       const name = document.getElementById('leadName').value.trim();
       const phone = document.getElementById('leadPhone').value.trim();
+      const email = document.getElementById('leadEmail').value.trim();
+      const city = document.getElementById('leadCity').value.trim();
+
       if (!name || !phone) { alert('Please enter at least your Name and Phone Number.'); return; }
 
-      quizAnswers['lead_name'] = name;
-      quizAnswers['lead_phone'] = phone;
-      quizAnswers['lead_email'] = document.getElementById('leadEmail').value.trim();
-      quizAnswers['lead_city'] = document.getElementById('leadCity').value.trim();
+      const submitBtn = event.target;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
 
-      const yesCount = Object.entries(quizAnswers)
-        .filter(([k, v]) => !k.startsWith('lead_') && v === 'Yes').length;
-
-      let resultMsg = '';
-      if (yesCount === 0) {
-        resultMsg = 'Based on your responses, you have no immediate red flags. However, if you are planning to conceive, a routine consultation with Dr. Yuvi is always a great first step.';
-      } else if (yesCount <= 3) {
-        resultMsg = 'You answered "Yes" to ' + yesCount + ' concern(s). There are some areas worth discussing with a specialist. We recommend booking a consultation to explore your options and get a personalised care plan.';
-      } else {
-        resultMsg = 'You answered "Yes" to ' + yesCount + ' concern(s), indicating moderate to significant fertility-related factors. We strongly recommend a comprehensive clinical evaluation with Dr. Yuvi to identify the best path forward for you.';
-      }
-
-      document.getElementById('finalResultText').textContent = resultMsg;
-      document.getElementById('quizProgressBar').style.width = '100%';
-      document.getElementById('quizLeadView').style.display = 'none';
-      document.getElementById('quizFinal').style.display = 'block';
+      fetch('{{ route('frontend.quiz.submit') }}', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          },
+          body: JSON.stringify({
+              name: name,
+              phone: phone,
+              email: email,
+              city: city,
+              answers: quizAnswers
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              document.getElementById('finalResultText').textContent = data.message;
+              document.getElementById('quizProgressBar').style.width = '100%';
+              document.getElementById('quizLeadView').style.display = 'none';
+              document.getElementById('quizFinal').style.display = 'block';
+          } else {
+              alert('Something went wrong. Please try again.');
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Unlock My Results &rarr;';
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('Failed to submit. Check your connection.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Unlock My Results &rarr;';
+      });
     }
 
     document.addEventListener('DOMContentLoaded', () => {

@@ -52,6 +52,36 @@
             </div>
         </div>
     </div>
+    <div class="col">
+        <div class="card shadow-none border bg-gradient-start-4 h-100">
+            <div class="card-body p-20">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <div>
+                        <p class="fw-medium text-primary-light mb-1">Total Blogs</p>
+                        <h6 class="mb-0">{{ $stats['blogs_count'] }}</h6>
+                    </div>
+                    <div class="w-50-px h-50-px bg-success rounded-circle d-flex justify-content-center align-items-center">
+                        <iconify-icon icon="solar:document-text-outline" class="text-white text-2xl mb-0"></iconify-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card shadow-none border bg-gradient-start-1 h-100">
+            <div class="card-body p-20">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <div>
+                        <p class="fw-medium text-primary-light mb-1">Total Services</p>
+                        <h6 class="mb-0">{{ $stats['services_count'] }}</h6>
+                    </div>
+                    <div class="w-50-px h-50-px bg-info rounded-circle d-flex justify-content-center align-items-center">
+                        <iconify-icon icon="solar:medical-kit-outline" class="text-white text-2xl mb-0"></iconify-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="mt-4">
@@ -64,6 +94,8 @@
                 <a href="{{ route('admin.leads') }}" class="btn btn-primary">View Leads</a>
                 <a href="{{ route('admin.faqs') }}" class="btn btn-info">Manage FAQs</a>
                 <a href="{{ route('admin.stories') }}" class="btn btn-success">Manage Stories</a>
+                <a href="{{ route('admin.blogs') }}" class="btn btn-primary" style="background-color: #4f84ae; border-color: #4f84ae;">Manage Blogs</a>
+                <a href="{{ route('admin.services') }}" class="btn btn-info" style="background-color: #b82430; border-color: #b82430;">Manage Services</a>
                 <a href="{{ route('admin.settings') }}" class="btn btn-warning">Site Settings</a>
             </div>
         </div>

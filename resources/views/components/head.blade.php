@@ -3,8 +3,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Yuvi </title>
-    <meta name="description" content="{{ $seoDescription }}">
-    <meta name="keywords" content="{{ $seoKeywords }}">
+    <meta name="description" content="{{ $seoDescription ?? '' }}">
+    <meta name="keywords" content="{{ $seoKeywords ?? '' }}">
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
     <!-- remix icon font css  -->
     <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}">
@@ -14,10 +14,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/lib/apexcharts.css') }}">
     <!-- Data Table css -->
     <link rel="stylesheet" href="{{ asset('assets/css/lib/dataTables.min.css') }}">
-    <!-- Text Editor css -->
-    <link rel="stylesheet" href="{{ asset('assets/css/lib/editor-katex.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/lib/editor.atom-one-dark.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/lib/editor.quill.snow.css') }}">
+    <!-- Summernote Editor css -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <!-- Date picker css -->
     <link rel="stylesheet" href="{{ asset('assets/css/lib/flatpickr.min.css') }}">
     <!-- Calendar css -->
@@ -36,4 +34,5 @@
     <link rel="stylesheet" href="{{ asset('assets/css/lib/audioplayer.css') }}">
     <!-- main css -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/premium-admin.css') }}">
 </head>

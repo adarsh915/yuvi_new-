@@ -15,7 +15,7 @@
         <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center">
             <div class="max-w-464-px mx-auto w-100">
                 <div>
-                    <a href="{{ route('index') }}" class="mb-40 max-w-290-px">
+                    <a href="{{ route('frontend.index') }}" class="mb-40 max-w-290-px">
                         <img src="{{ asset('assets/images/logo.png') }}" alt="">
                     </a>
                     <h4 class="mb-12">Sign Up to your Account</h4>

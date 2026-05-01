@@ -2,10 +2,14 @@
 <footer class="footer">
     <div class="footer-inner">
         <div>
-            <span class="footer-brand"><img src="{{ asset('assets/frontend/img/logo.png') }}"
-                    alt="Dr Yuvraj Jadeja Logo" style="max-height: 70px; width: auto; object-fit: contain;"></span>
-            <p class="footer-desc">Ethical, evidence-based fertility and women's health care in Ahmedabad. This website
-                is for information only and not a substitute for medical advice.</p>
+            <span class="footer-brand">
+                @php 
+                    $fLogo = $siteSettings['footer_logo'] ?? 'assets/frontend/img/logo.png';
+                    $fLogoPath = str_contains($fLogo, 'settings/') ? asset('storage/'.$fLogo) : asset($fLogo);
+                @endphp
+                <img src="{{ $fLogoPath }}" alt="Dr Yuvraj Jadeja Logo" style="max-height: 70px; width: auto; object-fit: contain;">
+            </span>
+            <p class="footer-desc">{{ $siteSettings['footer_description'] ?? 'Ethical, evidence-based fertility and women\'s health care in Ahmedabad.' }}</p>
             <div class="footer-social">
                 @if(isset($siteSettings['instagram_url']))
                 <a href="{{ $siteSettings['instagram_url'] }}" class="social-btn" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24"
@@ -23,14 +27,6 @@
                         <path
                             d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
                         <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
-                    </svg></a>
-                @endif
-                @if(isset($siteSettings['whatsapp_number']))
-                <a href="https://wa.me/{{ $siteSettings['whatsapp_number'] }}" class="social-btn" aria-label="WhatsApp"><svg width="15" height="15" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                     </svg></a>
                 @endif
             </div>
@@ -56,17 +52,18 @@
         <div>
             <h5>Connect</h5>
             <ul>
-                @if(isset($siteSettings['email_address']))
-                <li><a href="mailto:{{ $siteSettings['email_address'] }}">{{ $siteSettings['email_address'] }}</a></li>
+                @if(isset($siteSettings['footer_email']))
+                <li><a href="mailto:{{ $siteSettings['footer_email'] }}">{{ $siteSettings['footer_email'] }}</a></li>
                 @endif
-                @if(isset($siteSettings['phone_number']))
-                <li><a href="tel:{{ str_replace(' ', '', $siteSettings['phone_number']) }}">{{ $siteSettings['phone_number'] }}</a></li>
+                @if(isset($siteSettings['footer_phone']))
+                <li><a href="tel:{{ str_replace(' ', '', $siteSettings['footer_phone']) }}">{{ $siteSettings['footer_phone'] }}</a></li>
                 @endif
-                @if(isset($siteSettings['whatsapp_number']))
-                <li><a href="https://wa.me/{{ $siteSettings['whatsapp_number'] }}">WhatsApp</a></li>
-                @endif
-                @if(isset($siteSettings['office_address']))
-                <li><a href="#">Google Maps</a></li>
+                @if(!empty($siteSettings['footer_address']))
+                <li style="margin-top: 10px;">
+                    <p style="font-size: 0.88rem; color: #fff; opacity: 0.85; line-height: 1.5; margin: 0;">
+                        {{ $siteSettings['footer_address'] }}
+                    </p>
+                </li>
                 @endif
             </ul>
         </div>

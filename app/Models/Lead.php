@@ -13,5 +13,10 @@ class Lead extends Model
         'subject',
         'message',
         'status',
+        'dynamic_data',
+    ];
+
+    protected $casts = [
+        'dynamic_data' => 'array',
     ];
 }

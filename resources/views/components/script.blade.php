@@ -21,8 +21,8 @@
     <script src="{{ asset('assets/js/lib/prism.js') }}"></script>
     <!-- file upload js -->
     <script src="{{ asset('assets/js/lib/file-upload.js') }}"></script>
-    <!-- audioplayer -->
-    <script src="{{ asset('assets/js/lib/audioplayer.js') }}"></script>
+    <!-- Summernote Editor js -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
     <!-- main js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>

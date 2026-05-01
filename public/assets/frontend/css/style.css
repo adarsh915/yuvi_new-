@@ -1349,9 +1349,16 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 420px 1fr;
     gap: 5rem;
     align-items: start;
+}
+
+@media (max-width: 900px) {
+    .faq-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
 }
 
 .faq-left h2 {
@@ -1400,11 +1407,22 @@ body {
 .faq-list {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 1.2rem;
+    width: 100%;
 }
 
 .faq-item {
-    border-bottom: 1px solid var(--card-border);
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.faq-item.open {
+    border-color: var(--crimson);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
 .faq-question {
@@ -1412,8 +1430,17 @@ body {
     background: none;
     border: none;
     text-align: left;
-    padding: 1.3rem 0;
+    padding: 1.5rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--midnight);
+    transition: color 0.2s;
+}
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -6,31 +6,30 @@
 
 @section('content')
   <!-- HERO -->
-  <div class="hero-accent" id="heroAccent"></div>
+  <div class="hero-accent {{ $service->accent_class }}" id="heroAccent"></div>
   <section class="hero reveal">
     <div class="hero-inner">
       <div class="hero-text">
         <div class="hero-breadcrumb">
           <a href="{{ route('frontend.services') }}">Services</a>
           <span class="hero-breadcrumb-sep">/</span>
-          <span id="heroTag">IVF & ART</span>
+          <span id="heroTag">{{ $service->category_tag }}</span>
         </div>
-        <div class="hero-eyebrow" id="heroEyebrow">Advanced Protocol</div>
-        <h1 id="heroTitle">IVF & Assisted <em>Reproduction</em></h1>
-        <p class="hero-lead" id="heroLead">Comprehensive ART solutions built on advanced embryology, transparent
-          success-rate reporting, and individualized stimulation protocols — tailored entirely around you.</p>
+        <div class="hero-eyebrow" id="heroEyebrow">{{ $service->hero_eyebrow }}</div>
+        <h1 id="heroTitle">{!! str_replace(' ', ' <em>', $service->title) . '</em>' !!}</h1>
+        <p class="hero-lead" id="heroLead">{{ $service->hero_lead }}</p>
         <div class="hero-pills" id="heroPills">
-          <span class="hero-pill">IUI</span>
-          <span class="hero-pill">IVF / ICSI</span>
-          <span class="hero-pill">Laser Hatching</span>
-          <span class="hero-pill">Embryo Transfer</span>
-          <span class="hero-pill">PGT-A Testing</span>
+          @if($service->hero_pills && is_array($service->hero_pills))
+            @foreach($service->hero_pills as $pill)
+                <span class="hero-pill">{{ $pill }}</span>
+            @endforeach
+          @endif
         </div>
       </div>
       <div class="hero-img-wrap">
         <img id="heroImg"
-          src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=700"
-          alt="Service image">
+          src="{{ asset('storage/' . $service->hero_image) }}"
+          alt="{{ $service->title }}">
       </div>
     </div>
   </section>
@@ -43,113 +42,67 @@
 
       <!-- Stats -->
       <div class="stats-row reveal" id="statsRow">
-        <div class="stat-card"><span class="stat-num">68%</span><span class="stat-label">Live Birth Rate</span></div>
-        <div class="stat-card"><span class="stat-num">3,200+</span><span class="stat-label">Cycles Performed</span></div>
-        <div class="stat-card"><span class="stat-num">15+</span><span class="stat-label">Years Experience</span></div>
+        @if($service->stat1_num)
+        <div class="stat-card"><span class="stat-num">{{ $service->stat1_num }}</span><span class="stat-label">{{ $service->stat1_label }}</span></div>
+        @endif
+        @if($service->stat2_num)
+        <div class="stat-card"><span class="stat-num">{{ $service->stat2_num }}</span><span class="stat-label">{{ $service->stat2_label }}</span></div>
+        @endif
+        @if($service->stat3_num)
+        <div class="stat-card"><span class="stat-num">{{ $service->stat3_num }}</span><span class="stat-label">{{ $service->stat3_label }}</span></div>
+        @endif
       </div>
 
       <!-- Approach -->
       <div class="content-section reveal">
-        <h2>The Approach</h2>
-        <p id="approachP1">Our IVF pathway begins with a thorough ovarian reserve assessment and semen analysis to
-          determine the ideal stimulation protocol — whether a standard antagonist cycle, a mini-IVF, or a natural-cycle
-          approach.</p>
-        <p id="approachP2">Fertilization is performed in our in-house embryology lab using conventional IVF or ICSI, with
-          laser-assisted hatching available where indicated. Embryos are cultured to blastocyst stage and graded using
-          AI-assisted morphology scoring for the highest implantation potential.</p>
+        <h2>{{ $service->approach_title }}</h2>
+        <div class="bd-article__body">
+            {!! $service->approach_text !!}
+        </div>
       </div>
 
       <!-- Protocol -->
+      @if($service->protocol_json)
       <div class="protocol-block reveal">
-        <h3>Typical Protocol</h3>
+        <h3>{{ $service->protocol_title }}</h3>
         <ul class="protocol-steps" id="protocolSteps">
+          @foreach($service->protocol_json as $index => $step)
           <li class="protocol-step">
-            <span class="protocol-num">01</span>
+            <span class="protocol-num">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
             <div class="protocol-step-body">
-              <div class="protocol-step-title">Ovarian Stimulation</div>
-              <div class="protocol-step-desc">Individualized FSH/LH dosing monitored every 2–3 days by ultrasound and
-                estradiol.</div>
+              <div class="protocol-step-title">{{ $step['title'] ?? '' }}</div>
+              <div class="protocol-step-desc">{{ $step['desc'] ?? '' }}</div>
             </div>
           </li>
-          <li class="protocol-step">
-            <span class="protocol-num">02</span>
-            <div class="protocol-step-body">
-              <div class="protocol-step-title">Egg Retrieval & Fertilization</div>
-              <div class="protocol-step-desc">Ultrasound-guided egg collection under sedation, followed by ICSI or
-                conventional IVF in our embryology lab.</div>
-            </div>
-          </li>
-          <li class="protocol-step">
-            <span class="protocol-num">03</span>
-            <div class="protocol-step-body">
-              <div class="protocol-step-title">Embryo Culture & Transfer</div>
-              <div class="protocol-step-desc">Blastocyst culture for 5–6 days, AI morphology grading, and a seamless
-                single embryo transfer.</div>
-            </div>
-          </li>
-          <li class="protocol-step">
-            <span class="protocol-num">04</span>
-            <div class="protocol-step-body">
-              <div class="protocol-step-title">Luteal Support & Beta hCG</div>
-              <div class="protocol-step-desc">Tailored progesterone support with a serum beta hCG test at Day 12
-                post-transfer.</div>
-            </div>
-          </li>
+          @endforeach
         </ul>
       </div>
+      @endif
 
       <!-- What to Expect -->
+      @if($service->expect_json)
       <div class="content-section reveal">
-        <h2>What to Expect</h2>
-        <p id="expectIntro">Most IVF cycles span 10–14 days of stimulation followed by retrieval and a 5-day culture
-          period. Here is what your timeline typically looks like:</p>
+        <h2>{{ $service->expect_title }}</h2>
         <ul class="expect-list" id="expectList">
+          @foreach($service->expect_json as $item)
           <li class="expect-item">
             <div class="expect-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)"
                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="9 11 12 14 22 4" />
               </svg></div>
-            Day 1–2: Baseline scan and blood work to confirm readiness to start.
+            {{ $item }}
           </li>
-          <li class="expect-item">
-            <div class="expect-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 11 12 14 22 4" />
-              </svg></div>
-            Day 2–12: Daily or alternate-day monitoring; injections self-administered at home.
-          </li>
-          <li class="expect-item">
-            <div class="expect-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 11 12 14 22 4" />
-              </svg></div>
-            Day 12–14: Trigger injection followed by egg retrieval under sedation (~20 min).
-          </li>
-          <li class="expect-item">
-            <div class="expect-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 11 12 14 22 4" />
-              </svg></div>
-            Day 17–19: Embryo transfer — a gentle, scan-guided procedure requiring no anaesthesia.
-          </li>
-          <li class="expect-item">
-            <div class="expect-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 11 12 14 22 4" />
-              </svg></div>
-            Day 29: Pregnancy blood test (beta hCG).
-          </li>
+          @endforeach
         </ul>
       </div>
+      @endif
 
       <!-- Safety -->
       <div class="content-section reveal">
-        <h2>Safety & Ethical Practice</h2>
-        <p>We prioritize your health and safety above all else. Our clinic maintains strict adherence to ethical
-          guidelines — you are fully informed of every risk and success probability before treatment begins. No
-          unnecessary procedures. Ever.</p>
-        <p>All IVF cycles are closely monitored using real-time ultrasound and hormonal assays, ensuring we can adjust
-          protocols immediately for your safety and comfort.</p>
+        <h2>{{ $service->safety_title }}</h2>
+        <div class="bd-article__body">
+            {!! $service->safety_text !!}
+        </div>
       </div>
 
     </div>
@@ -178,26 +131,17 @@
       <div class="sidebar-card reveal delay-1">
         <h4>Related Pathways</h4>
         <ul class="related-list" id="relatedList">
-          <li class="related-item"><a href="{{ route('frontend.serviceDetail') }}?s=pcos" class="related-link">PCOS
-              Management <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg></a></li>
-          <li class="related-item"><a href="{{ route('frontend.serviceDetail') }}?s=male" class="related-link">Male Factor
-              Fertility <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg></a></li>
-          <li class="related-item"><a href="{{ route('frontend.serviceDetail') }}?s=preservation"
-              class="related-link">Fertility Preservation <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg></a></li>
-          <li class="related-item"><a href="{{ route('frontend.serviceDetail') }}?s=endoscopy" class="related-link">Gynae
-              Endoscopy <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg></a></li>
+          @foreach($allServices as $related)
+          <li class="related-item">
+              <a href="{{ route('frontend.serviceDetail', $related->slug) }}" class="related-link">
+                  {{ $related->title }}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+              </a>
+          </li>
+          @endforeach
         </ul>
       </div>
 

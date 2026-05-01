@@ -19,40 +19,23 @@
                         <th scope="col">Name</th>
                         <th scope="col">Contact</th>
                         <th scope="col">Concern</th>
-                        <th scope="col">Message</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($leads as $lead)
                     <tr>
-                        <td>{{ $lead->created_at->format('d M, Y H:i') }}</td>
+                        <td>{{ $lead->created_at->format('d M, Y') }}</td>
                         <td>{{ $lead->name }}</td>
                         <td>
-                            <div>{{ $lead->email }}</div>
+                            <div class="text-xs">{{ $lead->email }}</div>
                             <div class="text-secondary-light">{{ $lead->phone }}</div>
                         </td>
                         <td>{{ $lead->subject }}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#leadModal{{ $lead->id }}">
-                                View Message
-                            </button>
-                            
-                            <!-- Modal -->
-                            <div class="modal fade" id="leadModal{{ $lead->id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Message from {{ $lead->name }}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p><strong>Concern:</strong> {{ $lead->subject }}</p>
-                                            <hr>
-                                            <p>{{ $lead->message }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="{{ route('admin.leads.details', $lead->id) }}" class="btn btn-sm btn-outline-primary">
+                                <iconify-icon icon="solar:eye-outline"></iconify-icon> View Full Lead
+                            </a>
                         </td>
                     </tr>
                     @empty

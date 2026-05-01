@@ -198,85 +198,26 @@
         </div>
       </div>
       <div class="services-list">
-        <a href="{{ route('frontend.serviceDetail') }}?s=ivf" class="svc-row reveal"><span class="svc-num">01</span>
+        @foreach($services as $index => $service)
+        <a href="{{ route('frontend.serviceDetail', $service->slug) }}" class="svc-row reveal {{ $index % 3 == 1 ? 'delay-1' : ($index % 3 == 2 ? 'delay-2' : '') }}">
+          <span class="svc-num">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
           <div class="svc-content">
-            <div class="svc-title">IVF & Assisted Reproductive Techniques</div>
-            <div class="svc-desc">Personalized, ethical IVF with tiered protocols, transparent probabilities and informed
-              decisions at every step.</div>
+            <div class="svc-title">{{ $service->title }}</div>
+            <div class="svc-desc">{{ $service->excerpt }}</div>
           </div>
-          <div class="svc-pills"><span class="svc-pill">IVF / ICSI</span><span class="svc-pill">IUI</span><span
-              class="svc-pill">PGT-A</span></div><svg class="svc-arrow" width="18" height="18" viewBox="0 0 24 24"
+          <div class="svc-pills">
+            @if($service->hero_pills)
+                @foreach($service->hero_pills as $pill)
+                    <span class="svc-pill">{{ $pill }}</span>
+                @endforeach
+            @endif
+          </div>
+          <svg class="svc-arrow" width="18" height="18" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
-        <a href="{{ route('frontend.serviceDetail') }}?s=pcos" class="svc-row reveal delay-1"><span
-            class="svc-num">02</span>
-          <div class="svc-content">
-            <div class="svc-title">Intrauterine Insemination</div>
-            <div class="svc-desc">Evidence-based, minimally invasive pathway with clear criteria on when it helps — and
-              when to escalate.Root-cause hormonal management through lifestyle plans, ovulation induction, and
-              targeted therapy.</div>
-          </div>
-          <div class="svc-pills"><span class="svc-pill">Hormonal Therapy</span><span class="svc-pill">Ovulation
-              Induction</span></div><svg class="svc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
-        <a href="{{ route('frontend.serviceDetail') }}?s=male" class="svc-row reveal delay-2"><span
-            class="svc-num">03</span>
-          <div class="svc-content">
-            <div class="svc-title">Fertility Preservation</div>
-            <div class="svc-desc">Egg freezing with counseling on timelines, ovarian reserve, and realistic outlooks
-              tailored to you.</div>
-          </div>
-          <div class="svc-pills"><span class="svc-pill">Micro-TESE</span><span class="svc-pill">DNA Frag</span></div><svg
-            class="svc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
-        <a href="{{ route('frontend.serviceDetail') }}?s=preservation" class="svc-row reveal"><span
-            class="svc-num">04</span>
-          <div class="svc-content">
-            <div class="svc-title">PCOS & Hormonal Care</div>
-            <div class="svc-desc">Root-cause approach across lifestyle, metabolic health, and individualized medical
-              plans.</div>
-          </div>
-          <div class="svc-pills"><span class="svc-pill">Egg Freezing</span><span class="svc-pill">Oncofertility</span>
-          </div><svg class="svc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
-        <a href="{{ route('frontend.serviceDetail') }}?s=obstetrics" class="svc-row reveal delay-1"><span
-            class="svc-num">05</span>
-          <div class="svc-content">
-            <div class="svc-title">Male Fertility</div>
-            <div class="svc-desc">Dedicated andrology diagnostics and targeted treatment strategies with clear
-              communication.
-            </div>
-          </div>
-          <div class="svc-pills"><span class="svc-pill">Fetal Monitoring</span><span class="svc-pill">Preeclampsia</span>
-          </div><svg class="svc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
-        <a href="{{ route('frontend.serviceDetail') }}?s=endoscopy" class="svc-row reveal delay-2"><span
-            class="svc-num">06</span>
-          <div class="svc-content">
-            <div class="svc-title">High-Risk Pregnancy </div>
-            <div class="svc-desc">Specialist monitoring and compassionate support throughout complex pregnancies.</div>
-          </div>
-          <div class="svc-pills"><span class="svc-pill">Laparoscopy</span><span class="svc-pill">Hysteroscopy</span>
-          </div>
-          <svg class="svc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
+        @endforeach
       </div>
     </div>
   </section>
@@ -337,26 +278,85 @@
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg></a>
         </div>
-      </div>
-      <div class="grid" id="videoGrid">
+      </div> <!-- Close section-header -->
+
+      <div class="hp-stories-grid" id="hpStoriesGrid">
         @foreach($stories as $story)
-        <article class="card reveal" data-category="{{ strtolower($story->treatment_type) }}">
-          <div class="video-wrap">
-            <iframe src="{{ $story->video_url }}" loading="lazy" allowfullscreen
+        <article class="hp-video-card reveal" data-category="{{ strtolower($story->treatment_type) }}">
+          <div class="hp-video-wrap">
+            <iframe src="{{ $story->video_url }}" 
+              loading="lazy" allow="autoplay; encrypted-media" allowfullscreen
               title="{{ $story->title }}"></iframe>
-            <span class="card-badge">{{ $story->treatment_type }}</span>
-          </div>
-          <div class="card-body">
-            <span class="card-tag">#{{ str_replace(' ', '', $story->treatment_type) }}Success</span>
-            <h3 class="card-title">{{ $story->title }}</h3>
-            <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 6v6l4 2" />
-                </svg>Dynamic watch</span></div>
+            <div class="hp-video-overlay">
+              <span class="hp-patient-name">{{ $story->patient_name ?? $story->title }}</span>
+              <span class="hp-treatment-tag">{{ $story->treatment_type }}</span>
+            </div>
           </div>
         </article>
         @endforeach
+      </div>
+
+      <style>
+        .hp-stories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .hp-video-card {
+            position: relative;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .hp-video-card:hover {
+            transform: translateY(-8px);
+        }
+        .hp-video-wrap {
+            aspect-ratio: 9/16;
+            position: relative;
+            width: 100%;
+        }
+        .hp-video-wrap iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+        }
+        .hp-video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px 20px 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .hp-patient-name {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        .hp-treatment-tag {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+        @media (max-width: 1024px) {
+            .hp-stories-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .hp-stories-grid { grid-template-columns: 1fr; }
+        }
+      </style>
       </div>
     </div>
   </section>
@@ -381,58 +381,27 @@
         </div>
       </div>
       <div class="blog-list-grid">
-        <article class="blog-list-card reveal">
+        @foreach($blogs as $index => $blog)
+        <article class="blog-list-card reveal {{ $index % 3 == 1 ? 'delay-1' : ($index % 3 == 2 ? 'delay-2' : '') }}">
           <div class="blog-list-img-wrap">
-            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600"
-              alt="Blog 1" class="blog-list-img">
-            <span class="blog-list-badge">IVF Insights</span>
+            <img src="{{ asset('storage/' . $blog->image) }}"
+              alt="{{ $blog->title }}" class="blog-list-img">
+            <span class="blog-list-badge">{{ $blog->category_rel->name ?? 'Article' }}</span>
           </div>
           <div class="blog-list-content">
-            <div class="blog-list-meta">Oct 12, 2026 · 5 min read</div>
-            <h3 class="blog-list-title">Understanding IVF Success Rates: What to Ask Your Doctor</h3>
-            <p class="blog-list-excerpt">Demystifying how clinics report success rates and what actually matters for your
-              unique diagnosis.</p>
-            <a href="#" class="blog-list-link">Read Article <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+            <div class="blog-list-meta">{{ $blog->created_at->format('M d, Y') }} · 5 min read</div>
+            <h3 class="blog-list-title">{{ $blog->title }}</h3>
+            <p class="blog-list-excerpt">{{ $blog->excerpt }}</p>
+            <a href="{{ route('frontend.blogDetails', $blog->slug) }}" class="blog-list-link">Read Article <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg></a>
           </div>
         </article>
-        <article class="blog-list-card reveal delay-1">
-          <div class="blog-list-img-wrap">
-            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600"
-              alt="Blog 2" class="blog-list-img">
-            <span class="blog-list-badge">Women's Health</span>
-          </div>
-          <div class="blog-list-content">
-            <div class="blog-list-meta">Sep 28, 2026 · 4 min read</div>
-            <h3 class="blog-list-title">PCOS and Fertility: How Diet Impacts Ovulation</h3>
-            <p class="blog-list-excerpt">Actionable metabolic, dietary, and lifestyle changes that can improve ovulation
-              in PCOS patients.</p>
-            <a href="#" class="blog-list-link">Read Article <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg></a>
-          </div>
-        </article>
-        <article class="blog-list-card reveal delay-2">
-          <div class="blog-list-img-wrap">
-            <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&q=80&w=600"
-              alt="Blog 3" class="blog-list-img">
-            <span class="blog-list-badge">Male Fertility</span>
-          </div>
-          <div class="blog-list-content">
-            <div class="blog-list-meta">Sep 15, 2026 · 6 min read</div>
-            <h3 class="blog-list-title">Male Factor Infertility: Beyond the Semen Analysis</h3>
-            <p class="blog-list-excerpt">Why advanced diagnostics like DNA fragmentation are changing how we treat male
-              fertility issues.</p>
-            <a href="#" class="blog-list-link">Read Article <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg></a>
-          </div>
-        </article>
+        @endforeach
       </div>
+    </div>
+  </section>
     </div>
   </section>
 

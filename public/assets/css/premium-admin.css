@@ -1,0 +1,129 @@
+/* Premium Admin UI Overrides */
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #487FFF 0%, #4536B6 100%);
+    --info-gradient: linear-gradient(135deg, #144BD6 0%, #06307C 100%);
+    --success-gradient: linear-gradient(135deg, #45B369 0%, #006038 100%);
+    --danger-gradient: linear-gradient(135deg, #EF4A00 0%, #801D18 100%);
+    --warning-gradient: linear-gradient(135deg, #FF9F29 0%, #C28800 100%);
+}
+
+/* Button Patterns */
+.btn {
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn-sm {
+    padding: 6px 14px !important;
+    font-size: 0.85rem !important;
+}
+
+.btn-primary {
+    background: var(--primary-gradient) !important;
+    color: #fff !important;
+}
+.btn-primary:hover {
+    box-shadow: 0 6px 12px rgba(72, 127, 255, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+.btn-info {
+    background: var(--info-gradient) !important;
+    color: #fff !important;
+}
+.btn-info:hover {
+    box-shadow: 0 6px 12px rgba(20, 75, 214, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background: var(--success-gradient) !important;
+    color: #fff !important;
+}
+.btn-success:hover {
+    box-shadow: 0 6px 12px rgba(69, 179, 105, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: var(--danger-gradient) !important;
+    color: #fff !important;
+}
+.btn-danger:hover {
+    box-shadow: 0 6px 12px rgba(239, 74, 0, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+    background: transparent !important;
+    border: 1.5px solid #487FFF !important;
+    color: #487FFF !important;
+}
+.btn-outline-primary:hover {
+    background: #487FFF !important;
+    color: #fff !important;
+}
+
+.btn-outline-danger {
+    background: transparent !important;
+    border: 1.5px solid #EF4A00 !important;
+    color: #EF4A00 !important;
+}
+.btn-outline-danger:hover {
+    background: #EF4A00 !important;
+    color: #fff !important;
+}
+
+/* Card Improvements */
+.card {
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03) !important;
+    border-radius: 16px !important;
+}
+
+.card-header {
+    background: transparent !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    padding: 20px 24px !important;
+}
+
+/* Table Improvements */
+.table thead th {
+    background: #f8fafc !important;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    color: #64748b;
+    border-top: none !important;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    border: 1px solid #e2e8f0 !important;
+    background-color: #fcfdfe !important;
+}
+
+.form-control:focus {
+    border-color: #487FFF !important;
+    box-shadow: 0 0 0 4px rgba(72, 127, 255, 0.1) !important;
+    background-color: #fff !important;
+}
+
+/* Summernote Overrides */
+.note-editor {
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important;
+    overflow: hidden;
+}
+.note-toolbar {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
