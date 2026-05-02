@@ -555,7 +555,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     background: rgba(255, 255, 255, 0.07);
-    color: var(--gold);
+    color: var(--crimson-dark);
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 2px;
@@ -570,7 +570,7 @@ body {
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: var(--gold);
+    background: var(--crimson-dark);
 }
 
 .hero-box5 h1 {
@@ -583,7 +583,7 @@ body {
 }
 
 .hero-box5 h1 em {
-    color: var(--gold);
+    color: var(--crimson-dark);
     font-style: italic;
 }
 
@@ -745,7 +745,7 @@ body {
 .hero-stat-num-box5 {
     font-family: 'DM Serif Display', serif;
     font-size: 1.55rem;
-    color: var(--gold);
+    color: #fff;
     display: block;
     line-height: 1;
     margin-bottom: 0.3rem;
@@ -1110,7 +1110,7 @@ body {
 }
 
 .process-header-con h2 em {
-    color: var(--gold);
+    color: var(--crimson-dark);
     font-style: italic;
 }
 
@@ -1160,7 +1160,7 @@ body {
     margin: 0 auto 1.4rem;
     font-family: 'DM Serif Display', serif;
     font-size: 1.1rem;
-    color: var(--gold);
+    color: var(--crimson-dark);
     transition: var(--transition);
 }
 
@@ -3661,7 +3661,7 @@ body {
 }
 
 .cta-inner h2 em {
-    color: var(--gold);
+    color: var(--crimson-dark);
     font-style: italic;
 }
 

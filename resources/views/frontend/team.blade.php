@@ -5,20 +5,59 @@
 
 @section('content')
 
-  <!-- 1. TOP BANNER -->
-  <section class="team-hero-section">
-    <!-- Premium medical team stock image -->
-    <img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?auto=format&fit=crop&q=80&w=2000"
-      class="team-hero-bg" alt="Dr Yuvi and Team">
-    <div class="team-hero-overlay"></div>
-    <div class="team-hero-glow"></div>
-    <div class="team-hero-content reveal">
-      <div class="team-hero-badge">
-        <span class="badge-dot"></span> The People Behind The Care
+  <!-- TOP BANNER SLIDER (TEAM VERSION) -->
+  <section class="top-banner-slider-con">
+    <div class="top-banner-track" id="topBannerTrack">
+      <div class="top-banner-slide active">
+        <img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?auto=format&fit=crop&q=80&w=2000"
+          alt="Team Excellence">
       </div>
-      <h1>Meet the Team of <br><em>Dr. Yuvi</em></h1>
-      <p>A collective of brilliant minds and compassionate hearts, dedicated to guiding you toward your dream of
-        parenthood.</p>
+      <div class="top-banner-slide">
+        <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=2000"
+          alt="Clinical Specialists">
+      </div>
+      <div class="top-banner-slide">
+        <img src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&q=80&w=2000"
+          alt="Compassionate Care">
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="top-banner-nav">
+      <button class="top-banner-btn prev" id="topBannerPrev" aria-label="Previous">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="top-banner-btn next" id="topBannerNext" aria-label="Next">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Hero Content Overlay -->
+    <div class="team-banner-overlay">
+      <div class="team-hero-content reveal">
+        <div class="team-hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          Clinical Excellence · Expert Care
+        </div>
+        <h1>The Dedicated Team<br>Behind <em>Dr. Yuvi</em></h1>
+        <p>A collective of brilliant minds and compassionate hearts, dedicated to guiding you toward your dream of
+          parenthood.</p>
+        <div class="team-hero-actions">
+          <a href="{{ route('frontend.contact') }}" class="btn-hero-primary">
+            Join Our Journey
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -188,84 +227,114 @@
   </section>
 
   <style>
-    /* Hero Banner Premium Upgrade */
-    .team-hero-section {
+    /* Top Banner Slider Scoped Styles */
+    .top-banner-slider-con {
+      width: 100%;
+      height: 100vh;
       position: relative;
-      height: 60vh;
-      min-height: 550px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      /* Left aligned for editorial feel */
       overflow: hidden;
-      /* margin-top: 80px;  */
+      background: #000;
     }
 
-    .team-hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .top-banner-track {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+
+    .top-banner-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .top-banner-slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 30%;
-      /* Better framing of faces */
-      z-index: 1;
-      transform: scale(1.02);
-      /* Slight scale */
+      object-position: center;
     }
 
-    .team-hero-overlay {
+    .top-banner-nav {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2rem;
+      pointer-events: none;
+    }
+
+    .top-banner-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      pointer-events: auto;
+    }
+
+    .top-banner-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    /* Content Overlay */
+    .team-banner-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      /* Elegant left-to-right gradient fade */
-      background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.2) 100%);
-      z-index: 2;
-    }
-
-    .team-hero-glow {
-      position: absolute;
-      top: -20%;
-      left: -10%;
-      width: 50%;
-      height: 140%;
-      background: radial-gradient(circle, rgba(188, 43, 61, 0.2) 0%, transparent 70%);
-      z-index: 3;
-      pointer-events: none;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.7) 100%);
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     .team-hero-content {
       position: relative;
-      z-index: 4;
+      z-index: 6;
       color: #fff;
-      max-width: 700px;
+      max-width: 850px;
       padding: 0 5%;
     }
 
-    .team-hero-badge {
+    .team-hero-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(5px);
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.07);
       color: #fff;
-      padding: 0.5rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
       margin-bottom: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--gold, #d4af37);
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      background: #fff;
       border-radius: 50%;
     }
 
@@ -280,14 +349,42 @@
     .team-hero-content h1 em {
       font-family: 'DM Serif Display', serif;
       font-style: italic;
-      color: var(--gold, #d4af37);
+      color: var(--crimson-dark, #b92f38);
     }
 
     .team-hero-content p {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       line-height: 1.6;
       color: rgba(255, 255, 255, 0.9);
-      max-width: 550px;
+      max-width: 650px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .team-hero-actions {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Primary Button Style from Style.css */
+    .btn-hero-primary {
+      background: var(--crimson, #db454e);
+      color: #fff;
+      padding: 1.1rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(219, 69, 78, 0.3);
+    }
+
+    .btn-hero-primary:hover {
+      background: var(--crimson-dark, #b92f38);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(219, 69, 78, 0.4);
+      color: #fff;
     }
 
     /* Category Sections */
@@ -340,13 +437,11 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      group: hover;
     }
 
     .pt-img-wrap {
       width: 100%;
       aspect-ratio: 3/4;
-      /* Classic portrait ratio */
       overflow: hidden;
       border-radius: 12px;
       background: #eaeaea;
@@ -479,12 +574,22 @@
       }
     }
 
-    @media (max-width: 600px) {
-      .team-hero-section {
-        min-height: 400px;
-        padding-top: 2rem;
+    @media (max-width: 768px) {
+      .top-banner-slider-con {
+        height: 100vh;
       }
 
+      .top-banner-nav {
+        padding: 0 1rem;
+      }
+
+      .top-banner-btn {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 600px) {
       .team-category-section {
         padding: 4rem 0;
       }
@@ -494,5 +599,58 @@
       }
     }
   </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const track = document.getElementById('topBannerTrack');
+      const slides = document.querySelectorAll('#topBannerTrack .top-banner-slide');
+      const prevBtn = document.getElementById('topBannerPrev');
+      const nextBtn = document.getElementById('topBannerNext');
+      if (!track || slides.length < 2) return;
+
+      let currentIdx = 0;
+      let slideInterval;
+
+      function showSlide(index) {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        currentIdx = index;
+      }
+
+      function nextSlide() {
+        let nextIdx = (currentIdx + 1) % slides.length;
+        showSlide(nextIdx);
+      }
+
+      function prevSlide() {
+        let prevIdx = (currentIdx - 1 + slides.length) % slides.length;
+        showSlide(prevIdx);
+      }
+
+      function startAutoSlide() {
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+
+      function resetAutoSlide() {
+        clearInterval(slideInterval);
+        startAutoSlide();
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          nextSlide();
+          resetAutoSlide();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          prevSlide();
+          resetAutoSlide();
+        });
+      }
+
+      startAutoSlide();
+    });
+  </script>
 
 @endsection

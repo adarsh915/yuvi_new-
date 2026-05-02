@@ -12,12 +12,11 @@
       class="media-hero-bg" alt="Media and Events">
     <div class="media-hero-overlay"></div>
     <div class="media-hero-content reveal">
-      <div class="media-hero-badge">
-        <span class="badge-dot"></span> In The Spotlight
+      <div class="media-hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span> In The Spotlight
       </div>
       <h1>Media & <br><em>Events</em></h1>
-      <p>Dive into our world of expert podcasts and heartwarming community events. Discover the stories beyond the clinic
-        walls.</p>
+      <p>Dive into our world of expert podcasts and heartwarming community events. <br>Discover the stories beyond the clinic walls.</p>
     </div>
   </section>
 
@@ -127,17 +126,101 @@
     </div>
   </section>
 
+  <!-- 5. MEDIA HIGHLIGHTS (GALLERY) -->
+  <section class="media-section" style="padding-top: 0;">
+    <div class="section-wrap">
+      <div class="media-header reveal">
+        <h2>Media <em>Highlights</em></h2>
+        <p>A visual collection of clinical recognitions, press releases, and news appearances.</p>
+      </div>
+
+      <div class="highlights-gallery reveal delay-1">
+        <!-- Item 1: Image -->
+        <div class="h-gallery-item">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=800" alt="News Feature">
+          <div class="h-gallery-overlay">
+            <span>Press Clipping: Health Times</span>
+          </div>
+        </div>
+
+        <!-- Item 2: Video -->
+        <div class="h-gallery-item">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0&modestbranding=1&rel=0" allowfullscreen></iframe>
+        </div>
+
+        <!-- Item 3: Image -->
+        <div class="h-gallery-item">
+          <img src="https://images.unsplash.com/photo-1585829365294-4cc046252058?auto=format&fit=crop&q=80&w=800" alt="Press Release">
+          <div class="h-gallery-overlay">
+            <span>Global Medical Journal Feature</span>
+          </div>
+        </div>
+
+        <!-- Item 4: Image -->
+        <div class="h-gallery-item">
+          <img src="https://images.unsplash.com/photo-1557425955-df376b5903c8?auto=format&fit=crop&q=80&w=800" alt="Clinic News">
+          <div class="h-gallery-overlay">
+            <span>National Health Network</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* Gallery Styles */
+    .highlights-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .h-gallery-item {
+      position: relative;
+      background: #eee;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .h-gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .h-gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    .h-gallery-item iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .h-gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      pointer-events: none;
+    }
+  </style>
+
   <style>
     /* Hero Banner */
     .media-hero-section {
       position: relative;
-      height: 60vh;
-      min-height: 550px;
+      height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
+      text-align: center;
       overflow: hidden;
-      /* margin-top: 80px;  */
     }
 
     .media-hero-bg {
@@ -158,7 +241,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, rgba(17, 17, 17, 0.9) 0%, rgba(17, 17, 17, 0.6) 50%, rgba(17, 17, 17, 0.1) 100%);
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.75) 100%);
       z-index: 2;
     }
 
@@ -166,31 +249,31 @@
       position: relative;
       z-index: 4;
       color: #fff;
-      max-width: 750px;
+      max-width: 850px;
       padding: 0 5%;
     }
 
-    .media-hero-badge {
+    .media-hero-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(255, 255, 255, 0.1);
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(8px);
       color: #fff;
-      padding: 0.5rem 1.2rem;
+      padding: 0.4rem 1.2rem;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--gold, #d4af37);
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      background: #fff;
       border-radius: 50%;
     }
 
@@ -205,14 +288,15 @@
     .media-hero-content h1 em {
       font-family: 'DM Serif Display', serif;
       font-style: italic;
-      color: var(--gold, #d4af37);
+      color: var(--crimson-dark, #bc2b3d);
     }
 
     .media-hero-content p {
       font-size: 1.25rem;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.85);
-      max-width: 600px;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 650px;
+      margin: 0 auto;
     }
 
     /* Common Section Styles */
