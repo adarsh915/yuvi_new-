@@ -37,7 +37,7 @@
         </a>
         <a href="{{ route('frontend.services') }}"
             class="drawer-link {{ request()->routeIs('frontend.services', 'frontend.serviceDetail') ? 'active' : '' }}">
-            Services
+            Treatment & Care
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -51,6 +51,7 @@
                 <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
         </a>
+        {{-- 
         <a href="{{ route('frontend.blog') }}"
             class="drawer-link {{ request()->routeIs('frontend.blog', 'frontend.blogDetails') ? 'active' : '' }}">
             Health Blog
@@ -59,9 +60,26 @@
                 <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
         </a>
+        --}}
         <a href="{{ route('frontend.successStories') }}"
             class="drawer-link {{ request()->routeIs('frontend.successStories') ? 'active' : '' }}">
             Success Stories
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+        </a>
+        <a href="{{ route('frontend.team') }}"
+            class="drawer-link {{ request()->routeIs('frontend.team') ? 'active' : '' }}">
+            Meet Our Team
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+        </a>
+        <a href="{{ route('frontend.media') }}"
+            class="drawer-link {{ request()->routeIs('frontend.media') ? 'active' : '' }}">
+            Media
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -165,19 +183,25 @@
         <!-- Desktop center links -->
         <ul class="nav-center">
             <li><a href="{{ route('frontend.index') }}"
-                    class="{{ request()->routeIs('frontend.index') ? 'active' : '' }}">Home</a></li>
+                    class="{{ request()->requestUri === '/' ? 'active' : '' }}">Home</a></li>
             <li><a href="{{ route('frontend.about') }}"
                     class="{{ request()->routeIs('frontend.about') ? 'active' : '' }}">About</a></li>
             <li><a href="{{ route('frontend.services') }}"
-                    class="{{ request()->routeIs('frontend.services', 'frontend.serviceDetail') ? 'active' : '' }}">Services</a>
+                    class="{{ request()->routeIs('frontend.services', 'frontend.serviceDetail') ? 'active' : '' }}">Treatment & Care</a>
             </li>
             <li><a href="{{ route('frontend.gallery') }}"
                     class="{{ request()->routeIs('frontend.gallery') ? 'active' : '' }}">Gallery</a></li>
+            {{-- 
             <li><a href="{{ route('frontend.blog') }}"
                     class="{{ request()->routeIs('frontend.blog', 'frontend.blogDetails') ? 'active' : '' }}">Blog</a>
             </li>
+            --}}
             <li><a href="{{ route('frontend.successStories') }}"
                     class="{{ request()->routeIs('frontend.successStories') ? 'active' : '' }}">Stories</a></li>
+            <li><a href="{{ route('frontend.team') }}"
+                    class="{{ request()->routeIs('frontend.team') ? 'active' : '' }}">Team</a></li>
+            <li><a href="{{ route('frontend.media') }}"
+                    class="{{ request()->routeIs('frontend.media') ? 'active' : '' }}">Media</a></li>
             <li><a href="{{ route('frontend.contact') }}"
                     class="{{ request()->routeIs('frontend.contact') ? 'active' : '' }}">Contact</a></li>
         </ul>

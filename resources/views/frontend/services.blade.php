@@ -6,35 +6,76 @@
 
 <!-- HERO -->
 @section('content')
-  <section class="hero_box reveal">
-    <div class="hero-inner-box2">
-      <div>
-        <div class="hero-eyebrow-box2">Clinical Excellence</div>
+  <!-- TOP BANNER WITH LAB IMAGE -->
+  <section class="services-hero-banner reveal">
+    <div class="services-hero-overlay"></div>
+    <div class="custom-banner-inner">
+      <div class="custom-banner-text">
+        <div class="custom-banner-eyebrow">Clinical Excellence</div>
         <h1>Specialized <br><em>Fertility Pathways.</em></h1>
-        <p>Every journey is unique. Our services are built on advanced embryology, surgical precision, and ethical
-          transparency — tailored entirely around you.</p>
+        <p>Every journey is unique. Our services are built on advanced embryology, surgical precision, and ethical transparency — tailored entirely around you.</p>
       </div>
-      <div class="hero-stats-box2">
-        <div class="hero-stat-box2">
-          <span class="hero-stat-num-box2">6</span>
-          <span class="hero-stat-label-box2">Specializations</span>
+      <div class="custom-banner-stats">
+        <div class="custom-stat">
+          <span class="custom-stat-num">10,000+</span>
+          <span class="custom-stat-label">Patients Treated</span>
         </div>
-        <div class="hero-stat-box2">
-          <span class="hero-stat-num-box2">98%</span>
-          <span class="hero-stat-label-box2">Satisfaction</span>
+        <div class="custom-stat">
+          <span class="custom-stat-num">95%</span>
+          <span class="custom-stat-label">Success Rate</span>
         </div>
-        <div class="hero-stat-box2">
-          <span class="hero-stat-num-box2">15+</span>
-          <span class="hero-stat-label-box2">Years Experience</span>
+        <div class="custom-stat">
+          <span class="custom-stat-num">20+</span>
+          <span class="custom-stat-label">Years Experience</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
+  <!-- PROCESS SECTION (HOW YOUR JOURNEY UNFOLDS) -->
+  <section class="process-section-wide">
+    <div class="process-wide-inner">
+      <div class="custom-process-header reveal">
+        <h2>How your <em>journey</em><br>unfolds with us.</h2>
+        <p>A clear, step-by-step process so you always know what to expect — no surprises, no pressure. We believe in taking the time to explain every detail, giving you all the information you need to feel completely comfortable and confident moving forward.</p>
+      </div>
+      <div class="process-steps-wide reveal delay-1">
+        <div class="step-wide">
+          <div class="step-num-wide">01</div>
+          <div class="step-content-wide">
+            <h3 class="step-title-wide">Consultation</h3>
+            <p class="step-desc-wide">Your journey begins with a comprehensive, pressure-free discussion. We take the time to deeply understand your medical history, personal goals, and emotional needs. This is a safe space for you to express all your concerns and ask as many questions as you need without ever feeling rushed.</p>
+          </div>
+        </div>
+        <div class="step-wide">
+          <div class="step-num-wide">02</div>
+          <div class="step-content-wide">
+            <h3 class="step-title-wide">Diagnosis</h3>
+            <p class="step-desc-wide">We conduct thorough, state-of-the-art investigations including hormonal, ultrasound, and genetic profiling. We practice strictly ethical medicine — which means we only recommend tests that are absolutely necessary for your specific case, completely avoiding any redundant or unnecessary procedures.</p>
+          </div>
+        </div>
+        <div class="step-wide">
+          <div class="step-num-wide">03</div>
+          <div class="step-content-wide">
+            <h3 class="step-title-wide">Treatment</h3>
+            <p class="step-desc-wide">Based on your diagnosis, we design a highly tailored treatment protocol specifically around your age and family goals. We discuss the scientific rationale behind each clinical step, transparently outline the success probabilities, and meticulously guide you through the actual treatment phase with the utmost precision and care.</p>
+          </div>
+        </div>
+        <div class="step-wide">
+          <div class="step-num-wide">04</div>
+          <div class="step-content-wide">
+            <h3 class="step-title-wide">Recovery</h3>
+            <p class="step-desc-wide">Our care doesn't end when the procedure does. We provide continuous monitoring, dedicated medical follow-ups, and emotional support during your recovery period. Our clinical team and coordinators remain accessible to you 24/7, ensuring you have guidance and reassurance at every moment until your goal is fully achieved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES LIST -->
   <section class="services-section">
     <div class="section-header reveal">
-      <h2>Every pathway,<br>designed with care.</h2>
+      <h2>All the treatment options<br><em>Dr Yuvi</em> offers.</h2>
       <p>From first consultation to new beginnings, our specialized teams guide you through every step with honesty and
         expertise.</p>
     </div>
@@ -78,42 +119,6 @@
       </div>
       @endforelse
 
-    </div>
-  </section>
-
-  <!-- PROCESS SECTION -->
-  <section class="process-section">
-    <div class="process-inner">
-      <div class="process-header reveal">
-        <h2>How your <em>journey</em><br>unfolds with us.</h2>
-        <p>A clear, step-by-step process so you always know what to expect — no surprises, no pressure.</p>
-      </div>
-      <div class="process-steps reveal">
-        <div class="step">
-          <div class="step-num">01</div>
-          <p class="step-title">Initial Consultation</p>
-          <p class="step-desc">Meet Dr. Yuvi for a comprehensive first discussion about your history, goals, and the
-            best path forward.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">02</div>
-          <p class="step-title">Diagnostic Workup</p>
-          <p class="step-desc">Thorough investigations for both partners including hormonal, ultrasound, and genetic
-            profiling as needed.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">03</div>
-          <p class="step-title">Personalised Protocol</p>
-          <p class="step-desc">A tailored treatment plan designed specifically around your diagnosis, age, and family
-            goals.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">04</div>
-          <p class="step-title">Ongoing Support</p>
-          <p class="step-desc">Continuous monitoring and emotional support at every cycle, every step, until your goal
-            is achieved.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -201,6 +206,219 @@
     </div>
   </section>
 
-
   <a href="{{ route('frontend.quiz') }}" class="mobile-floating-cta">Get Started &rarr;</a>
+
+  <!-- UNIQUE SCOPED CSS FOR SERVICES PAGE -->
+  <style>
+    /* Hero Banner with Lab Image */
+    .services-hero-banner {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2000&auto=format&fit=crop') center center / cover no-repeat;
+      padding: 140px 0 100px;
+      color: #fff;
+      overflow: hidden;
+    }
+    .services-hero-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(12, 17, 33, 0.95) 0%, rgba(12, 17, 33, 0.7) 100%);
+      z-index: 1;
+    }
+    .custom-banner-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+    .custom-banner-text {
+      max-width: 800px;
+    }
+    .custom-banner-eyebrow {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .custom-banner-text h1 {
+      font-family: 'DM Serif Display', serif;
+      color: #fff;
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+    .custom-banner-text p {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+    .custom-banner-stats {
+      display: flex;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+    .custom-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .custom-stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.5rem;
+      color: var(--gold, #d4af37);
+      line-height: 1;
+    }
+    .custom-stat-label {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Process Section - Horizontal Journey */
+    .process-section-wide {
+      padding: 6rem 2rem;
+      background: var(--bg-light, #fcfcfc);
+    }
+    .process-wide-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .custom-process-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .custom-process-header h2 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+      color: #111; /* Explicit dark color */
+      line-height: 1.2;
+    }
+    .custom-process-header h2 em {
+      color: var(--gold, #d4af37);
+      font-style: italic;
+    }
+    .custom-process-header p {
+      font-size: 1.15rem;
+      color: #555; /* Explicit dark color */
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .process-steps-wide {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+    /* Horizontal connecting line */
+    .process-steps-wide::before {
+      content: '';
+      position: absolute;
+      top: 30px; /* Center of the 60px number circles */
+      left: 30px;
+      right: 30px;
+      height: 2px;
+      background: rgba(188, 43, 61, 0.2); /* crimson light */
+      z-index: 1;
+    }
+    .step-wide {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center; /* Center the number over the card */
+      position: relative;
+      z-index: 2;
+    }
+    .step-num-wide {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--crimson);
+      background: #fff;
+      min-width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 2px solid var(--crimson);
+      box-shadow: 0 4px 10px rgba(188, 43, 61, 0.1);
+      z-index: 3;
+    }
+    .step-content-wide {
+      background: #fff;
+      padding: 2.5rem 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      border-top: 4px solid var(--crimson);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .step-content-wide:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    .step-title-wide {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+    .step-desc-wide {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .process-steps-wide {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 2rem;
+      }
+      .process-steps-wide::before {
+        display: none; /* Hide horizontal line when wrapping into rows */
+      }
+    }
+    @media (max-width: 768px) {
+      .services-hero-banner {
+        padding: 100px 0 80px;
+      }
+      .custom-banner-stats {
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+      .custom-stat-num {
+        font-size: 2.5rem;
+      }
+      .process-steps-wide {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .step-wide {
+        flex-direction: column;
+        align-items: center;
+      }
+      .step-num-wide {
+        font-size: 2rem;
+        min-width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
 @endsection

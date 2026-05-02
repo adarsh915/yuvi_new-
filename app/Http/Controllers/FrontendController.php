@@ -108,7 +108,9 @@ class FrontendController extends Controller
     public function faq()
     {
         $faqs = \App\Models\Faq::where('is_active', true)->orderBy('order')->get();
-        return view('frontend.faq', compact('faqs'));
+        // Since category is nullable, we filter out nulls/empties. We also use values() to reset keys after filtering.
+        $categories = $faqs->pluck('category')->filter()->unique()->values();
+        return view('frontend.faq', compact('faqs', 'categories'));
     }
 
     public function gallery()
@@ -182,5 +184,15 @@ class FrontendController extends Controller
     {
         $stories = \App\Models\SuccessStory::where('is_active', true)->orderBy('order')->get();
         return view('frontend.success-stories', compact('stories'));
+    }
+
+    public function team()
+    {
+        return view('frontend.team');
+    }
+
+    public function media()
+    {
+        return view('frontend.media');
     }
 }

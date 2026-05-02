@@ -7,20 +7,16 @@
 }
 
 :root {
-    /* ===================================
-       UPDATED VERSION
-       Better Cream Background for Clinic UX
-       Soft clean + premium + eye comfort
-    =================================== */
 
-    /* BACKGROUNDS */
+
+
     --cream: #faf8f6;
-    /* Better main page background */
+
 
     --warm-white: #ffffff;
-    /* Cards / sections */
 
-    /* PRIMARY RED THEME */
+
+
     --crimson: #db454e;
 
     --crimson-dark: #b92f38;
@@ -29,33 +25,25 @@
 
     --crimson-mid: #f0b4b8;
 
-    /* SECONDARY DARK */
-    --blue: #1f1006;
 
-    --blue-dark: #120802;
 
-    --blue-light: #f7f3ef;
+    --blue: #121212;
+    --blue-dark: #000000;
+    --blue-light: #f8f8f8;
+    --blue-mid: #4a4a4a;
 
-    --blue-mid: #7d6a5d;
+    --midnight: #121212;
+    --slate: #555555;
+    --muted: #888888;
 
-    /* GOLD */
+
     --gold: #f9a215;
-
     --gold-light: #fff7e8;
 
-    /* TEXT */
-    --midnight: #1f1006;
 
-    --slate: #4d4038;
-
-    --muted: #8f8074;
-
-    /* UI */
-    --card-border: rgba(31, 16, 6, 0.08);
-
-    --shadow-soft: 0 8px 24px rgba(31, 16, 6, 0.05);
-
-    --shadow-hover: 0 18px 42px rgba(31, 16, 6, 0.12);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 18px 42px rgba(0, 0, 0, 0.12);
 
     --radius: 16px;
     --radius-sm: 10px;
@@ -1422,7 +1410,7 @@ body {
 
 .faq-item.open {
     border-color: var(--crimson);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .faq-question {
@@ -1441,6 +1429,8 @@ body {
     color: var(--midnight);
     transition: color 0.2s;
 }
+
+.faq-question p {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1449,6 +1439,7 @@ body {
     font-size: 1rem;
     color: var(--midnight);
     transition: color 0.2s;
+
 }
 
 .faq-question:hover {
@@ -9212,3 +9203,64 @@ select {
 }
 
 /*  */
+
+/* --- Dr. Yuvi Info Section (Unique Classes) --- */
+.dr-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.dr-info-card {
+    background: var(--warm-white);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 1.8rem;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dr-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.dr-info-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--blue);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+
+.dr-info-card h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.8rem;
+}
+
+.dr-info-card p {
+    font-size: 0.88rem;
+    color: var(--slate);
+    line-height: 1.7;
+    font-weight: 400;
+    margin: 0 !important;
+}
+
+@media (max-width: 991px) {
+    .dr-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .dr-info-grid {
+        grid-template-columns: 1fr;
+    }
+}

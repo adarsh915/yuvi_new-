@@ -17,15 +17,15 @@
       <div class="image-stats">
         <div class="image-stat">
           <span class="image-stat-num">15+</span>
-          <span class="image-stat-label">Years Practice</span>
+          <span class="image-stat-label">Years Experience</span>
         </div>
         <div class="image-stat">
-          <span class="image-stat-num">5000+</span>
-          <span class="image-stat-label">IVF Cycles</span>
+          <span class="image-stat-num">7500+</span>
+          <span class="image-stat-label">Babies Born</span>
         </div>
         <div class="image-stat">
-          <span class="image-stat-num">98%</span>
-          <span class="image-stat-label">Satisfaction</span>
+          <span class="image-stat-num">1 Lakh+</span>
+          <span class="image-stat-label">Patients Treated</span>
         </div>
       </div>
     </div>
@@ -45,16 +45,87 @@
           responsibility. With advanced training in reproductive medicine and assisted reproductive technologies, patients
           receive personalized care rooted in science and compassion.
         </p>
+        <!-- Professional Achievements -->
+        <div class="reveal delay-1" style="margin-top: 3rem; margin-bottom: 4.5rem;">
+          <div class="section-label">Milestones & Achievements</div>
+          <div class="achievements-grid">
+            
+            <div class="achievement-card">
+              <div class="ach-icon ach-red">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <h3>1 Lakh+</h3>
+              <p>Patients treated globally for various Gynaecology and Fertility conditions.</p>
+            </div>
 
+            <div class="achievement-card">
+              <div class="ach-icon ach-gold">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <h3>7500+</h3>
+              <p>Babies born through dedicated care and ethical reproductive protocols.</p>
+            </div>
 
-        <!-- <div class="specialties">
-            <span class="specialty-chip">Recurrent Implantation Failure</span>
-            <span class="specialty-chip">Thin Endometrium</span>
-            <span class="specialty-chip">Male Infertility</span>
-            <span class="specialty-chip">Poor Ovarian Reserve</span>
-            <span class="specialty-chip">Natural Cycle IVF</span>
-            <span class="specialty-chip">Minimal Stimulation</span>
-          </div> -->
+            <div class="achievement-card">
+              <div class="ach-icon ach-blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <h3>15+ Years</h3>
+              <p>Of rich clinical experience in high-risk pregnancy and advanced IVF.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <style>
+          .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+          }
+          .achievement-card {
+            background: var(--warm-white);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+          }
+          .achievement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+          }
+          .ach-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+          }
+          .ach-red { background: var(--crimson-light); color: var(--crimson); }
+          .ach-gold { background: var(--gold-light); color: var(--gold); }
+          .ach-blue { background: var(--blue-light); color: var(--blue); }
+          
+          .achievement-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.85rem;
+            color: var(--midnight);
+            margin-bottom: 0.6rem;
+          }
+          .achievement-card p {
+            font-size: 0.92rem;
+            color: var(--slate);
+            margin: 0;
+            line-height: 1.5;
+          }
+          @media (max-width: 900px) {
+            .achievements-grid { grid-template-columns: 1fr; }
+          }
+        </style>
 
         <div class="intro-chips reveal">
           <span class="intro-chip">15+ Years Experience</span>

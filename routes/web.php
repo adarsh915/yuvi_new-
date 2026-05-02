@@ -30,6 +30,8 @@ Route::name('frontend.')->group(function () {
         Route::get('/service-detail/{slug}', 'serviceDetail')->name('serviceDetail');
         Route::get('/services', 'services')->name('services');
         Route::get('/success-stories', 'successStories')->name('successStories');
+        Route::get('/team', 'team')->name('team');
+        Route::get('/media', 'media')->name('media');
     });
 });
 
