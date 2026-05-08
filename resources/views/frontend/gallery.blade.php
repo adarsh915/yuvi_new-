@@ -6,7 +6,7 @@
 
 @section('content')
   <!-- GALLERY PAGE -->
-  <header class="gallery-hero-sg">
+  <header class="gallery-hero-sg reveal">
     <div class="gallery-hero-sg-inner">
       <h1>Our <em style="color:var(--gold);font-style:italic;">Gallery</em></h1>
       <p>A glimpse into our state-of-the-art facilities, patient journeys, and advanced medical care.</p>

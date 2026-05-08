@@ -7,7 +7,7 @@
 
 @section('content')
   <!-- QUIZ SECTION -->
-  <section class="quiz-section" aria-label="Interactive Assessment">
+  <section class="quiz-section reveal" aria-label="Interactive Assessment">
     <div class="quiz-container reveal">
 
       <div class="quiz-progress">
@@ -74,7 +74,7 @@
           </div>
           <div class="form-group">
             <label for="leadEmail">Email Address (Optional)</label>
-            <input type="email" id="leadEmail" class="form-input" placeholder="jane@example.com">
+            <input type="email" id="leadEmail" class="form-input" placeholder="doctoryuvi@nimaaya.com">
           </div>
           <div class="form-group">
             <label for="leadCity">City (Optional)</label>

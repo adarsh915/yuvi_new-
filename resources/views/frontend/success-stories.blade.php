@@ -18,18 +18,20 @@
   </section>
 
   <!-- PAGE BODY -->
-  <div class="page-body">
+  <div class="page-body reveal">
+    @php
+      $categories = $stories->pluck('treatment_type')->unique();
+    @endphp
+    {{-- Sidebar moved to right --}}
+
     <!-- LEFT FILTER SIDEBAR -->
     <aside class="filter-sidebar">
       <span class="fs-title">Filter Journeys</span>
       <div class="fs-filters">
-        <button class="filter-btn active" data-filter="all"><span class="dot"></span>All Journeys<span
+        <button class="filter-btn story-filter-btn active" data-filter="all"><span class="dot"></span>All Journeys<span
             class="filter-count">{{ $stories->count() }}</span></button>
-        @php
-          $categories = $stories->pluck('treatment_type')->unique();
-        @endphp
         @foreach($categories as $cat)
-          <button class="filter-btn" data-filter="{{ strtolower(str_replace(' ', '-', $cat)) }}">
+          <button class="filter-btn story-filter-btn" data-filter="{{ strtolower(str_replace(' ', '-', $cat)) }}">
             <span class="dot"></span>{{ $cat }}
             <span class="filter-count">{{ $stories->where('treatment_type', $cat)->count() }}</span>
           </button>
@@ -38,27 +40,27 @@
       <hr class="fs-divider">
       <div class="fs-note"><strong>Privacy First.</strong><br>All stories are shared with full informed consent. Names may
         be changed to protect privacy.</div>
+      
+      <div class="sidebar-cta" style="margin-top: 2rem; background: var(--crimson-light); padding: 1.5rem; border-radius: 12px;">
+        <h4 style="font-size: 1rem; color: var(--crimson); margin-bottom: 0.5rem;">Start Your Story</h4>
+        <p style="font-size: 0.85rem; color: var(--blue-mid); line-height: 1.4; margin-bottom: 1rem;">Let us help you achieve your dream of parenthood.</p>
+        <a href="{{ route('frontend.quiz') }}" style="display: inline-block; color: var(--crimson); font-weight: 600; text-decoration: none; font-size: 0.9rem;">Take Fertility Quiz &rarr;</a>
+      </div>
     </aside>
 
     <!-- RIGHT CONTENT AREA -->
     <div class="story-content-main">
       <!-- Mobile filter toggle -->
-      <div class="mobile-filter-panel" id="mobileFilterPanel">
-        <button class="filter-btn active" data-filter="all"><span class="dot"></span>All</button>
-        @foreach($categories as $cat)
-          <button class="filter-btn" data-filter="{{ strtolower(str_replace(' ', '-', $cat)) }}"><span
-              class="dot"></span>{{ $cat }}</button>
-        @endforeach
-      </div>
+      {{-- Mobile filter panel removed to use same vertical list as desktop --}}
 
       <div class="grid-header reveal">
-        <h2>Patient Stories</h2>
-        <span id="visibleCount">Showing {{ $stories->count() }} stories</span>
+        <h2>Patient Success Stories</h2>
+        <span id="storyVisibleCount">Showing {{ $stories->count() }} stories</span>
       </div>
 
       <div class="story-page-grid" id="storyPageGrid">
         @foreach($stories as $story)
-          <article class="story-page-card reveal"
+          <div class="story-page-card reveal"
             data-category="{{ strtolower(str_replace(' ', '-', $story->treatment_type)) }}">
             <div class="story-page-video-wrap">
               @if(Str::endsWith($story->video_url, ['.mp4', '.webm', '.ogg']))
@@ -85,16 +87,15 @@
                 <span class="story-page-treatment-tag">{{ $story->treatment_type }}</span>
               </div>
             </div>
-          </article>
+          </div>
         @endforeach
 
-        <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-state" id="storyEmptyState" style="display:none;">
           <h3>No stories found</h3>
           <p>Try selecting a different category.</p>
         </div>
       </div>
     </div>
-  </div>
 
   <style>
     .page-body {
@@ -167,12 +168,29 @@
       margin-top: 4px;
     }
 
+
+
     @media (max-width: 1100px) {
       .page-body {
         grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+        gap: 2rem;
+      }
+      
+      /* Hide privacy note and CTA on mobile */
+      .fs-divider, 
+      .fs-note, 
+      .filter-sidebar .sidebar-cta {
+        display: none !important;
       }
 
       .filter-sidebar {
+        display: block;
+        position: static;
+        margin-bottom: 2rem;
+      }
+
+      .mobile-filter-panel {
         display: none;
       }
 
@@ -184,6 +202,9 @@
     @media (max-width: 600px) {
       .story-page-grid {
         grid-template-columns: 1fr;
+      }
+      .grid-header h2 {
+        font-size: 1.8rem;
       }
     }
   </style>
@@ -203,4 +224,58 @@
     </section> -->
 
   <a href="{{ route('frontend.quiz') }}" class="mobile-floating-cta">Get Started &rarr;</a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const storyFilterBtns = document.querySelectorAll('.story-filter-btn');
+      const storyCards = document.querySelectorAll('.story-page-card');
+      const storyVisibleCountText = document.getElementById('storyVisibleCount');
+      const storyEmptyState = document.getElementById('storyEmptyState');
+
+      function filterStories(category) {
+        console.log('Filtering stories by:', category);
+        let count = 0;
+        
+        storyCards.forEach(card => {
+          const cardCat = card.getAttribute('data-category');
+          // If category is 'all' or matches the card's category
+          if (category === 'all' || cardCat === category) {
+            card.style.display = 'block';
+            count++;
+            card.classList.add('reveal');
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Update the display count text
+        if (storyVisibleCountText) {
+          storyVisibleCountText.textContent = `Showing ${count} ${count === 1 ? 'story' : 'stories'}`;
+        }
+        
+        // Toggle empty state visibility
+        if (storyEmptyState) {
+          if (count === 0) {
+            storyEmptyState.style.display = 'block';
+          } else {
+            storyEmptyState.style.display = 'none';
+          }
+        }
+      }
+
+      storyFilterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          storyFilterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+          filterStories(filter);
+        });
+      });
+
+      // Initial filter on page load to sync count and visibility
+      filterStories('all');
+    });
+  </script>
 @endsection

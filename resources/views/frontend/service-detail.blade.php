@@ -35,7 +35,7 @@
   </section>
 
   <!-- MAIN -->
-  <div class="main-wrap">
+  <div class="main-wrap reveal">
 
     <!-- ── LEFT CONTENT ── -->
     <div class="content-col">
@@ -109,7 +109,7 @@
 
     <!-- SIDEBAR COMPONENT -->
 
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar reveal" id="sidebar">
 
       <!-- CTA -->
       <div class="sidebar-cta reveal">
@@ -225,7 +225,7 @@
   </div>
 
   <!-- PROCESS -->
-  <section class="process-section">
+  <section class="process-section reveal">
     <div class="process-inner">
       <div class="process-header reveal">
         <h2>How your <em>journey</em><br>unfolds with us.</h2>
@@ -261,7 +261,7 @@
   </section>
 
   <!-- CTA -->
-  <section class="cta-section">
+  <section class="cta-section reveal">
     <div class="cta-inner reveal">
       <div class="cta-eyebrow">Still Unsure?</div>
       <h2>Let's find the right <em>pathway</em> for you.</h2>

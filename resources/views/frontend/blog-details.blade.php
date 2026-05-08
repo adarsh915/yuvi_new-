@@ -5,7 +5,7 @@
 @section('meta_keywords', 'home, laravel, website')
 
 @section('content')
-  <section class="article-hero">
+  <section class="article-hero reveal">
     <div class="article-inner">
       <div class="breadcrumb">
         <a href="{{ route('frontend.index') }}">Home</a> / <a href="{{ route('frontend.blog') }}">Blog</a> /
@@ -29,7 +29,7 @@
   <!-- MAIN CONTENT -->
   <main class="bd-layout">
 
-    <article class="bd-article">
+    <article class="bd-article reveal">
 
       @if($blog->image)
         <img src="{{ asset('storage/' . $blog->image) }}"
@@ -59,7 +59,7 @@
       </div>
 
       <!-- Categories -->
-      <div class="bd-sidebar__card">
+      <div class="bd-sidebar__card reveal">
         <h4 class="bd-sidebar__card-title">Article Topics</h4>
         <div class="bd-sidebar__tags">
           <span class="bd-sidebar__cat-tag bd-sidebar__cat-tag--primary">Fertility</span>
@@ -68,7 +68,7 @@
       </div>
 
       <!-- Related Articles -->
-      <div class="bd-sidebar__card">
+      <div class="bd-sidebar__card reveal">
         <h4 class="bd-sidebar__card-title">Related Articles</h4>
         <ul class="bd-related-list">
           @foreach($relatedBlogs as $related)
@@ -92,14 +92,14 @@
       </div>
 
       <!-- Newsletter -->
-      <div class="bd-sidebar__card bd-sidebar__card--newsletter">
+      <div class="bd-sidebar__card bd-sidebar__card--newsletter reveal">
         <h4 class="bd-sidebar__card-title">Health Blog</h4>
         <p class="bd-sidebar__card-text">Receive the latest health tips and clinical updates directly in your inbox.</p>
         <button class="bd-subscribe-btn">Subscribe to Blog</button>
       </div>
 
       <!-- Consult CTA -->
-      <div class="bd-sidebar__card bd-sidebar__card--consult">
+      <div class="bd-sidebar__card bd-sidebar__card--consult reveal">
         <h4 class="bd-sidebar__card-title bd-sidebar__card-title--blue">Need Clarity?</h4>
         <p class="bd-sidebar__card-text">Schedule a personalized consultation with Dr. Yuvi to discuss your specific
           journey.</p>
@@ -107,7 +107,7 @@
       </div>
 
       <!-- Quick Contact -->
-      <div class="bd-quick-contact">
+      <div class="bd-quick-contact reveal">
         <p class="bd-quick-contact__label">Quick Support</p>
         <div class="bd-quick-contact__item">
           <div class="bd-quick-contact__icon">

@@ -11,10 +11,10 @@ class FrontendController extends Controller
     public function index()
     {
         $faqs = \App\Models\Faq::where('is_active', true)->orderBy('order')->get();
-        $stories = \App\Models\SuccessStory::where('is_active', true)->orderBy('order')->get();
+        $stories = \App\Models\SuccessStory::where('is_active', true)->orderBy('order')->take(4)->get();
         $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
         $services = \App\Models\Service::where('is_active', true)->orderBy('order')->get();
-        $blogs = \App\Models\Blog::where('is_active', true)->orderBy('created_at', 'desc')->take(3)->get();
+        $blogs = \App\Models\Blog::where('is_active', true)->orderBy('created_at', 'desc')->take(4)->get();
 
         return view('frontend.index', compact('faqs', 'stories', 'settings', 'services', 'blogs'));
     }

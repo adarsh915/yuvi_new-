@@ -11,7 +11,7 @@
     <!-- IMAGE PANEL -->
     <div class="image-panel">
       <img
-        src="https://nimaaya.com/wp-content/uploads/2023/07/MinistryOfMemories_NimaayaBarodainauguration_20220130-78_websize-1-683x1024.jpg"
+        src="{{ asset('storage/about/MinistryOfMemories_NimaayaBarodainauguration_20220130-78_websize-1-683x1024.webp') }}"
         alt="Dr. Yuvraj Jadeja">
       <div class="image-panel-overlay"></div>
       <div class="image-stats">
@@ -49,10 +49,16 @@
         <div class="reveal delay-1" style="margin-top: 3rem; margin-bottom: 4.5rem;">
           <div class="section-label">Milestones & Achievements</div>
           <div class="achievements-grid">
-            
+
             <div class="achievement-card">
               <div class="ach-icon ach-red">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
               </div>
               <h3>1 Lakh+</h3>
               <p>Patients treated globally for various Gynaecology and Fertility conditions.</p>
@@ -60,7 +66,11 @@
 
             <div class="achievement-card">
               <div class="ach-icon ach-gold">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
               </div>
               <h3>7500+</h3>
               <p>Babies born through dedicated care and ethical reproductive protocols.</p>
@@ -68,7 +78,11 @@
 
             <div class="achievement-card">
               <div class="ach-icon ach-blue">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
               </div>
               <h3>15+ Years</h3>
               <p>Of rich clinical experience in high-risk pregnancy and advanced IVF.</p>
@@ -84,6 +98,7 @@
             gap: 1.5rem;
             margin-top: 1.5rem;
           }
+
           .achievement-card {
             background: var(--warm-white);
             border: 1px solid var(--card-border);
@@ -93,10 +108,12 @@
             box-shadow: var(--shadow-soft);
             transition: var(--transition);
           }
+
           .achievement-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
           }
+
           .ach-icon {
             width: 52px;
             height: 52px;
@@ -106,24 +123,119 @@
             justify-content: center;
             margin: 0 auto 1.2rem;
           }
-          .ach-red { background: var(--crimson-light); color: var(--crimson); }
-          .ach-gold { background: var(--gold-light); color: var(--gold); }
-          .ach-blue { background: var(--blue-light); color: var(--blue); }
-          
+
+          .ach-red {
+            background: var(--crimson-light);
+            color: var(--crimson);
+          }
+
+          .ach-gold {
+            background: var(--gold-light);
+            color: var(--gold);
+          }
+
+          .ach-blue {
+            background: var(--blue-light);
+            color: var(--blue);
+          }
+
           .achievement-card h3 {
             font-family: 'DM Serif Display', serif;
             font-size: 1.85rem;
             color: var(--midnight);
             margin-bottom: 0.6rem;
           }
+
           .achievement-card p {
             font-size: 0.92rem;
             color: var(--slate);
             margin: 0;
             line-height: 1.5;
           }
+
           @media (max-width: 900px) {
-            .achievements-grid { grid-template-columns: 1fr; }
+            .achievements-grid {
+              grid-template-columns: 1fr;
+            }
+          }
+
+          /* Qualifications Styles */
+          .qual-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+          }
+
+          .qual-item {
+            padding: 1.5rem 2rem;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+          }
+
+          .qual-item:hover {
+            border-color: var(--crimson-light);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            transform: translateX(10px);
+          }
+
+          .qual-marker {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--crimson);
+            opacity: 0.3;
+            min-width: 40px;
+          }
+
+          .qual-content {
+            flex-grow: 1;
+          }
+
+          .qual-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+          }
+
+          .qual-degree {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: var(--midnight);
+            margin: 0;
+          }
+
+          .qual-badge {
+            background: var(--crimson-light);
+            color: var(--crimson);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          }
+
+          .qual-detail {
+            font-size: 0.95rem;
+            color: var(--slate);
+            line-height: 1.6;
+            margin: 0;
+          }
+
+          @media (max-width: 600px) {
+            .qual-item {
+              flex-direction: column;
+              gap: 1rem;
+              padding: 1.5rem;
+            }
+            .qual-marker {
+              font-size: 1.2rem;
+            }
           }
         </style>
 
@@ -170,50 +282,31 @@
         </div>
       </div>
 
-      <!-- Qualifications 
-        <div class="reveal delay-1">
-          <div class="section-label">Qualifications</div>
-          <div class="qual-list">
+      <!-- Qualifications -->
+      <div class="reveal delay-1" style="margin-top: 4rem;">
+        <div class="section-label">Academic Qualifications</div>
+        <div class="qual-list">
 
-            <div class="qual-item">
-              <span class="qual-num">01</span>
-              <div class="qual-body">
-                <span class="qual-degree">MBBS</span>
-                <span class="qual-detail">Bachelor of Medicine, Bachelor of Surgery</span>
-              </div>
-              <span class="qual-badge">Foundation</span>
+          <div class="qual-item">
+            <div class="qual-content">
+              <h3 class="qual-degree">M.D. (Obstetrics and Gynecology)</h3>
             </div>
-
-            <div class="qual-item">
-              <span class="qual-num">02</span>
-              <div class="qual-body">
-                <span class="qual-degree">MS (Obs & Gynae)</span>
-                <span class="qual-detail">Master of Surgery in Obstetrics & Gynaecology</span>
-              </div>
-              <span class="qual-badge">Postgraduate</span>
-            </div>
-
-            <div class="qual-item">
-              <span class="qual-num">03</span>
-              <div class="qual-body">
-                <span class="qual-degree">Fellowship in ART</span>
-                <span class="qual-detail">Advanced training in Assisted Reproductive Technology</span>
-              </div>
-              <span class="qual-badge">Fellowship</span>
-            </div>
-
-            <div class="qual-item">
-              <span class="qual-num">04</span>
-              <div class="qual-body">
-                <span class="qual-degree">Endoscopy Specialist</span>
-                <span class="qual-detail">Expertise in advanced laparoscopic & hysteroscopic procedures</span>
-              </div>
-              <span class="qual-badge">Surgical</span>
-            </div>
-
           </div>
+
+          <div class="qual-item">
+            <div class="qual-content">
+              <h3 class="qual-degree">DIAGE (CICE, France), FRM (ISAR-ASPIRE, Japan)</h3>
+            </div>
+          </div>
+
+          <div class="qual-item">
+            <div class="qual-content">
+              <h3 class="qual-degree">DRM (SKUH, Germany)</h3>
+            </div>
+          </div>
+
         </div>
-        -->
+      </div>
 
       <!-- Philosophy Quote -->
       <div class="reveal delay-2">
@@ -345,12 +438,12 @@
             </div>
           </div>
           <!-- <div class="award-card">
-                        <div class="award-year">2019</div>
-                        <div class="award-info">
-                          <h4 class="award-title">Research Excellence Award</h4>
-                          <p class="award-org">International Fertility Congress</p>
-                        </div>
-                      </div> -->
+                            <div class="award-year">2019</div>
+                            <div class="award-info">
+                              <h4 class="award-title">Research Excellence Award</h4>
+                              <p class="award-org">International Fertility Congress</p>
+                            </div>
+                          </div> -->
         </div>
       </div>
 

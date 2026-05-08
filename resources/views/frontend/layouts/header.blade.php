@@ -35,6 +35,14 @@
                 <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
         </a>
+        <a href="{{ route('frontend.team') }}"
+            class="drawer-link {{ request()->routeIs('frontend.team') ? 'active' : '' }}" style="padding-left: 2.8rem; font-size: 0.95rem; opacity: 0.85;">
+            Meet Our Team
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+        </a>
         <a href="{{ route('frontend.services') }}"
             class="drawer-link {{ request()->routeIs('frontend.services', 'frontend.serviceDetail') ? 'active' : '' }}">
             Treatment & Care
@@ -69,17 +77,17 @@
                 <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
         </a>
-        <a href="{{ route('frontend.team') }}"
-            class="drawer-link {{ request()->routeIs('frontend.team') ? 'active' : '' }}">
-            Meet Our Team
+        <a href="{{ route('frontend.media') }}"
+            class="drawer-link {{ request()->routeIs('frontend.media') ? 'active' : '' }}">
+            Media
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
         </a>
-        <a href="{{ route('frontend.media') }}"
-            class="drawer-link {{ request()->routeIs('frontend.media') ? 'active' : '' }}">
-            Media
+        <a href="{{ route('frontend.faq') }}"
+            class="drawer-link {{ request()->routeIs('frontend.faq') ? 'active' : '' }}">
+            FAQ
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -184,8 +192,13 @@
         <ul class="nav-center">
             <li><a href="{{ route('frontend.index') }}"
                     class="{{ request()->requestUri === '/' ? 'active' : '' }}">Home</a></li>
-            <li><a href="{{ route('frontend.about') }}"
-                    class="{{ request()->routeIs('frontend.about') ? 'active' : '' }}">About</a></li>
+            <li class="has-submenu">
+                <a href="javascript:void(0)" class="{{ request()->routeIs('frontend.about', 'frontend.team') ? 'active' : '' }}">About</a>
+                <ul class="nav-submenu">
+                    <li><a href="{{ route('frontend.about') }}">About Dr. Yuvi</a></li>
+                    <li><a href="{{ route('frontend.team') }}">Meet Our Team</a></li>
+                </ul>
+            </li>
             <li><a href="{{ route('frontend.services') }}"
                     class="{{ request()->routeIs('frontend.services', 'frontend.serviceDetail') ? 'active' : '' }}">Treatment & Care</a>
             </li>
@@ -198,10 +211,10 @@
             --}}
             <li><a href="{{ route('frontend.successStories') }}"
                     class="{{ request()->routeIs('frontend.successStories') ? 'active' : '' }}">Stories</a></li>
-            <li><a href="{{ route('frontend.team') }}"
-                    class="{{ request()->routeIs('frontend.team') ? 'active' : '' }}">Team</a></li>
             <li><a href="{{ route('frontend.media') }}"
                     class="{{ request()->routeIs('frontend.media') ? 'active' : '' }}">Media</a></li>
+            <li><a href="{{ route('frontend.faq') }}"
+                    class="{{ request()->routeIs('frontend.faq') ? 'active' : '' }}">FAQ</a></li>
             <li><a href="{{ route('frontend.contact') }}"
                     class="{{ request()->routeIs('frontend.contact') ? 'active' : '' }}">Contact</a></li>
         </ul>

@@ -6,19 +6,16 @@
 @section('content')
 
   <!-- TOP BANNER SLIDER (TEAM VERSION) -->
-  <section class="top-banner-slider-con">
+  <section class="top-banner-slider-con reveal">
     <div class="top-banner-track" id="topBannerTrack">
       <div class="top-banner-slide active">
-        <img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?auto=format&fit=crop&q=80&w=2000"
-          alt="Team Excellence">
+        <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Team Excellence">
       </div>
       <div class="top-banner-slide">
-        <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=2000"
-          alt="Clinical Specialists">
+        <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Clinical Specialists">
       </div>
       <div class="top-banner-slide">
-        <img src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&q=80&w=2000"
-          alt="Compassionate Care">
+        <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Compassionate Care">
       </div>
     </div>
 
@@ -62,7 +59,7 @@
   </section>
 
   <!-- 2. DOCTORS SECTION -->
-  <section class="team-category-section" style="background: var(--bg-light, #fcfcfc);">
+  <section class="team-category-section reveal" style="background: var(--bg-light, #fcfcfc);">
     <div class="section-wrap">
       <div class="team-category-header reveal">
         <h2>Our <em>Doctors</em></h2>
@@ -73,7 +70,7 @@
         <!-- Doctor Card 1 -->
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Doctor+Portrait" alt="Doctor Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Dr. Aditi Sharma</h3>
@@ -84,7 +81,7 @@
         <!-- Doctor Card 2 -->
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Doctor+Portrait" alt="Doctor Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Dr. Rohan Desai</h3>
@@ -97,7 +94,7 @@
   </section>
 
   <!-- 3. NURSES SECTION -->
-  <section class="team-category-section">
+  <section class="team-category-section reveal">
     <div class="section-wrap">
       <div class="team-category-header reveal">
         <h2>Compassionate <em>Nurses</em></h2>
@@ -107,7 +104,7 @@
       <div class="premium-team-grid reveal delay-1">
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Nurse+Portrait" alt="Nurse Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Priya Verma</h3>
@@ -116,7 +113,7 @@
         </div>
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Nurse+Portrait" alt="Nurse Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Meera Patel</h3>
@@ -125,7 +122,7 @@
         </div>
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Nurse+Portrait" alt="Nurse Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Sneha Rao</h3>
@@ -137,7 +134,7 @@
   </section>
 
   <!-- 4. SUPPORTING STAFF SECTION -->
-  <section class="team-category-section" style="background: var(--bg-light, #fcfcfc);">
+  <section class="team-category-section reveal" style="background: var(--bg-light, #fcfcfc);">
     <div class="section-wrap">
       <div class="team-category-header reveal">
         <h2>Supporting <em>Staff</em></h2>
@@ -147,7 +144,7 @@
       <div class="premium-team-grid support-grid reveal delay-1">
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Staff+Portrait" alt="Staff Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Amit Joshi</h3>
@@ -156,7 +153,7 @@
         </div>
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Staff+Portrait" alt="Staff Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Kavya Singh</h3>
@@ -165,7 +162,7 @@
         </div>
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Staff+Portrait" alt="Staff Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Rahul Mehta</h3>
@@ -174,7 +171,7 @@
         </div>
         <div class="premium-team-card">
           <div class="pt-img-wrap">
-            <img src="https://dummyimage.com/600x800/eaeaea/888888.png&text=Staff+Portrait" alt="Staff Placeholder">
+            <img src="{{ asset('storage/placeholder/placeholder.png') }}" alt="Placeholder">
           </div>
           <div class="pt-info">
             <h3>Deepa Nair</h3>
@@ -186,7 +183,7 @@
   </section>
 
   <!-- 5. JOIN US (Fellowship & Openings) -->
-  <section class="team-join-section">
+  <section class="team-join-section reveal">
     <div class="section-wrap">
       <div class="join-grid">
 
@@ -230,7 +227,7 @@
     /* Top Banner Slider Scoped Styles */
     .top-banner-slider-con {
       width: 100%;
-      height: 100vh;
+      height: 80vh;
       position: relative;
       overflow: hidden;
       background: #000;
@@ -340,10 +337,10 @@
 
     .team-hero-content h1 {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(3.5rem, 6vw, 4.5rem);
+      font-size: clamp(3.5rem, 6vw, 4rem);
       line-height: 1.1;
       margin-bottom: 1.5rem;
-      font-weight: 400;
+
     }
 
     .team-hero-content h1 em {
@@ -564,19 +561,23 @@
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
+    /* Tablets (Landscape & Portrait) */
+    @media (min-width: 601px) and (max-width: 991px) {
       .join-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
       }
 
       .join-box {
         padding: 3rem 2rem;
       }
-    }
 
-    @media (max-width: 768px) {
+      .join-box h2 {
+        font-size: 2.2rem;
+      }
+
       .top-banner-slider-con {
-        height: 100vh;
+        height: 60vh;
       }
 
       .top-banner-nav {
@@ -589,7 +590,25 @@
       }
     }
 
+    /* Mobile Devices */
     @media (max-width: 600px) {
+      .join-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .join-box {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .join-box h2 {
+        font-size: 1.8rem;
+      }
+
+      .join-box p {
+        font-size: 1rem;
+      }
+
       .team-category-section {
         padding: 4rem 0;
       }
@@ -603,36 +622,70 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const track = document.getElementById('topBannerTrack');
-      const slides = document.querySelectorAll('#topBannerTrack .top-banner-slide');
+      const originalSlides = Array.from(document.querySelectorAll('#topBannerTrack .top-banner-slide'));
       const prevBtn = document.getElementById('topBannerPrev');
       const nextBtn = document.getElementById('topBannerNext');
-      if (!track || slides.length < 2) return;
+      if (!track || originalSlides.length < 2) return;
 
-      let currentIdx = 0;
-      let slideInterval;
+      // Clone first and last for infinite effect
+      const firstClone = originalSlides[0].cloneNode(true);
+      const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
+      track.appendChild(firstClone);
+      track.insertBefore(lastClone, originalSlides[0]);
 
-      function showSlide(index) {
+      const allSlides = document.querySelectorAll('#topBannerTrack .top-banner-slide');
+      let currentIdx = 1; // Start at first original slide
+      let isTransitioning = false;
+
+      // Initialize position
+      track.style.transition = 'none';
+      track.style.transform = `translateX(-100%)`;
+
+      function showSlide(index, animate = true) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        if (animate) {
+          track.style.transition = 'transform 1s cubic-bezier(0.645, 0.045, 0.355, 1)';
+        } else {
+          track.style.transition = 'none';
+        }
+
         track.style.transform = `translateX(-${index * 100}%)`;
         currentIdx = index;
       }
 
+      track.addEventListener('transitionend', () => {
+        isTransitioning = false;
+        // If at last clone, jump to first real slide
+        if (currentIdx === allSlides.length - 1) {
+          track.style.transition = 'none';
+          currentIdx = 1;
+          track.style.transform = `translateX(-100%)`;
+        }
+        // If at first clone, jump to last real slide
+        if (currentIdx === 0) {
+          track.style.transition = 'none';
+          currentIdx = allSlides.length - 2;
+          track.style.transform = `translateX(-${currentIdx * 100}%)`;
+        }
+      });
+
       function nextSlide() {
-        let nextIdx = (currentIdx + 1) % slides.length;
-        showSlide(nextIdx);
+        if (isTransitioning) return;
+        showSlide(currentIdx + 1);
       }
 
       function prevSlide() {
-        let prevIdx = (currentIdx - 1 + slides.length) % slides.length;
-        showSlide(prevIdx);
+        if (isTransitioning) return;
+        showSlide(currentIdx - 1);
       }
 
-      function startAutoSlide() {
-        slideInterval = setInterval(nextSlide, 5000);
-      }
+      let slideInterval = setInterval(nextSlide, 5000);
 
       function resetAutoSlide() {
         clearInterval(slideInterval);
-        startAutoSlide();
+        slideInterval = setInterval(nextSlide, 5000);
       }
 
       if (nextBtn) {
@@ -648,8 +701,6 @@
           resetAutoSlide();
         });
       }
-
-      startAutoSlide();
     });
   </script>
 

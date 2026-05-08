@@ -5,7 +5,7 @@
 @section('meta_keywords', 'home, laravel, website')
 
 @section('content')
-  <section class="policy-hero">
+  <section class="policy-hero reveal">
     <div class="policy-hero-inner">
       <div class="breadcrumb">Trust & Transparency</div>
       <h1>Our Privacy <em>Policy</em></h1>
@@ -14,7 +14,7 @@
     </div>
   </section>
 
-  <main class="content-container">
+  <main class="content-container reveal">
 
     <section class="policy-section">
       <h2>1. Commitment to Confidentiality</h2>
@@ -79,7 +79,7 @@
       <h2>7. Contact Us</h2>
       <p>If you have any questions or concerns regarding this Privacy Policy or our data handling practices, please
         contact our privacy coordinator at:</p>
-      <p><strong>Email:</strong> privacy@docteryuvi.com<br><strong>Location:</strong> Ahmedabad, India</p>
+      <p><strong>Email:</strong> doctoryuvi@nimaaya.com<br><strong>Location:</strong> Ahmedabad, India</p>
     </section>
 
     <div class="last-updated">Last Updated: April 13, 2026</div>

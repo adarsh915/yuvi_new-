@@ -14,7 +14,7 @@
   </section>
 
   <!-- MAIN TWO-COLUMN LAYOUT -->
-  <div class="main">
+  <div class="main reveal">
 
     <!-- LEFT: FORM COLUMN -->
     <div class="form-col reveal">

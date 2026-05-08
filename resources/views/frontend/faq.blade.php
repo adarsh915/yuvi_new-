@@ -4,7 +4,7 @@
 @section('meta_description', 'Find answers to common questions about fertility treatments, IVF, clinic procedures, and more.')
 
 @section('content')
-  <section class="faq-hero">
+  <section class="faq-hero reveal">
     <div class="faq-hero-inner">
       <div class="breadcrumb"><a href="{{ route('frontend.index') }}">Home</a> / FAQ</div>
       <h1>Clear Answers for Your<br><em>Family Journey</em></h1>
@@ -13,12 +13,13 @@
   </section>
 
   <!-- PAGE BODY -->
-  <div class="page-body">
+  <div class="page-body reveal">
     <!-- LEFT FILTER SIDEBAR -->
     <aside class="filter-sidebar">
       <span class="fs-title">Filter FAQs</span>
       <div class="fs-filters">
-        <button class="filter-btn active" data-filter="all"><span class="dot"></span>All FAQs<span class="filter-count">{{ $faqs->count() }}</span></button>
+        <button class="filter-btn active" data-filter="all"><span class="dot"></span>All FAQs<span
+            class="filter-count">{{ $faqs->count() }}</span></button>
         @foreach($categories as $cat)
           <button class="filter-btn" data-filter="{{ strtolower(str_replace(' ', '-', $cat)) }}">
             <span class="dot"></span>{{ $cat }}
@@ -30,16 +31,10 @@
 
     <!-- RIGHT CONTENT AREA -->
     <div class="story-content-main">
-      <!-- Mobile filter toggle -->
-      <div class="mobile-filter-panel" id="mobileFilterPanel">
-        <button class="filter-btn active" data-filter="all"><span class="dot"></span>All</button>
-        @foreach($categories as $cat)
-          <button class="filter-btn" data-filter="{{ strtolower(str_replace(' ', '-', $cat)) }}"><span
-              class="dot"></span>{{ $cat }}</button>
-        @endforeach
-      </div>
+      {{-- Mobile filter panel removed to use same vertical list as desktop --}}
 
-      <div class="grid-header reveal" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+      <div class="grid-header reveal"
+        style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
         <h2>Frequently Asked Questions</h2>
         <span id="visibleCount" style="color: var(--muted); font-size: 0.9rem;">Showing {{ $faqs->count() }} FAQs</span>
       </div>
@@ -48,25 +43,27 @@
         <section class="faq-category">
           <div class="faq-list" id="faqPageGrid">
             @forelse($faqs as $faq)
-            <div class="faq-item" data-category="{{ $faq->category ? strtolower(str_replace(' ', '-', $faq->category)) : 'general' }}">
-              <button class="faq-question">{{ $faq->question }}
-                <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                  </svg></div>
-              </button>
-              <div class="faq-answer">
-                <p>{{ $faq->answer }}</p>
+              <div class="faq-item"
+                data-category="{{ $faq->category ? strtolower(str_replace(' ', '-', $faq->category)) : 'general' }}">
+                <button class="faq-question">{{ $faq->question }}
+                  <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg></div>
+                </button>
+                <div class="faq-answer">
+                  <p>{{ $faq->answer }}</p>
+                </div>
               </div>
-            </div>
             @empty
-            <div class="empty-state" style="display:block;">
+              <div class="empty-state" style="display:block;">
                 <p>No questions added yet. Please check back later.</p>
-            </div>
+              </div>
             @endforelse
 
-            <div class="empty-state" id="emptyState" style="display:none; text-align: center; padding: 3rem 1rem; background: var(--warm-white); border-radius: 12px;">
+            <div class="empty-state" id="emptyState"
+              style="display:none; text-align: center; padding: 3rem 1rem; background: var(--warm-white); border-radius: 12px;">
               <h3 style="margin-bottom: 0.5rem; color: var(--midnight);">No FAQs found</h3>
               <p style="color: var(--muted);">Try selecting a different category.</p>
             </div>
@@ -86,13 +83,96 @@
       gap: 3rem;
     }
 
-    @media (max-width: 1100px) {
+    /* Tablets & Small Laptops */
+    @media (min-width: 601px) and (max-width: 1199px) {
       .page-body {
         grid-template-columns: 1fr;
+        padding: 3rem 2rem;
+        gap: 2rem;
       }
 
       .filter-sidebar {
+        display: block;
+        position: static;
+        margin-bottom: 1.5rem;
+      }
+
+      .fs-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .filter-btn {
+        width: auto;
+      }
+
+      .grid-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.5rem;
+      }
+
+      .faq-hero {
+        padding: 4rem 2rem;
+      }
+
+      .faq-hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .faq-container {
+        padding: 2rem 0;
+      }
+    }
+
+    /* Mobile Devices */
+    @media (max-width: 600px) {
+      .page-body {
+        grid-template-columns: 2fr;
+        padding: 2rem 1.2rem;
+      }
+
+      .filter-sidebar {
+        margin-bottom: 1.5rem;
+      }
+
+      .fs-filters {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 0.6rem;
+        padding-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .filter-btn {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .filter-count {
         display: none;
+      }
+
+      .faq-question {
+        font-size: 0.95rem;
+        padding: 1.2rem 1.5rem;
+      }
+
+      .faq-answer p {
+        padding: 0 1.5rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      .faq-hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .faq-hero p {
+        font-size: 1rem;
       }
     }
   </style>
@@ -108,7 +188,7 @@
         btn.addEventListener('click', () => {
           // Update active state on all buttons
           document.querySelectorAll('.page-body .filter-btn').forEach(b => b.classList.remove('active'));
-          
+
           // Make clicked button active (and its mobile/desktop counterpart if matching)
           const filter = btn.getAttribute('data-filter');
           document.querySelectorAll(`.page-body .filter-btn[data-filter="${filter}"]`).forEach(b => b.classList.add('active'));
@@ -117,7 +197,7 @@
 
           faqItems.forEach(item => {
             const cat = item.getAttribute('data-category');
-            
+
             if (filter === 'all' || cat === filter) {
               item.style.display = '';
               visible++;
@@ -141,7 +221,7 @@
     });
   </script>
 
-  <section class="cta-section">
+  <section class="cta-section reveal">
     <div class="cta-inner">
       <h2>Still have questions?</h2>
       <p>We're here to provide the clarity you need to move forward with peace of mind.</p>

@@ -5,23 +5,31 @@
 
 @section('content')
 
-  <!-- 1. TOP BANNER -->
-  <section class="media-hero-section">
-    <!-- Premium lifestyle/media stock image -->
-    <img src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?auto=format&fit=crop&q=80&w=2000"
-      class="media-hero-bg" alt="Media and Events">
-    <div class="media-hero-overlay"></div>
+  <section class="media-hero-section reveal">
+    <div class="media-hero-bg-wrap">
+      <img src="{{ asset('storage/media/banner.avif') }}" class="media-hero-bg" alt="Media and Events">
+      <div class="media-hero-overlay"></div>
+    </div>
     <div class="media-hero-content reveal">
       <div class="media-hero-eyebrow">
         <span class="hero-eyebrow-dot"></span> In The Spotlight
       </div>
-      <h1>Media & <br><em>Events</em></h1>
-      <p>Dive into our world of expert podcasts and heartwarming community events. <br>Discover the stories beyond the clinic walls.</p>
+      <h1>Stories, Science & <br><em>Clinical Insights</em></h1>
+      <p>Exploring the intersection of modern reproductive medicine, community advocacy, and heartwarming patient journeys
+        beyond the clinic walls.</p>
+      <div class="media-hero-actions">
+        <a href="#podcasts" class="btn-hero-primary">Listen to Podcasts</a>
+        <a href="#events" class="btn-hero-outline">View Events</a>
+      </div>
     </div>
+    <!-- <div class="media-scroll-down">
+                    <span class="scroll-text">Scroll to explore</span>
+                    <div class="scroll-line"></div>
+                  </div> -->
   </section>
 
   <!-- 2. PODCASTS SECTION -->
-  <section class="media-section bg-light-section">
+  <section class="media-section bg-light-section reveal">
     <div class="section-wrap">
       <div class="media-header reveal">
         <h2>Expert <em>Podcasts</em></h2>
@@ -32,8 +40,7 @@
         <!-- Podcast Item 1 -->
         <div class="podcast-row-card">
           <div class="podcast-img">
-            <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=600"
-              alt="Podcast Episode">
+            <img src="{{ asset('storage/media/img1.avif') }}" alt="Podcast Episode">
             <div class="play-btn">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z" />
@@ -55,8 +62,7 @@
         <!-- Podcast Item 2 -->
         <div class="podcast-row-card">
           <div class="podcast-img">
-            <img src="https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&q=80&w=600"
-              alt="Podcast Episode">
+            <img src="{{ asset('storage/media/img2.avif') }}" alt="Podcast Episode">
             <div class="play-btn">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z" />
@@ -79,7 +85,7 @@
   </section>
 
   <!-- 3. FEEL GOOD EVENTS -->
-  <section class="media-section">
+  <section class="media-section reveal">
     <div class="section-wrap">
       <div class="media-header reveal">
         <h2>Feel Good <em>Events</em></h2>
@@ -88,8 +94,7 @@
 
       <div class="events-gallery reveal delay-1">
         <div class="event-gallery-item">
-          <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=800"
-            alt="Mother's Day Meetup">
+          <img src="{{ asset('storage/media/img3.avif') }}" alt="Mother's Day Meetup">
           <div class="event-gallery-overlay">
             <div class="event-gallery-content">
               <span class="event-date">March 2026</span>
@@ -100,8 +105,7 @@
         </div>
 
         <div class="event-gallery-item">
-          <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=600"
-            alt="Community Camp">
+          <img src="{{ asset('storage/media/img4.avif') }}" alt="Community Camp">
           <div class="event-gallery-overlay">
             <div class="event-gallery-content">
               <span class="event-date">Feb 2026</span>
@@ -112,8 +116,7 @@
         </div>
 
         <div class="event-gallery-item">
-          <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=600"
-            alt="Team Awards">
+          <img src="{{ asset('storage/media/img6.avif') }}" alt="Team Awards">
           <div class="event-gallery-overlay">
             <div class="event-gallery-content">
               <span class="event-date">Jan 2026</span>
@@ -127,7 +130,7 @@
   </section>
 
   <!-- 5. MEDIA HIGHLIGHTS (GALLERY) -->
-  <section class="media-section" style="padding-top: 0;">
+  <section class="media-section reveal" style="padding-top: 0;">
     <div class="section-wrap">
       <div class="media-header reveal">
         <h2>Media <em>Highlights</em></h2>
@@ -137,7 +140,7 @@
       <div class="highlights-gallery reveal delay-1">
         <!-- Item 1: Image -->
         <div class="h-gallery-item">
-          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=800" alt="News Feature">
+          <img src="{{ asset('storage/media/img6.avif') }}" alt="News Feature">
           <div class="h-gallery-overlay">
             <span>Press Clipping: Health Times</span>
           </div>
@@ -145,12 +148,15 @@
 
         <!-- Item 2: Video -->
         <div class="h-gallery-item">
-          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0&modestbranding=1&rel=0" allowfullscreen></iframe>
+          <img src="{{ asset('storage/media/img6.avif') }}" alt="Press Release">
+          <div class="h-gallery-overlay">
+            <span>Global Medical Journal Feature</span>
+          </div>
         </div>
 
         <!-- Item 3: Image -->
         <div class="h-gallery-item">
-          <img src="https://images.unsplash.com/photo-1585829365294-4cc046252058?auto=format&fit=crop&q=80&w=800" alt="Press Release">
+          <img src="{{ asset('storage/media/img6.avif') }}" alt="Press Release">
           <div class="h-gallery-overlay">
             <span>Global Medical Journal Feature</span>
           </div>
@@ -158,7 +164,7 @@
 
         <!-- Item 4: Image -->
         <div class="h-gallery-item">
-          <img src="https://images.unsplash.com/photo-1557425955-df376b5903c8?auto=format&fit=crop&q=80&w=800" alt="Clinic News">
+          <img src="{{ asset('storage/media/img6.avif') }}" alt="Clinic News">
           <div class="h-gallery-overlay">
             <span>National Health Network</span>
           </div>
@@ -175,35 +181,40 @@
       gap: 1.5rem;
       margin-top: 2rem;
     }
+
     .h-gallery-item {
       position: relative;
       background: #eee;
       border-radius: 16px;
       overflow: hidden;
       aspect-ratio: 16/9;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
+
     .h-gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.4s ease;
     }
+
     .h-gallery-item:hover img {
       transform: scale(1.05);
     }
+
     .h-gallery-item iframe {
       width: 100%;
       height: 100%;
       border: none;
     }
+
     .h-gallery-overlay {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       padding: 1.5rem;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
       color: #fff;
       font-size: 0.9rem;
       font-weight: 500;
@@ -212,91 +223,206 @@
   </style>
 
   <style>
-    /* Hero Banner */
+    /* Hero Banner Redesign */
     .media-hero-section {
       position: relative;
-      height: 100vh;
+      height: 80vh;
+      min-height: 600px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       overflow: hidden;
+      background: #000;
+    }
+
+    .media-hero-bg-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
     }
 
     .media-hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
-      z-index: 1;
-      transform: scale(1.02);
+      animation: heroZoom 20s infinite alternate linear;
+    }
+
+    @keyframes heroZoom {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.1);
+      }
     }
 
     .media-hero-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.75) 100%);
+      inset: 0;
+      background: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0.4) 0%,
+          rgba(0, 0, 0, 0.2) 40%,
+          rgba(0, 0, 0, 0.8) 100%);
       z-index: 2;
     }
 
     .media-hero-content {
       position: relative;
-      z-index: 4;
+      z-index: 10;
       color: #fff;
-      max-width: 850px;
-      padding: 0 5%;
+      max-width: 900px;
+      padding: 0 2rem;
     }
 
     .media-hero-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-      color: #fff;
-      padding: 0.4rem 1.2rem;
+      gap: 0.6rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1.5rem;
       border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 2px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
     }
 
     .hero-eyebrow-dot {
       width: 6px;
       height: 6px;
-      background: #fff;
+      background: var(--gold, #f9a215);
       border-radius: 50%;
+      box-shadow: 0 0 10px var(--gold);
     }
 
     .media-hero-content h1 {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(3.5rem, 6vw, 5rem);
-      line-height: 1.1;
+      font-size: clamp(3rem, 7vw, 4rem);
+      line-height: 1.05;
       margin-bottom: 1.5rem;
-      font-weight: 400;
+
     }
 
     .media-hero-content h1 em {
       font-family: 'DM Serif Display', serif;
       font-style: italic;
-      color: var(--crimson-dark, #bc2b3d);
+      color: #fff;
+      position: relative;
     }
 
+
+
     .media-hero-content p {
+      font-family: 'DM Sans', sans-serif;
       font-size: 1.25rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-      max-width: 650px;
-      margin: 0 auto;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+
+    .media-hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-primary {
+      background: #fff;
+      color: #000;
+      padding: 1rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-hero-primary:hover {
+      background: var(--crimson);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    .btn-hero-outline {
+      background: transparent;
+      color: #fff;
+      padding: 1rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-hero-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #fff;
+      transform: translateY(-3px);
+    }
+
+    /* Scroll Down Indicator */
+    .media-scroll-down {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .scroll-text {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 700;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, #fff, transparent);
+      animation: scrollLine 2s infinite;
+    }
+
+    @keyframes scrollLine {
+      0% {
+        transform: scaleY(0);
+        transform-origin: top;
+      }
+
+      50% {
+        transform: scaleY(1);
+        transform-origin: top;
+      }
+
+      50.1% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+      }
+
+      100% {
+        transform: scaleY(0);
+        transform-origin: bottom;
+      }
     }
 
     /* Common Section Styles */
@@ -350,6 +476,7 @@
       background: #fff;
       border-radius: 16px;
       overflow: hidden;
+      min-height: 320px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       border: 1px solid rgba(0, 0, 0, 0.03);
@@ -528,7 +655,16 @@
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
+    /* Large Tablets & Small Laptops */
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .podcast-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    /* Standard Tablets (Landscape & Portrait) */
+    @media (min-width: 601px) and (max-width: 991px) {
       .podcast-grid {
         grid-template-columns: 1fr;
       }
@@ -536,8 +672,13 @@
       .events-gallery {
         grid-template-columns: 1fr 1fr;
       }
+
+      .media-hero-section {
+        min-height: 60vh;
+      }
     }
 
+    /* Mobile Devices */
     @media (max-width: 600px) {
       .media-hero-section {
         min-height: 450px;
@@ -549,6 +690,7 @@
 
       .podcast-row-card {
         flex-direction: column;
+        min-height: auto;
       }
 
       .podcast-img {
@@ -563,7 +705,55 @@
 
       .events-gallery {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
+
+      .event-gallery-item {
+        aspect-ratio: 1/1;
+        /* Square aspect ratio on mobile for more vertical space */
+      }
+
+      .event-gallery-overlay {
+        padding: 1.5rem;
+        /* Reduced padding on mobile */
+      }
+
+      .event-gallery-content h3 {
+        font-size: 1.4rem;
+        /* Smaller heading on mobile */
+      }
+
+      .event-gallery-content p {
+        font-size: 0.85rem;
+        /* Smaller description on mobile */
+        opacity: 0.9;
+      }
+
+      .event-date {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.65rem;
+        margin-bottom: 0.75rem;
+      }
+
+      /* Highlights Gallery Mobile Fix */
+      .h-gallery-item {
+        aspect-ratio: 3/2;
+        /* Taller aspect ratio on mobile */
+      }
+
+      .h-gallery-overlay {
+        padding: 1.2rem;
+        font-size: 0.85rem;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+      }
+
+      .highlights-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
     }
   </style>
 

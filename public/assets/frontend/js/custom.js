@@ -159,70 +159,63 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ── FILTER LOGIC ──
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.card[data-category]');
-    const emptyState = document.getElementById('emptyState');
-    const visibleCountEl = document.getElementById('visibleCount');
+    // ── FILTER LOGIC (Mainly for Blog) ──
+    const globalFilterBtns = document.querySelectorAll('.filter-btn');
+    const globalCards = document.querySelectorAll('.card[data-category]');
+    const globalEmptyState = document.getElementById('emptyState');
+    const globalVisibleCountEl = document.getElementById('visibleCount');
 
-    // ── MOBILE FILTER TOGGLE ──
-    const mobileFilterToggle = document.getElementById('mobileFilterToggle');
-    const mobileFilterPanel = document.getElementById('mobileFilterPanel');
+    if (globalCards.length > 0) {
+        // ── MOBILE FILTER TOGGLE (Mainly for Blog) ──
+        const mobileFilterToggle = document.getElementById('mobileFilterToggle');
+        const mobileFilterPanel = document.getElementById('mobileFilterPanel');
 
-    if (mobileFilterToggle && mobileFilterPanel) {
-        mobileFilterToggle.addEventListener('click', () => {
-            const isOpen = mobileFilterPanel.classList.toggle('open');
-            mobileFilterToggle.setAttribute('aria-expanded', isOpen);
-            mobileFilterToggle.classList.toggle('open');
-        });
+        if (mobileFilterToggle && mobileFilterPanel) {
+            mobileFilterToggle.addEventListener('click', () => {
+                const isOpen = mobileFilterPanel.classList.toggle('open');
+                mobileFilterToggle.setAttribute('aria-expanded', isOpen);
+                mobileFilterToggle.classList.toggle('open');
+            });
 
-        // Close panel when a filter is clicked
-        mobileFilterPanel.querySelectorAll('.filter-btn').forEach(btn => {
+            // Close panel when a filter is clicked
+            mobileFilterPanel.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    mobileFilterPanel.classList.remove('open');
+                    mobileFilterToggle.classList.remove('open');
+                    mobileFilterToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+        globalFilterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                mobileFilterPanel.classList.remove('open');
-                mobileFilterToggle.classList.remove('open');
-                mobileFilterToggle.setAttribute('aria-expanded', 'false');
+                globalFilterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+                let visible = 0;
+
+                globalCards.forEach(card => {
+                    const cats = card.getAttribute('data-category').split(' ');
+                    if (filter === 'all' || cats.includes(filter)) {
+                        card.classList.remove('hidden');
+                        card.classList.add('fade-in');
+                        visible++;
+                        setTimeout(() => card.classList.remove('fade-in'), 400);
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                if (globalEmptyState) globalEmptyState.classList.toggle('show', visible === 0);
+                if (globalVisibleCountEl) {
+                    globalVisibleCountEl.textContent = visible === 0
+                        ? "No articles found"
+                        : `Showing ${visible} article${visible === 1 ? "" : "s"}`;
+                }
             });
         });
     }
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filter = btn.getAttribute('data-filter');
-            let visible = 0;
-
-            cards.forEach(card => {
-                const cats = card.getAttribute('data-category').split(' ');
-
-                if (filter === 'all' || cats.includes(filter)) {
-                    card.classList.remove('hidden');
-                    card.classList.add('fade-in');
-                    visible++;
-
-                    setTimeout(() => {
-                        card.classList.remove('fade-in');
-                    }, 400);
-
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-
-            if (emptyState) {
-                emptyState.classList.toggle('show', visible === 0);
-            }
-
-            if (visibleCountEl) {
-                visibleCountEl.textContent =
-                    visible === 0
-                        ? "No articles found"
-                        : `Showing ${visible} article${visible === 1 ? "" : "s"}`;
-            }
-        });
-    });
 
     // ── CONSULT TABS ──
     const tabBtns = document.querySelectorAll('.tab-btn');
@@ -305,6 +298,6 @@ window.addEventListener('load', () => {
             setTimeout(() => { 
                 preloader.style.display = 'none'; 
             }, 600); 
-        }, 1500); 
+        }, 800); 
     } 
 });

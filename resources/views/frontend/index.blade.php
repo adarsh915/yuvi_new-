@@ -7,19 +7,16 @@
 
 @section('content')
   <!-- TOP BANNER SLIDER -->
-  <section class="top-banner-slider-con">
+  <section class="top-banner-slider-con reveal">
     <div class="top-banner-track" id="topBannerTrack">
       <div class="top-banner-slide active">
-        <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=2000"
-          alt="Medical Excellence">
+        <img src="{{ asset('storage/banner/banner1.avif') }}" alt="Medical Excellence">
       </div>
       <div class="top-banner-slide">
-        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=2000"
-          alt="Advanced Care">
+        <img src="{{ asset('storage/banner/banner2.avif') }}" alt="Advanced Care">
       </div>
       <div class="top-banner-slide">
-        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=2000"
-          alt="Patient Support">
+        <img src="{{ asset('storage/banner/banner3.avif') }}" alt="Patient Support">
       </div>
     </div>
 
@@ -40,115 +37,90 @@
     </div>
   </section>
 
-  <section class="value-scroll-section reveal">
-    <div class="value-scroll-inner">
-      <div class="value-scroll-container" id="valueScrollContainer">
-
-        <!-- Card 1 -->
-        <div class="value-scroll-card">
-          <div class="v-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
+  <section class="value-marquee-section reveal">
+    <div class="value-marquee-inner">
+      <div class="value-marquee-wrapper">
+        <div class="value-marquee-track" id="valueMarqueeTrack">
+          <!-- Card 1 -->
+          <div class="value-marquee-card">
+            <div class="v-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 class="v-card-title">ETHICAL PRACTICE</h3>
           </div>
-          <h3 class="v-card-title">ETHICAL PRACTICE</h3>
-          <p class="v-card-text">No unnecessary procedures. Honest and transparent care.</p>
-        </div>
 
-        <!-- Card 2 -->
-        <div class="value-scroll-card">
-          <div class="v-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+          <!-- Card 2 -->
+          <div class="value-marquee-card">
+            <div class="v-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <h3 class="v-card-title">DIAGNOSIS FIRST</h3>
           </div>
-          <h3 class="v-card-title">DIAGNOSIS FIRST</h3>
-          <p class="v-card-text">No assumptions. Full clarity before moving forward.</p>
-        </div>
 
-        <!-- Card 3 -->
-        <div class="value-scroll-card">
-          <div class="v-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-              </path>
-            </svg>
+          <!-- Card 3 -->
+          <div class="value-marquee-card">
+            <div class="v-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="v-card-title">HOLISTIC SUPPORT</h3>
           </div>
-          <h3 class="v-card-title">HOLISTIC SUPPORT</h3>
-          <p class="v-card-text">Science, technology, and emotional support unified.</p>
-        </div>
 
-        <!-- Card 4 -->
-        <div class="value-scroll-card">
-          <div class="v-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 11 12 14 22 4"></polyline>
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-            </svg>
+          <!-- Card 4 -->
+          <div class="value-marquee-card">
+            <div class="v-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+            </div>
+            <h3 class="v-card-title">EVIDENCE BASED</h3>
           </div>
-          <h3 class="v-card-title">EVIDENCE BASED</h3>
-          <p class="v-card-text">Implementing the latest, globally recognized clinical protocols.</p>
-        </div>
 
-        <!-- Card 5 -->
-        <div class="value-scroll-card">
-          <div class="v-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
+          <!-- Card 5 -->
+          <div class="value-marquee-card">
+            <div class="v-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="v-card-title">PATIENT FIRST</h3>
           </div>
-          <h3 class="v-card-title">PATIENT FIRST</h3>
-          <p class="v-card-text">Compassionate care accompanying you at every step.</p>
-        </div>
 
-        <!-- Card 6 -->
-        <div class="value-scroll-card">
-          <div class="v-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
+          <!-- Card 6 -->
+          <div class="value-marquee-card">
+            <div class="v-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="v-card-title">ADVANCED LAB</h3>
           </div>
-          <h3 class="v-card-title">ADVANCED LAB</h3>
-          <p class="v-card-text">State-of-the-art embryology and surgical setups.</p>
-        </div>
 
-        <!-- Card 7 -->
-        <div class="value-scroll-card">
-          <div class="v-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
+          <!-- Card 7 -->
+          <div class="value-marquee-card">
+            <div class="v-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3 class="v-card-title">24x7 SUPPORT</h3>
           </div>
-          <h3 class="v-card-title">24x7 SUPPORT</h3>
-          <p class="v-card-text">Always here when needed. Unwavering medical assistance.</p>
         </div>
-
-      </div>
-
-      <!-- Scroll Dots -->
-      <div class="value-scroll-dots">
-        <button class="value-dot active" onclick="scrollValue(0)" aria-label="Go to slide 1"></button>
-        <button class="value-dot" onclick="scrollValue(1)" aria-label="Go to slide 2"></button>
-        <button class="value-dot" onclick="scrollValue(2)" aria-label="Go to slide 3"></button>
-        <button class="value-dot" onclick="scrollValue(3)" aria-label="Go to slide 4"></button>
-        <button class="value-dot" onclick="scrollValue(4)" aria-label="Go to slide 5"></button>
-        <button class="value-dot" onclick="scrollValue(5)" aria-label="Go to slide 6"></button>
-        <button class="value-dot" onclick="scrollValue(6)" aria-label="Go to slide 7"></button>
       </div>
     </div>
   </section>
@@ -156,7 +128,7 @@
   <style>
     .top-banner-slider-con {
       width: 100%;
-      height: 100vh;
+      height: 80vh;
       position: relative;
       overflow: hidden;
       background: #000;
@@ -218,9 +190,26 @@
       transform: scale(1.1);
     }
 
-    @media (max-width: 768px) {
+    /* Tablets (Landscape & Portrait) */
+    @media (min-width: 601px) and (max-width: 991px) {
       .top-banner-slider-con {
-        height: 100vh;
+        height: 60vh;
+      }
+
+      .top-banner-nav {
+        padding: 0 1.5rem;
+      }
+
+      .top-banner-btn {
+        width: 45px;
+        height: 45px;
+      }
+    }
+
+    /* Mobile Devices */
+    @media (max-width: 600px) {
+      .top-banner-slider-con {
+        height: 40vh;
       }
 
       .top-banner-nav {
@@ -228,8 +217,8 @@
       }
 
       .top-banner-btn {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
       }
     }
   </style>
@@ -237,39 +226,72 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const track = document.getElementById('topBannerTrack');
-      const slides = document.querySelectorAll('#topBannerTrack .top-banner-slide');
+      const originalSlides = Array.from(document.querySelectorAll('#topBannerTrack .top-banner-slide'));
       const prevBtn = document.getElementById('topBannerPrev');
       const nextBtn = document.getElementById('topBannerNext');
-      if (!track || slides.length < 2) return;
+      if (!track || originalSlides.length < 2) return;
 
-      let currentIdx = 0;
-      let slideInterval;
+      // Clone first and last for infinite effect
+      const firstClone = originalSlides[0].cloneNode(true);
+      const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
+      track.appendChild(firstClone);
+      track.insertBefore(lastClone, originalSlides[0]);
 
-      function showSlide(index) {
+      const allSlides = document.querySelectorAll('#topBannerTrack .top-banner-slide');
+      let currentIdx = 1; // Start at first original slide
+      let isTransitioning = false;
+
+      // Initialize position
+      track.style.transition = 'none';
+      track.style.transform = `translateX(-100%)`;
+
+      function showSlide(index, animate = true) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        if (animate) {
+          track.style.transition = 'transform 1s cubic-bezier(0.645, 0.045, 0.355, 1)';
+        } else {
+          track.style.transition = 'none';
+        }
+
         track.style.transform = `translateX(-${index * 100}%)`;
         currentIdx = index;
       }
 
+      track.addEventListener('transitionend', () => {
+        isTransitioning = false;
+        // If at last clone, jump to first real slide
+        if (currentIdx === allSlides.length - 1) {
+          track.style.transition = 'none';
+          currentIdx = 1;
+          track.style.transform = `translateX(-100%)`;
+        }
+        // If at first clone, jump to last real slide
+        if (currentIdx === 0) {
+          track.style.transition = 'none';
+          currentIdx = allSlides.length - 2;
+          track.style.transform = `translateX(-${currentIdx * 100}%)`;
+        }
+      });
+
       function nextSlide() {
-        let nextIdx = (currentIdx + 1) % slides.length;
-        showSlide(nextIdx);
+        if (isTransitioning) return;
+        showSlide(currentIdx + 1);
       }
 
       function prevSlide() {
-        let prevIdx = (currentIdx - 1 + slides.length) % slides.length;
-        showSlide(prevIdx);
+        if (isTransitioning) return;
+        showSlide(currentIdx - 1);
       }
 
-      function startAutoSlide() {
-        slideInterval = setInterval(nextSlide, 5000);
-      }
+      let slideInterval = setInterval(nextSlide, 5000);
 
       function resetAutoSlide() {
         clearInterval(slideInterval);
-        startAutoSlide();
+        slideInterval = setInterval(nextSlide, 5000);
       }
 
-      // Button listeners
       if (nextBtn) {
         nextBtn.addEventListener('click', () => {
           nextSlide();
@@ -283,398 +305,249 @@
           resetAutoSlide();
         });
       }
-
-      // Initial start
-      startAutoSlide();
     });
   </script>
 
-  <section class="hero-box5">
-    <div class="hero-glow-1_box5"></div>
-    <div class="hero-glow-2_box5"></div>
-    <div class="hero-inner-box5">
-      <div class="hero-left-box5 reveal-box5 reveal delay-2">
-        <div class="hero-eyebrow-box5">
-          <span class="hero-eyebrow-dot-box5"></span>
-          Ethical Fertility Care · Ahmedabad
-        </div>
-        <h1>Science, Sensitivity<br>&amp; <em>Ethics</em><br>in Fertility.</h1>
-        <p class="hero-lead-box5">Evidence-based fertility and women's health — designed precisely around you, your hopes,
-          and your future family.</p>
-        <div class="hero-actions-box5">
-          <a href="{{ route('frontend.contact') }}" class="btn-hero-primary">
-            Book Consultation
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
-          <a href="{{ route('frontend.services') }}" class="btn-hero-ghost">
-            Explore Services
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-        <!-- <div class="hero-trust-box5">
-                                  <div class="hero-trust-item-box5">
-                                    <div class="hero-trust-icon-box5">
-                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                      </svg>
-                                    </div>
-                                    Ethics-led practice
-                                  </div>
-                                  <div class="hero-trust-item-box5">
-                                    <div class="hero-trust-icon-box5">
-                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="9 11 12 14 22 4" />
-                                      </svg>
-                                    </div>
-                                    Evidence-based protocols
-                                  </div>
-                                  <div class="hero-trust-item-box5">
-                                    <div class="hero-trust-icon-box5">
-                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <polyline points="12 6 12 12 16 14" />
-                                      </svg>
-                                    </div>
-                                    24/7 patient support
-                                  </div>
-                                </div> -->
-      </div>
+  <!-- <section class="hero-box5">
+                        <div class="hero-glow-1_box5"></div>
+                        <div class="hero-glow-2_box5"></div>
+                        <div class="hero-inner-box5">
+                          <div class="hero-left-box5 reveal-box5 reveal delay-2">
+                            <div class="hero-eyebrow-box5">
+                              <span class="hero-eyebrow-dot-box5"></span>
+                              Ethical Fertility Care · Ahmedabad
+                            </div>
+                            <h1>Science, Sensitivity<br>&amp; <em>Ethics</em><br>in Fertility.</h1>
+                            <p class="hero-lead-box5">Evidence-based fertility and women's health — designed precisely around you, your hopes,
+                              and your future family.</p>
+                            <div class="hero-actions-box5">
+                              <a href="{{ route('frontend.contact') }}" class="btn-hero-primary">
+                                Book Consultation
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                  stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                              </a>
+                              <a href="{{ route('frontend.services') }}" class="btn-hero-ghost">
+                                Explore Services
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                              </a>
+                            </div>
+                            <div class="hero-trust-box5">
+                                                              <div class="hero-trust-item-box5">
+                                                                <div class="hero-trust-icon-box5">
+                                                                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                                  </svg>
+                                                                </div>
+                                                                Ethics-led practice
+                                                              </div>
+                                                              <div class="hero-trust-item-box5">
+                                                                <div class="hero-trust-icon-box5">
+                                                                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                                    <polyline points="9 11 12 14 22 4" />
+                                                                  </svg>
+                                                                </div>
+                                                                Evidence-based protocols
+                                                              </div>
+                                                              <div class="hero-trust-item-box5">
+                                                                <div class="hero-trust-icon-box5">
+                                                                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                                    <circle cx="12" cy="12" r="10" />
+                                                                    <polyline points="12 6 12 12 16 14" />
+                                                                  </svg>
+                                                                </div>
+                                                                24/7 patient support
+                                                              </div>
+                                                            </div>
+                          </div>
 
-      <div class="hero-right-box5 reveal delay-2">
-        <div class="doctor-card-box5">
-          <img
-            src="https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/post_attachments/uploads/2022/10/MinistryOfMemories_Headshots-13_websize-1-min-1665749722.jpg"
-            alt="Dr. Yuvraj Jadeja">
-          <div class="doctor-card-overlay-box5"></div>
-          <div class="doctor-card-info-box5">
-            <div class="doctor-card-name-box5">Dr. Yuvraj Jadeja</div>
-            <div class="doctor-card-role-box5">Reproductive Medicine Specialist</div>
-          </div>
-        </div>
-        <div class="hero-stats-row-box5">
-          <div class="hero-stat-box5"><span class="hero-stat-num-box5">15+</span><span class="hero-stat-label-box5">Years
-              Experience</span></div>
-          <div class="hero-stat-box5"><span class="hero-stat-num-box5">98%</span><span
-              class="hero-stat-label-box5">Satisfaction</span></div>
-          <div class="hero-stat-box5"><span class="hero-stat-num-box5">5K+</span><span
-              class="hero-stat-label-box5">Families Helped</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
+                          <div class="hero-right-box5 reveal delay-2">
+                            <div class="doctor-card-box5">
+                              <img
+                                src="https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/post_attachments/uploads/2022/10/MinistryOfMemories_Headshots-13_websize-1-min-1665749722.jpg"
+                                alt="Dr. Yuvraj Jadeja">
+                              <div class="doctor-card-overlay-box5"></div>
+                              <div class="doctor-card-info-box5">
+                                <div class="doctor-card-name-box5">Dr. Yuvraj Jadeja</div>
+                                <div class="doctor-card-role-box5">Reproductive Medicine Specialist</div>
+                              </div>
+                            </div>
+                            <div class="hero-stats-row-box5">
+                              <div class="hero-stat-box5"><span class="hero-stat-num-box5">15+</span><span class="hero-stat-label-box5">Years
+                                  Experience</span></div>
+                              <div class="hero-stat-box5"><span class="hero-stat-num-box5">98%</span><span
+                                  class="hero-stat-label-box5">Satisfaction</span></div>
+                              <div class="hero-stat-box5"><span class="hero-stat-num-box5">5K+</span><span
+                                  class="hero-stat-label-box5">Families Helped</span></div>
+                            </div>
+                          </div>
+                        </div>
+                      </section> -->
 
   <!-- TRUST BAND -->
   <!-- <div class="trust-band-1">
-                                  <div class="trust-inner-1">
-                                    <div class="trust-item-1">
-                                      <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                        </svg></div>
-                                      <div class="trust-text-1"><strong>Ethical Practice</strong><span>No unnecessary procedures</span></div>
-                                    </div>
-                                    <div class="trust-item-1">
-                                      <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <polyline points="9 11 12 14 22 4" />
-                                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                                        </svg></div>
-                                      <div class="trust-text-1"><strong>Evidence-Based</strong><span>Latest clinical protocols</span></div>
-                                    </div>
-                                    <div class="trust-item-1">
-                                      <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <path
-                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                                        </svg></div>
-                                      <div class="trust-text-1"><strong>Patient-First</strong><span>Compassionate every step</span></div>
-                                    </div>
-                                    <div class="trust-item-1">
-                                      <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <circle cx="12" cy="12" r="10" />
-                                          <polyline points="12 6 12 12 16 14" />
-                                        </svg></div>
-                                      <div class="trust-text-1"><strong>24/7 Support</strong><span>Always here when needed</span></div>
-                                    </div>
-                                  </div>
-                                </div> -->
+                                                              <div class="trust-inner-1">
+                                                                <div class="trust-item-1">
+                                                                  <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                                    </svg></div>
+                                                                  <div class="trust-text-1"><strong>Ethical Practice</strong><span>No unnecessary procedures</span></div>
+                                                                </div>
+                                                                <div class="trust-item-1">
+                                                                  <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                      <polyline points="9 11 12 14 22 4" />
+                                                                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                                                    </svg></div>
+                                                                  <div class="trust-text-1"><strong>Evidence-Based</strong><span>Latest clinical protocols</span></div>
+                                                                </div>
+                                                                <div class="trust-item-1">
+                                                                  <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                      <path
+                                                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                                                    </svg></div>
+                                                                  <div class="trust-text-1"><strong>Patient-First</strong><span>Compassionate every step</span></div>
+                                                                </div>
+                                                                <div class="trust-item-1">
+                                                                  <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                      <circle cx="12" cy="12" r="10" />
+                                                                      <polyline points="12 6 12 12 16 14" />
+                                                                    </svg></div>
+                                                                  <div class="trust-text-1"><strong>24/7 Support</strong><span>Always here when needed</span></div>
+                                                                </div>
+                                                              </div>
+                                                            </div> -->
 
   <!-- VALUE SCROLL SECTION -->
 
 
   <style>
-    /* Scoped CSS for Value Scroll Section */
-    .value-scroll-section {
-      background: var(--bg-light, #fcfcfc);
-      padding: 5rem 0 3rem 0;
+    /* Value Marquee Styling */
+    .value-marquee-section {
+      background: var(--gold-light);
+      /* Theme cream background */
+      padding: 1.5rem 0;
       width: 100%;
       overflow: hidden;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    .value-scroll-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 2rem;
+    .value-marquee-inner {
+      width: 100%;
     }
 
-    .value-scroll-container {
+    .value-marquee-wrapper {
+      width: 100%;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .value-marquee-track {
       display: flex;
-      gap: 2rem;
-      overflow-x: auto;
-      padding-bottom: 2rem;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      /* Firefox */
-      -ms-overflow-style: none;
-      /* IE and Edge */
+      gap: 5rem;
+      width: max-content;
+      animation: value-marquee-scroll 40s linear infinite;
     }
 
-    .value-scroll-container::-webkit-scrollbar {
-      display: none;
-      /* Chrome, Safari, Opera */
+    .value-marquee-track:hover {
+      animation-play-state: paused;
     }
 
-    .value-scroll-card {
-      /* Display three boxes at a time with gap calculation */
-      flex: 0 0 calc(33.333% - 1.34rem);
-      background: #fff;
-      border: 1px solid rgba(0, 0, 0, 0.04);
-      border-radius: 20px;
-      padding: 3rem;
-      scroll-snap-align: start;
-      /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04); */
-      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    @keyframes value-marquee-scroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .value-marquee-card {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-shrink: 0;
+      background: transparent;
+      padding: 0;
+      border: none;
       position: relative;
-      overflow: hidden;
-    }
-
-    /* Stylish accent bar */
-    .value-scroll-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--crimson, #bc2b3d), var(--gold, #d4af37));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-
-    .value-scroll-card:hover {
-      transform: translateY(-8px);
-      /* box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); */
-      border-color: rgba(188, 43, 61, 0.1);
-    }
-
-    .value-scroll-card:hover::before {
-      transform: scaleX(1);
     }
 
     .v-card-icon {
-      width: 56px;
-      height: 56px;
-      background: #111;
-      border-radius: 12px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 2rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
     }
 
-    .value-scroll-card:hover .v-card-icon {
-      transform: scale(1.1) rotate(-5deg);
-      background: var(--crimson, #bc2b3d);
+    .v-card-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--crimson, #db454e);
+      /* Theme crimson for icons */
     }
 
     .v-card-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.5px;
-      color: #111;
-      margin-bottom: 1rem;
-    }
-
-    .v-card-text {
-      font-size: 1.05rem;
-      color: #555;
-      line-height: 1.6;
-      margin: 0;
       font-family: 'DM Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--midnight, #121212);
+      /* Theme midnight for titles on light background */
+      margin: 0;
+      white-space: nowrap;
+      text-transform: uppercase;
     }
 
-    @media (max-width: 900px) {
-      .value-scroll-card {
-        flex: 0 0 calc(85% - 1rem);
-        /* Show 1 full box + peek of the next on mobile */
-        padding: 2.5rem 2rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .value-scroll-section {
-        padding: 3rem 0 1rem 0;
-      }
-
-      .value-scroll-inner {
-        padding: 0 1rem;
-      }
-
-      .value-scroll-card {
-        flex: 0 0 85%;
-        margin-right: 1rem;
-      }
-
-      .v-card-icon {
-        margin-bottom: 1.5rem;
+    @media (max-width: 768px) {
+      .value-marquee-track {
+        gap: 3rem;
+        animation-duration: 25s;
       }
 
       .v-card-title {
-        font-size: 1.35rem;
+        font-size: 0.9rem;
       }
     }
-
-    /* Scroll Dots Styling */
-    .value-scroll-dots {
-      display: flex;
-      justify-content: center;
-      gap: 0.8rem;
-      margin-top: 2rem;
-    }
-
-    .value-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #ddd;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: all 0.3s ease;
-    }
-
-    .value-dot.active {
-      background: var(--crimson, #bc2b3d);
-      transform: scale(1.3);
-    }
-
-    .value-dot:hover:not(.active) {
-      background: #bbb;
-    }
+  </style>
   </style>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const container = document.getElementById('valueScrollContainer');
-      const dotsContainer = document.querySelector('.value-scroll-dots');
-      const originalCards = Array.from(container.querySelectorAll('.value-scroll-card'));
+      const track = document.getElementById('valueMarqueeTrack');
+      if (!track) return;
 
-      if (!container || !originalCards.length) return;
-
-      // 1. DYNAMIC DOT GENERATION
-      function renderDots() {
-        dotsContainer.innerHTML = '';
-        const itemsVisible = window.innerWidth > 900 ? 3 : 1.2;
-        const totalDots = originalCards.length;
-
-        // On desktop, we can only scroll until the last set of 3 is visible
-        const maxDots = window.innerWidth > 900 ? totalDots - 2 : totalDots;
-
-        for (let i = 0; i < maxDots; i++) {
-          const dot = document.createElement('button');
-          dot.classList.add('value-dot');
-          if (i === 0) dot.classList.add('active');
-          dot.addEventListener('click', () => {
-            stopAutoSlide();
-            scrollToIndex(i);
-            setTimeout(startAutoSlide, 5000);
-          });
-          dotsContainer.appendChild(dot);
-        }
-      }
-
-      function scrollToIndex(index) {
-        const cardWidth = originalCards[0].offsetWidth;
-        const gap = parseFloat(window.getComputedStyle(container).gap) || 0;
-        container.scrollTo({
-          left: index * (cardWidth + gap),
-          behavior: 'smooth'
-        });
-      }
-
-      // 2. AUTO-SLIDE & LOOP
-      let currentIndex = 0;
-      let autoSlideInterval;
-
-      function startAutoSlide() {
-        stopAutoSlide();
-        autoSlideInterval = setInterval(() => {
-          const maxDots = dotsContainer.querySelectorAll('.value-dot').length;
-          currentIndex++;
-
-          if (currentIndex >= maxDots) {
-            // Smoothly jump back to start (for now, without cloning to avoid layout shifts)
-            currentIndex = 0;
-          }
-
-          scrollToIndex(currentIndex);
-        }, 4000);
-      }
-
-      function stopAutoSlide() {
-        if (autoSlideInterval) clearInterval(autoSlideInterval);
-      }
-
-      // 3. SYNC DOTS ON SCROLL
-      container.addEventListener('scroll', () => {
-        const cardWidth = originalCards[0].offsetWidth;
-        const gap = parseFloat(window.getComputedStyle(container).gap) || 0;
-        const index = Math.round(container.scrollLeft / (cardWidth + gap));
-
-        const dots = dotsContainer.querySelectorAll('.value-dot');
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === index);
-        });
-        currentIndex = index;
+      // Duplicate cards for seamless marquee
+      const cards = Array.from(track.children);
+      cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        track.appendChild(clone);
       });
-
-      // Initialize
-      renderDots();
-      startAutoSlide();
-      window.addEventListener('resize', renderDots);
-
-      // Pause on interaction
-      container.addEventListener('mouseenter', stopAutoSlide);
-      container.addEventListener('mouseleave', startAutoSlide);
-      container.addEventListener('touchstart', stopAutoSlide, { passive: true });
     });
   </script>
 
   <!-- DIFFERENTIATOR -->
-  <section class="diff-section">
+  <section class="diff-section reveal">
     <div class="diff-inner">
       <div class="custom-diff-grid-img">
 
         <!-- Left Side: Image -->
         <div class="diff-left-image reveal">
           <div class="doc-image-wrapper">
-            <img
-              src="https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/post_attachments/uploads/2022/10/MinistryOfMemories_Headshots-13_websize-1-min-1665749722.jpg"
+            <img src="{{ asset('storage/about/MinistryOfMemories_Headshots-13_websize-1-min-1665749722.webp') }}"
               alt="Dr. Yuvraj Jadeja">
             <div class="doc-image-accent"></div>
           </div>
@@ -742,28 +615,33 @@
       /* Image + Text Grid Layout */
       .custom-diff-grid-img {
         display: grid;
-        grid-template-columns: 4fr 6fr;
-        /* 40% Image, 60% Content */
-        gap: 5rem;
+        grid-template-columns: 4.5fr 5.5fr;
+        /* Balanced ratio */
+        gap: 4rem;
         align-items: center;
       }
 
       /* Doctor Image Styles */
+      .diff-left-image {
+        height: 100%;
+      }
+
       .doc-image-wrapper {
         position: relative;
         border-radius: 16px;
         z-index: 1;
+        height: 100%;
       }
 
       .doc-image-wrapper img {
         width: 100%;
-        height: auto;
+        height: 100%;
         border-radius: 16px;
         display: block;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         position: relative;
         z-index: 2;
-        aspect-ratio: 4/5;
+        aspect-ratio: 0.85 / 1;
         object-fit: cover;
       }
 
@@ -794,11 +672,11 @@
       }
 
       .doc-intro-text {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
         color: #555;
         line-height: 1.6;
-        margin-bottom: 3rem;
-        max-width: 90%;
+        margin-bottom: 2rem;
+        max-width: 100%;
       }
 
       /* Premium Timeline Profile Design */
@@ -806,7 +684,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: 2.5rem;
+        gap: 1.8rem;
         padding-top: 0.5rem;
       }
 
@@ -869,8 +747,8 @@
       .timeline-content li::before {
         content: '→';
         position: absolute;
-        left: 0;
-        top: 0;
+        left: -4px;
+        top: -4px;
         color: var(--gold, #d4af37);
         font-weight: bold;
         font-size: 1.1rem;
@@ -901,7 +779,7 @@
   </section>
 
   <!-- SERVICES -->
-  <section class="services-section">
+  <section class="services-section reveal">
     <div class="section-wrap">
       <div class="section-header reveal">
         <h2>Services Designed<br>Around You</h2>
@@ -944,11 +822,11 @@
   <!-- PROCESS -->
   <section class="process-section-con">
     <div class="process-inner-con">
-      <div class="process-header-con reveal-con">
+      <div class="process-header-con reveal">
         <h2>The Journey<br>to <em>Clarity.</em></h2>
         <p>A clear, step-by-step process so you always know what to expect — no surprises, no pressure.</p>
       </div>
-      <div class="process-steps-con reveal-con">
+      <div class="process-steps-con reveal">
         <div class="step-con">
           <div class="step-num-con">I</div>
           <p class="step-title-con">Understanding You</p>
@@ -979,7 +857,7 @@
   </section>
 
   <!-- STORIES -->
-  <section class="stories-section">
+  <section class="stories-section reveal">
     <div class="section-wrap">
       <div class="section-header reveal">
         <div>
@@ -1018,7 +896,7 @@
       <style>
         .hp-stories-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 1.5rem;
           margin-top: 2rem;
         }
@@ -1094,7 +972,7 @@
   </section>
 
   <!-- BLOG PREVIEW -->
-  <section class="blog-list-section">
+  <section class="blog-list-section reveal">
     <div class="blog-list-inner">
       <div class="section-header reveal">
         <div>
@@ -1114,7 +992,8 @@
       </div>
       <div class="blog-list-grid">
         @foreach($blogs as $index => $blog)
-          <article class="blog-list-card reveal {{ $index % 3 == 1 ? 'delay-1' : ($index % 3 == 2 ? 'delay-2' : '') }}">
+          <article
+            class="blog-list-card reveal {{ $index % 4 == 1 ? 'delay-1' : ($index % 4 == 2 ? 'delay-2' : ($index % 4 == 3 ? 'delay-3' : '')) }}">
             <div class="blog-list-img-wrap">
               <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}" class="blog-list-img">
               <span class="blog-list-badge">{{ $blog->category_rel->name ?? 'Article' }}</span>
@@ -1134,11 +1013,9 @@
       </div>
     </div>
   </section>
-  </div>
-  </section>
 
   <!-- TESTIMONIALS -->
-  <section class="testimonials-section" style="padding: 6rem 0; background: var(--bg-light);">
+  <section class="testimonials-section reveal" style="padding: 6rem 0; background: var(--bg-light);">
     <div class="section-wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
       <div class="section-header reveal" style="text-align: center; margin-bottom: 3rem;">
         <h2
@@ -1158,121 +1035,126 @@
           </svg>
         </button>
 
-        <div class="testimonials-carousel" id="testiCarousel">
-          <!-- Card 1 -->
-          <div class="testimonial-card">
-            <div class="stars">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
+        <div class="testimonials-carousel-inner" style="overflow: hidden;">
+          <div class="testimonials-carousel" id="testiCarousel">
+            <!-- Card 1 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+              </div>
+              <p>"Dr. Yuvi and his team were a beacon of hope for us. Their ethical approach made us feel completely
+                comfortable."</p>
+              <div class="author">— Sneha & Rahul D.</div>
             </div>
-            <p>"Dr. Yuvi and his team were a beacon of hope for us. Their ethical approach made us feel completely
-              comfortable."</p>
-            <div class="author">— Sneha & Rahul D.</div>
-          </div>
-          <!-- Card 2 -->
-          <div class="testimonial-card">
-            <div class="stars">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
+            <!-- Card 2 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+              </div>
+              <p>"After years of disappointment, we finally found the right guidance here. No false promises, just pure
+                medical expertise."</p>
+              <div class="author">— Anjali M.</div>
             </div>
-            <p>"After years of disappointment, we finally found the right guidance here. No false promises, just pure
-              medical expertise."</p>
-            <div class="author">— Anjali M.</div>
-          </div>
-          <!-- Card 3 -->
-          <div class="testimonial-card">
-            <div class="stars">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
+            <!-- Card 3 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+              </div>
+              <p>"The entire staff is incredibly supportive. They walked us through every step, ensuring we fully
+                understood
+                our options."</p>
+              <div class="author">— Priya & Amit K.</div>
             </div>
-            <p>"The entire staff is incredibly supportive. They walked us through every step, ensuring we fully understood
-              our options."</p>
-            <div class="author">— Priya & Amit K.</div>
-          </div>
-          <!-- Card 4 -->
-          <div class="testimonial-card">
-            <div class="stars">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
+            <!-- Card 4 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+              </div>
+              <p>"We travelled from another city just for Dr. Yuvi, and it was the best decision. His empathy and
+                expertise
+                are unmatched."</p>
+              <div class="author">— Neha S.</div>
             </div>
-            <p>"We travelled from another city just for Dr. Yuvi, and it was the best decision. His empathy and expertise
-              are unmatched."</p>
-            <div class="author">— Neha S.</div>
-          </div>
-          <!-- Card 5 -->
-          <div class="testimonial-card">
-            <div class="stars">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
+            <!-- Card 5 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+              </div>
+              <p>"Transparent, honest, and truly caring. We are blessed with a healthy baby today because of their
+                tireless
+                efforts."</p>
+              <div class="author">— Rohan & Meera V.</div>
             </div>
-            <p>"Transparent, honest, and truly caring. We are blessed with a healthy baby today because of their tireless
-              efforts."</p>
-            <div class="author">— Rohan & Meera V.</div>
           </div>
         </div>
 
@@ -1286,14 +1168,6 @@
         <!-- Dots Container -->
         <div class="testi-dots" id="testiDots"></div>
       </div>
-
-      <!-- <div style="text-align: center; margin-top: 3rem;" class="reveal delay-2">
-                <a href="{{ route('frontend.successStories') }}" class="btn-outline-dark">View All Stories <svg width="13"
-                    height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg></a>
-              </div> -->
     </div>
 
     <style>
@@ -1302,27 +1176,21 @@
         padding: 0 50px;
       }
 
+      .testimonials-carousel-inner {
+        overflow: hidden;
+        width: 100%;
+      }
+
       .testimonials-carousel {
         display: flex;
         gap: 2rem;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
+        transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
         padding: 1rem 0 2rem;
-        scrollbar-width: none;
-        /* Firefox */
-      }
-
-      .testimonials-carousel::-webkit-scrollbar {
-        display: none;
-        /* Chrome/Safari */
       }
 
       .testimonial-card {
         flex: 0 0 calc(33.333% - 1.35rem);
-        /* 3 columns */
-        scroll-snap-align: start;
+        flex-shrink: 0;
         background: #fff;
         padding: 2.5rem;
         border-radius: 16px;
@@ -1332,11 +1200,6 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-      }
-
-      .testimonial-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
       }
 
       .testimonial-card .stars {
@@ -1378,13 +1241,6 @@
         cursor: pointer;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         z-index: 10;
-        transition: all 0.3s ease;
-      }
-
-      .testi-btn:hover {
-        background: var(--crimson);
-        color: #fff;
-        border-color: var(--crimson);
       }
 
       .testi-prev {
@@ -1395,7 +1251,6 @@
         right: 0;
       }
 
-      /* Testimonial Dots */
       .testi-dots {
         display: flex;
         justify-content: center;
@@ -1411,7 +1266,6 @@
         border: none;
         cursor: pointer;
         padding: 0;
-        transition: all 0.3s ease;
       }
 
       .testi-dot.active {
@@ -1437,8 +1291,6 @@
         .testi-btn {
           display: none;
         }
-
-        /* Hide buttons on mobile, allow swipe */
       }
     </style>
 
@@ -1451,46 +1303,87 @@
         const originalCards = Array.from(carousel.querySelectorAll('.testimonial-card'));
 
         if (carousel && prevBtn && nextBtn && dotsContainer && originalCards.length) {
-          // 1. DYNAMIC DOT GENERATION
+          const cardCount = originalCards.length;
+          let currentIndex = 3;
+          let isTransitioning = false;
+          let testiAutoSlide;
+
+          // Cloning 3 cards at each end for multi-column seamlessness
+          for (let i = 0; i < 3; i++) {
+            const firstClone = originalCards[i].cloneNode(true);
+            const lastClone = originalCards[cardCount - 1 - i].cloneNode(true);
+            carousel.appendChild(firstClone);
+            carousel.insertBefore(lastClone, carousel.firstChild);
+          }
+
+          const allCards = carousel.querySelectorAll('.testimonial-card');
+
+          function getStep() {
+            const cardWidth = originalCards[0].offsetWidth;
+            const gap = parseFloat(window.getComputedStyle(carousel).gap) || 32;
+            return cardWidth + gap;
+          }
+
+          function updatePosition(animate = true) {
+            const step = getStep();
+            if (animate) {
+              carousel.style.transition = 'transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)';
+            } else {
+              carousel.style.transition = 'none';
+            }
+            carousel.style.transform = `translateX(-${currentIndex * step}px)`;
+          }
+
+          setTimeout(() => updatePosition(false), 50);
+
+          function scrollToIndex(index) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentIndex = index;
+            updatePosition(true);
+            syncDots();
+          }
+
+          carousel.addEventListener('transitionend', () => {
+            isTransitioning = false;
+            if (currentIndex >= allCards.length - 3) {
+              currentIndex = 3;
+              updatePosition(false);
+            }
+            if (currentIndex <= 0) {
+              currentIndex = allCards.length - 6;
+              updatePosition(false);
+            }
+          });
+
+          function syncDots() {
+            const dots = dotsContainer.querySelectorAll('.testi-dot');
+            let realIdx = (currentIndex - 3) % cardCount;
+            if (realIdx < 0) realIdx += cardCount;
+            dots.forEach((dot, i) => {
+              dot.classList.toggle('active', i === realIdx);
+            });
+          }
+
           function renderDots() {
             dotsContainer.innerHTML = '';
-            const itemsVisible = window.innerWidth > 1024 ? 3 : (window.innerWidth > 768 ? 2 : 1);
-            const totalDots = originalCards.length;
-            const maxDots = window.innerWidth > 1024 ? totalDots - 2 : (window.innerWidth > 768 ? totalDots - 1 : totalDots);
-
-            for (let i = 0; i < maxDots; i++) {
+            for (let i = 0; i < cardCount; i++) {
               const dot = document.createElement('button');
               dot.classList.add('testi-dot');
               if (i === 0) dot.classList.add('active');
               dot.addEventListener('click', () => {
                 stopAutoSlide();
-                scrollToIndex(i);
+                scrollToIndex(i + 3);
                 setTimeout(startAutoSlide, 5000);
               });
               dotsContainer.appendChild(dot);
             }
           }
 
-          function getScrollStep() {
-            const card = originalCards[0];
-            return card.offsetWidth + (parseFloat(window.getComputedStyle(carousel).gap) || 32);
-          }
-
-          function scrollToIndex(index) {
-            carousel.scrollTo({ left: index * getScrollStep(), behavior: 'smooth' });
-          }
-
-          // 2. AUTO-SLIDE & LOOP
-          let currentIndex = 0;
-          let testiAutoSlide;
-
           function startAutoSlide() {
             stopAutoSlide();
             testiAutoSlide = setInterval(() => {
-              const dots = dotsContainer.querySelectorAll('.testi-dot');
-              currentIndex++;
-              if (currentIndex >= dots.length) currentIndex = 0;
-              scrollToIndex(currentIndex);
+              scrollToIndex(currentIndex + 1);
             }, 5000);
           }
 
@@ -1498,51 +1391,71 @@
             if (testiAutoSlide) clearInterval(testiAutoSlide);
           }
 
-          // 3. SYNC DOTS ON SCROLL
-          carousel.addEventListener('scroll', () => {
-            const index = Math.round(carousel.scrollLeft / getScrollStep());
-            const dots = dotsContainer.querySelectorAll('.testi-dot');
-            dots.forEach((dot, i) => {
-              dot.classList.toggle('active', i === index);
-            });
-            currentIndex = index;
-          });
-
-          // Initialize
           renderDots();
           startAutoSlide();
-          window.addEventListener('resize', renderDots);
+          window.addEventListener('resize', () => updatePosition(false));
 
-          // Buttons
           prevBtn.addEventListener('click', () => {
             stopAutoSlide();
-            const dots = dotsContainer.querySelectorAll('.testi-dot');
-            currentIndex--;
-            if (currentIndex < 0) currentIndex = dots.length - 1;
-            scrollToIndex(currentIndex);
+            scrollToIndex(currentIndex - 1);
             setTimeout(startAutoSlide, 5000);
           });
 
           nextBtn.addEventListener('click', () => {
             stopAutoSlide();
-            const dots = dotsContainer.querySelectorAll('.testi-dot');
-            currentIndex++;
-            if (currentIndex >= dots.length) currentIndex = 0;
-            scrollToIndex(currentIndex);
+            scrollToIndex(currentIndex + 1);
             setTimeout(startAutoSlide, 5000);
           });
 
-          // Pause on interaction
           carousel.addEventListener('mouseenter', stopAutoSlide);
           carousel.addEventListener('mouseleave', startAutoSlide);
-          carousel.addEventListener('touchstart', stopAutoSlide, { passive: true });
         }
       });
     </script>
   </section>
 
+  <style>
+    /* Global Section Styles for Index Page */
+    .section-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 0rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-header-right {
+      max-width: 500px;
+    }
+
+    .section-header-right p {
+      color: #555;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 991px) {
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+
+      .section-header-right {
+        max-width: 100%;
+      }
+    }
+  </style>
+
   <!-- CTA -->
-  <section class="cta-section">
+  <section class="cta-section reveal">
     <div class="cta-inner reveal">
       <div class="cta-eyebrow">Ready for Clarity?</div>
       <h2>Start Your Family's<br><em>Journey Today.</em></h2>
