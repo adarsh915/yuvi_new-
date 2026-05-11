@@ -18,8 +18,9 @@ class ContactFieldController extends Controller
     {
         $request->validate([
             'label' => 'required|string|max:255',
-            'type' => 'required|in:text,email,tel,select,textarea',
-            'order' => 'required|integer'
+            'type' => 'required|in:text,email,tel,number,date,select,textarea',
+            'category' => 'required|in:inclinic_visit,online_consultation,whatsapp,all',
+            'order' => 'required|integer|unique:contact_fields,order'
         ]);
 
         $name = Str::slug($request->label, '_');
@@ -28,6 +29,7 @@ class ContactFieldController extends Controller
             'label' => $request->label,
             'name' => $name,
             'type' => $request->type,
+            'category' => $request->category,
             'options' => $request->options,
             'is_required' => $request->has('is_required'),
             'order' => $request->order,
@@ -41,13 +43,15 @@ class ContactFieldController extends Controller
     {
         $request->validate([
             'label' => 'required|string|max:255',
-            'type' => 'required|in:text,email,tel,select,textarea',
-            'order' => 'required|integer'
+            'type' => 'required|in:text,email,tel,number,date,select,textarea',
+            'category' => 'required|in:inclinic_visit,online_consultation,whatsapp,all',
+            'order' => 'required|integer|unique:contact_fields,order,' . $contactField->id
         ]);
 
         $contactField->update([
             'label' => $request->label,
             'type' => $request->type,
+            'category' => $request->category,
             'options' => $request->options,
             'is_required' => $request->has('is_required'),
             'order' => $request->order,

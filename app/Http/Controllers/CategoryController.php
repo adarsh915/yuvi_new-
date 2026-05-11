@@ -18,11 +18,13 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
+            'slug' => 'nullable|string|max:255|unique:categories,slug',
             'description' => 'nullable|string'
         ]);
 
         Category::create([
             'name' => $request->name,
+            'slug' => $this->generateUniqueSlug(Str::slug($this->slugSource($request))),
             'description' => $request->description
         ]);
 
@@ -33,12 +35,13 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'slug' => 'nullable|string|max:255|unique:categories,slug,' . $category->id,
             'description' => 'nullable|string'
         ]);
 
         $category->update([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $this->generateUniqueSlug(Str::slug($this->slugSource($request)), $category->id),
             'description' => $request->description
         ]);
 
@@ -52,5 +55,27 @@ class CategoryController extends Controller
         }
         $category->delete();
         return redirect()->back()->with('success', 'Category deleted successfully.');
+    }
+
+    private function generateUniqueSlug(string $slug, ?int $ignoreId = null): string
+    {
+        $baseSlug = $slug !== '' ? $slug : 'category';
+        $candidate = $baseSlug;
+        $counter = 1;
+
+        while (Category::where('slug', $candidate)
+            ->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()) {
+            $candidate = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $candidate;
+    }
+
+    private function slugSource(Request $request): string
+    {
+        $manualSlug = trim((string) $request->input('slug', ''));
+        return $manualSlug !== '' ? $manualSlug : (string) $request->input('name', '');
     }
 }

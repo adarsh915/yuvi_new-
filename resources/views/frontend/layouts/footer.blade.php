@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>© 2026 Dr. Yuvraj Jadeja. All Rights Reserved.</p>
-        <p>Designed with care · Ahmedabad, India</p>
+        <p>© {{ date('Y') }} Dr. Yuvraj Jadeja. All Rights Reserved.</p>
+        <p>Created by Crescita Software.</p>
     </div>
 </footer>

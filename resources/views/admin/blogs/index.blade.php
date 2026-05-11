@@ -52,6 +52,7 @@
                         </td>
                         <td>
                             <div class="fw-medium">{{ $blog->title }}</div>
+                            <div class="text-xs text-secondary-light">/{{ $blog->slug }}</div>
                             <div class="text-xs text-secondary-light">By {{ $blog->author ?? 'Admin' }}</div>
                         </td>
                         <td>

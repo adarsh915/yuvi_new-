@@ -2,18 +2,25 @@
 
 @php
     $title = 'Success Stories';
-    $subTitle = 'Patient Journeys';
+    $subTitle = 'Video Stories & Patient Journeys';
     $script = '
         <script>
-            function editStory(id, title, url, type, name, order, is_active) {
-                $("#editModal").modal("show");
-                $("#edit_title").val(title);
-                $("#edit_video_url").val(url);
-                $("#edit_treatment_type").val(type);
-                $("#edit_patient_name").val(name);
-                $("#edit_order").val(order);
-                $("#edit_is_active").prop("checked", is_active == 1);
-                $("#editForm").attr("action", "/admin/stories/" + id);
+            $(document).ready(function() {
+                $("#storiesTable").DataTable({
+                    "order": [[3, "asc"]]
+                });
+            });
+
+            function editStory(id, title, url, typeId, name, order, is_active) {
+                document.getElementById("editForm").action = "/admin/stories/" + id;
+                document.getElementById("edit_title").value = title;
+                document.getElementById("edit_video_url").value = url;
+                document.getElementById("edit_treatment_type_id").value = typeId;
+                document.getElementById("edit_patient_name").value = name;
+                document.getElementById("edit_order").value = order;
+                document.getElementById("edit_is_active").checked = is_active;
+                const editModal = new bootstrap.Modal(document.getElementById("editModal"));
+                editModal.show();
             }
         </script>
     ';
@@ -36,8 +43,16 @@
                     <div class="text-xs text-secondary-light mt-4">Supports YouTube Shorts, Standard YouTube, and Instagram Reels.</div>
                 </div>
                 <div class="mb-20">
-                    <label class="form-label fw-semibold text-sm mb-8">Treatment Type</label>
-                    <input type="text" name="treatment_type" class="form-control" placeholder="e.g. IVF Success" required>
+                    <label class="form-label fw-semibold text-sm mb-8">Treatment Type *</label>
+                    <select name="treatment_type_id" class="form-control" required>
+                        <option value="">Select a treatment type</option>
+                        @foreach($treatmentTypes as $type)
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                    <div class="text-xs text-secondary-light mt-4">
+                        <a href="{{ route('admin.treatment-types') }}" target="_blank">Manage treatment types</a>
+                    </div>
                 </div>
                 <div class="mb-20">
                     <label class="form-label fw-semibold text-sm mb-8">Patient Name (Optional)</label>
@@ -62,11 +77,12 @@
         <div class="card p-24 radius-12 bg-base h-100">
             <h6 class="text-lg fw-semibold mb-20">Manage Stories</h6>
             <div class="table-responsive">
-                <table class="table bordered-table mb-0">
+                <table class="table bordered-table mb-0" id="storiesTable">
                     <thead>
                         <tr>
                             <th>Video</th>
                             <th>Info</th>
+                            <th>Treatment</th>
                             <th>Order</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -82,7 +98,10 @@
                             </td>
                             <td>
                                 <div class="fw-semibold text-primary-600">{{ $story->title }}</div>
-                                <div class="text-xs text-secondary-light">{{ $story->treatment_type }}</div>
+                                <div class="text-xs text-secondary-light">{{ $story->patient_name ?? '-' }}</div>
+                            </td>
+                            <td>
+                                <div class="text-sm fw-medium">{{ $story->treatmentType->name ?? '-' }}</div>
                             </td>
                             <td>{{ $story->order }}</td>
                             <td>
@@ -92,15 +111,15 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
-                                    <button class="btn btn-sm btn-outline-info" 
-                                            onclick="editStory({{ $story->id }}, '{{ $story->title }}', '{{ $story->video_url }}', '{{ $story->treatment_type }}', '{{ $story->patient_name }}', {{ $story->order }}, {{ $story->is_active }})">
-                                        <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
+                                    <button class="btn btn-sm btn-outline-info radius-8" 
+                                            onclick="editStory({{ $story->id }}, '{{ addslashes($story->title) }}', '{{ $story->video_url }}', {{ $story->treatment_type_id }}, '{{ addslashes($story->patient_name) }}', {{ $story->order }}, {{ $story->is_active }})">
+                                        <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon> Edit
                                     </button>
-                                    <form action="{{ route('admin.stories.destroy', $story->id) }}" method="POST" onsubmit="return confirm('Delete this story?')">
+                                    <form action="{{ route('admin.stories.destroy', $story->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Delete this story?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger radius-8">
+                                            <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon> Delete
                                         </button>
                                     </form>
                                 </div>
@@ -116,7 +135,7 @@
 
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content radius-16">
             <div class="modal-header border-bottom-0">
                 <h6 class="modal-title">Edit Story</h6>
@@ -127,19 +146,23 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="mb-20">
-                        <label class="form-label fw-semibold text-sm mb-8">Story Title</label>
+                        <label class="form-label fw-semibold text-sm mb-8">Story Title *</label>
                         <input type="text" name="title" id="edit_title" class="form-control" required>
                     </div>
                     <div class="mb-20">
-                        <label class="form-label fw-semibold text-sm mb-8">Video URL</label>
+                        <label class="form-label fw-semibold text-sm mb-8">Video URL *</label>
                         <input type="url" name="video_url" id="edit_video_url" class="form-control" required>
                     </div>
                     <div class="mb-20">
-                        <label class="form-label fw-semibold text-sm mb-8">Treatment Type</label>
-                        <input type="text" name="treatment_type" id="edit_treatment_type" class="form-control" required>
+                        <label class="form-label fw-semibold text-sm mb-8">Treatment Type *</label>
+                        <select name="treatment_type_id" id="edit_treatment_type_id" class="form-control" required>
+                            @foreach($treatmentTypes as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-20">
-                        <label class="form-label fw-semibold text-sm mb-8">Patient Name</label>
+                        <label class="form-label fw-semibold text-sm mb-8">Patient Name (Optional)</label>
                         <input type="text" name="patient_name" id="edit_patient_name" class="form-control">
                     </div>
                     <div class="mb-20">

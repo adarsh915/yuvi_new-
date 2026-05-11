@@ -11,7 +11,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ContactFieldController;
 use App\Http\Controllers\StoryController;
+use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\TreatmentTypeController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\SliderController;
 
 // Frontend Routes
 Route::name('frontend.')->group(function () {
@@ -40,7 +44,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/leads', 'leads')->name('leads');
+        Route::get('/leads/export/csv', 'exportLeadsCsv')->name('leads.export.csv');
         Route::get('/leads/{lead}', 'leadDetails')->name('leads.details');
+        Route::delete('/leads/{lead}', 'destroyLead')->name('leads.destroy');
         Route::get('/settings', 'settings')->name('settings');
         Route::post('/settings/update', 'settingsUpdate')->name('settings.update');
     });
@@ -52,11 +58,41 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{faq}', 'destroy')->name('faqs.destroy');
     });
 
+    Route::controller(SliderController::class)->prefix('sliders')->group(function () {
+        Route::get('/', 'index')->name('sliders');
+        Route::get('/create', 'create')->name('sliders.create');
+        Route::post('/store', 'store')->name('sliders.store');
+        Route::get('/{slider}/edit', 'edit')->name('sliders.edit');
+        Route::put('/{slider}', 'update')->name('sliders.update');
+        Route::delete('/{slider}', 'destroy')->name('sliders.destroy');
+    });
+
     Route::controller(StoryController::class)->prefix('stories')->group(function () {
         Route::get('/', 'index')->name('stories');
         Route::post('/store', 'store')->name('stories.store');
         Route::put('/{story}', 'update')->name('stories.update');
         Route::delete('/{story}', 'destroy')->name('stories.destroy');
+    });
+
+    Route::controller(TreatmentTypeController::class)->prefix('treatment-types')->group(function () {
+        Route::get('/', 'index')->name('treatment-types');
+        Route::post('/store', 'store')->name('treatment-types.store');
+        Route::put('/{treatmentType}', 'update')->name('treatment-types.update');
+        Route::delete('/{treatmentType}', 'destroy')->name('treatment-types.destroy');
+    });
+
+    Route::controller(GalleryController::class)->prefix('gallery')->group(function () {
+        Route::get('/', 'index')->name('gallery');
+        Route::post('/store', 'store')->name('gallery.store');
+        Route::put('/{gallery}', 'update')->name('gallery.update');
+        Route::delete('/{gallery}', 'destroy')->name('gallery.destroy');
+    });
+
+    Route::controller(TestimonialController::class)->prefix('testimonials')->group(function () {
+        Route::get('/', 'index')->name('testimonials');
+        Route::post('/store', 'store')->name('testimonials.store');
+        Route::put('/{testimonial}', 'update')->name('testimonials.update');
+        Route::delete('/{testimonial}', 'destroy')->name('testimonials.destroy');
     });
 
     Route::controller(QuizController::class)->prefix('quiz')->group(function () {
@@ -65,6 +101,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::put('/questions/{quizQuestion}', 'update')->name('quiz.questions.update');
         Route::delete('/questions/{quizQuestion}', 'destroy')->name('quiz.questions.destroy');
         Route::get('/submissions', 'submissions')->name('quiz.submissions');
+        Route::get('/submissions/export', 'exportSubmissions')->name('quiz.submissions.export');
+        Route::get('/submissions/{submission}/print', 'printSubmission')->name('quiz.submissions.print');
         Route::get('/submissions/{submission}', 'submissionDetails')->name('quiz.submissions.details');
         Route::delete('/submissions/{submission}', 'destroySubmission')->name('quiz.submissions.destroy');
     });

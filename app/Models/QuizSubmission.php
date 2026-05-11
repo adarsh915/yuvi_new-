@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuizSubmission extends Model
 {
-    protected $fillable = ['name', 'phone', 'email', 'city', 'answers_json', 'yes_count'];
+    protected $fillable = ['name', 'phone', 'email', 'city', 'answers_json'];
 
     protected $casts = [
         'answers_json' => 'array'

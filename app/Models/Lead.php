@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Lead extends Model
 {
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'phone',
         'subject',
+        'consultation_type',
         'message',
+        'preferred_location',
         'status',
         'dynamic_data',
     ];
@@ -19,4 +22,9 @@ class Lead extends Model
     protected $casts = [
         'dynamic_data' => 'array',
     ];
+
+    public function getFullNameAttribute(): string
+    {
+        return trim(($this->first_name ?? '') . ' ' . ($this->last_name ?? ''));
+    }
 }

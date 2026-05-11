@@ -5,6 +5,12 @@
     $subTitle = 'Manage FAQs';
     $script = '
         <script>
+            $(document).ready(function() {
+                $("#faqsTable").DataTable({
+                    "order": [[1, "asc"]]
+                });
+            });
+
             $(document).on("click", ".edit-faq-btn", function() {
                 const id = $(this).data("id");
                 const question = $(this).data("question");
@@ -57,7 +63,7 @@
         <div class="card p-24 radius-12 bg-base h-100">
             <h6 class="text-lg fw-semibold mb-20">Manage FAQs</h6>
             <div class="table-responsive">
-                <table class="table bordered-table mb-0">
+                <table class="table bordered-table mb-0" id="faqsTable">
                     <thead>
                         <tr>
                             <th>Question & Answer</th>
