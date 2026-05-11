@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactField extends Model
 {
-    protected $fillable = ['label', 'name', 'type', 'options', 'is_required', 'order', 'placeholder'];
+    protected $fillable = ['label', 'name', 'type', 'category', 'options', 'is_required', 'order', 'placeholder'];
 }

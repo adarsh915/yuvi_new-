@@ -32,7 +32,12 @@
                     <div class="row gy-20">
                         <div class="col-12">
                             <label class="form-label fw-semibold text-sm mb-8">Service Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control radius-8" value="{{ $service->title }}" required>
+                            <input type="text" id="service_title" name="title" class="form-control radius-8" value="{{ $service->title }}" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold text-sm mb-8">Slug</label>
+                            <input type="text" id="service_slug" name="slug" class="form-control radius-8" value="{{ $service->slug }}" placeholder="auto-generated-from-title">
                         </div>
                         
                         <div class="col-12">
@@ -224,6 +229,34 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    function slugifyText(value) {
+        return String(value)
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+    }
+
+    function bindSlugAuto(sourceId, slugId) {
+        const source = document.getElementById(sourceId);
+        const slug = document.getElementById(slugId);
+        if (!source || !slug) return;
+
+        slug.dataset.manual = '0';
+
+        slug.addEventListener('input', function() {
+            this.dataset.manual = this.value.trim() !== '' ? '1' : '0';
+        });
+
+        source.addEventListener('input', function() {
+            if (slug.dataset.manual === '1') return;
+            slug.value = slugifyText(source.value);
+        });
+    }
+
+    bindSlugAuto('service_title', 'service_slug');
+
     // Protocol Repeater
     let protocolIndex = {{ count($service->protocol_json ?? [1]) }};
     const protocolContainer = document.getElementById('protocol-container');

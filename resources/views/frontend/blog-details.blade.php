@@ -11,11 +11,10 @@
         <a href="{{ route('frontend.index') }}">Home</a> / <a href="{{ route('frontend.blog') }}">Blog</a> /
         <span>{{ $blog->title }}</span>
       </div>
-      <div class="hero-eyebrow">{{ strtoupper($blog->category) }}</div>
+      <div class="hero-eyebrow">{{ strtoupper(optional($blog->category_rel)->name ?? strtoupper($blog->category)) }}</div>
       <h1>{!! str_replace(' ', ' <em>', $blog->title) . '</em>' !!}</h1>
       <div class="meta-info">
         <div class="author">
-          <div class="author-img"></div>
           <span>{{ $blog->author }}</span>
         </div>
         <span>•</span>
@@ -83,7 +82,7 @@
               </div>
               <div class="bd-related-info">
                 <h5 class="bd-related-title">{{ $related->title }}</h5>
-                <span class="bd-related-meta">{{ $related->created_at->format('M d, Y') }} · {{ ucfirst($related->category) }}</span>
+                <span class="bd-related-meta">{{ $related->created_at->format('M d, Y') }} · {{ ucfirst(optional($related->category_rel)->name ?? $related->category) }}</span>
               </div>
             </a>
           </li>

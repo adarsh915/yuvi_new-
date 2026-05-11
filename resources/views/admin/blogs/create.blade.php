@@ -19,7 +19,36 @@
                         ["view", ["fullscreen", "codeview", "help"]]
                     ]
                 });
+
+                bindSlugAuto("#blog_title", "#blog_slug");
             });
+
+            function slugifyText(value) {
+                return String(value)
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^a-z0-9\s-]/g, "")
+                    .replace(/\s+/g, "-")
+                    .replace(/-+/g, "-");
+            }
+
+            function bindSlugAuto(sourceSelector, slugSelector) {
+                const $source = $(sourceSelector);
+                const $slug = $(slugSelector);
+
+                if (!$source.length || !$slug.length) return;
+
+                $slug.data("manual", false);
+
+                $slug.on("input", function() {
+                    $(this).data("manual", $(this).val().trim() !== "");
+                });
+
+                $source.on("input", function() {
+                    if ($slug.data("manual")) return;
+                    $slug.val(slugifyText($source.val()));
+                });
+            }
         </script>
     ';
 @endphp
@@ -41,7 +70,12 @@
                     <div class="row gy-20">
                         <div class="col-12">
                             <label class="form-label fw-semibold text-sm mb-8">Post Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control radius-8" placeholder="Enter post title" required>
+                            <input type="text" id="blog_title" name="title" class="form-control radius-8" placeholder="Enter post title" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold text-sm mb-8">Slug</label>
+                            <input type="text" id="blog_slug" name="slug" class="form-control radius-8" placeholder="auto-generated-from-title">
                         </div>
                         
                         <div class="col-12">
@@ -74,10 +108,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-12">
-                                <label class="form-label fw-semibold text-sm mb-8">Author Name</label>
-                                <input type="text" name="author" class="form-control radius-8" placeholder="e.g. Dr. Yuvi">
-                            </div>
+                            
 
                             <div class="col-12">
                                 <label class="form-label fw-semibold text-sm mb-8">Tags (Comma separated)</label>

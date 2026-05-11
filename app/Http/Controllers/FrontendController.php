@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use App\Models\QuizQuestion;
 use App\Models\QuizSubmission;
 
@@ -12,11 +14,12 @@ class FrontendController extends Controller
     {
         $faqs = \App\Models\Faq::where('is_active', true)->orderBy('order')->get();
         $stories = \App\Models\SuccessStory::where('is_active', true)->orderBy('order')->take(4)->get();
+        $sliders = \App\Models\Slider::where('is_active', true)->orderBy('order')->get();
         $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
         $services = \App\Models\Service::where('is_active', true)->orderBy('order')->get();
         $blogs = \App\Models\Blog::where('is_active', true)->orderBy('created_at', 'desc')->take(4)->get();
 
-        return view('frontend.index', compact('faqs', 'stories', 'settings', 'services', 'blogs'));
+        return view('frontend.index', compact('faqs', 'stories', 'sliders', 'settings', 'services', 'blogs'));
     }
 
     public function about()
@@ -28,19 +31,19 @@ class FrontendController extends Controller
     {
         $blogs = \App\Models\Blog::where('is_active', true)->orderBy('created_at', 'desc')->get();
         $categories = \App\Models\Blog::where('is_active', true)
-            ->select('category', \DB::raw('count(*) as total'))
+            ->select('category', DB::raw('count(*) as total'))
             ->groupBy('category')
             ->get();
-            
+
         return view('frontend.blog', compact('blogs', 'categories'));
     }
 
     public function blogDetails($slug)
     {
-        $blog = \App\Models\Blog::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        $relatedBlogs = \App\Models\Blog::where('id', '!=', $blog->id)
+        $blog = \App\Models\Blog::with('category_rel')->where('slug', $slug)->where('is_active', true)->firstOrFail();
+        $relatedBlogs = \App\Models\Blog::with('category_rel')->where('id', '!=', $blog->id)
             ->where('is_active', true)
-            ->where('category', $blog->category)
+            ->where('category_id', $blog->category_id)
             ->limit(2)
             ->get();
         return view('frontend.blog-details', compact('blog', 'relatedBlogs'));
@@ -55,22 +58,65 @@ class FrontendController extends Controller
 
     public function contactSubmit(Request $request)
     {
-        $fields = \App\Models\ContactField::all();
+        $selectedCategory = $request->input('consultation_type');
+        $fields = \App\Models\ContactField::where(function ($q) use ($selectedCategory) {
+            $q->where('category', 'all');
+            if (!empty($selectedCategory)) {
+                $q->orWhere('category', $selectedCategory);
+            }
+        })->get();
         $rules = [];
-        
+        // Base field validations
+        $rules['first_name'] = ['required', 'string', 'max:255'];
+        $rules['last_name'] = ['required', 'string', 'max:255'];
+        $rules['email'] = ['required', 'email', 'max:255'];
+        $rules['phone'] = ['required', 'regex:/^\d{10}$/'];
+        $rules['primary_concern'] = ['required', 'string', 'max:255'];
+        $rules['preferred_location'] = ['nullable', 'string', 'max:255'];
+        $rules['consultation_type'] = ['required', 'in:inclinic_visit,online_consultation,whatsapp'];
+        $rules['message'] = ['required', 'string', 'min:10'];
+
         foreach ($fields as $field) {
             $fieldRules = $field->is_required ? ['required'] : ['nullable'];
-            if ($field->type == 'email') $fieldRules[] = 'email';
+            switch ($field->type) {
+                case 'email':
+                    $fieldRules[] = 'email';
+                    break;
+                case 'tel':
+                    $fieldRules[] = 'regex:/^\d{10}$/';
+                    break;
+                case 'number':
+                    $fieldRules[] = 'numeric';
+                    break;
+                case 'date':
+                    $fieldRules[] = 'date';
+                    break;
+                case 'select':
+                    // build in: rule from options if available
+                    if (!empty($field->options)) {
+                        $opts = array_filter(array_map('trim', explode(',', $field->options)));
+                        if (!empty($opts)) {
+                            $fieldRules[] = 'in:' . implode(',', array_map(function ($o) {
+                                return str_replace(',', '', $o);
+                            }, $opts));
+                        }
+                    }
+                    break;
+                default:
+                    $fieldRules[] = 'string';
+                    break;
+            }
+
             $rules[$field->name] = $fieldRules;
         }
 
-        $validator = \Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validator->errors()
-            ]);
+            ], 422);
         }
 
         // Prepare lead data
@@ -80,6 +126,8 @@ class FrontendController extends Controller
         $phone = $request->input('phone', '');
         $subject = $request->input('primary_concern', 'General Inquiry');
         $message = $request->input('message', 'No message provided');
+        $preferredLocation = $request->input('preferred_location', null);
+        $consultationType = $request->input('consultation_type', 'inclinic_visit');
 
         // Capture all dynamic data
         $dynamicData = [];
@@ -94,10 +142,13 @@ class FrontendController extends Controller
         }
 
         \App\Models\Lead::create([
-            'name' => trim($firstName . ' ' . $lastName),
+            'first_name' => $firstName,
+            'last_name' => $lastName,
             'email' => $email,
             'phone' => $phone,
             'subject' => $subject,
+            'consultation_type' => $consultationType,
+            'preferred_location' => $preferredLocation,
             'message' => $message,
             'dynamic_data' => $dynamicData
         ]);
@@ -137,6 +188,7 @@ class FrontendController extends Controller
             'answers' => 'required|array'
         ]);
 
+        // Optionally compute a local yes count for messaging, but do not store or expose it.
         $yesCount = 0;
         foreach ($request->answers as $ans) {
             if ($ans === 'Yes') $yesCount++;
@@ -148,22 +200,20 @@ class FrontendController extends Controller
             'email' => $request->email,
             'city' => $request->city,
             'answers_json' => $request->answers,
-            'yes_count' => $yesCount
         ]);
 
         $resultMsg = '';
         if ($yesCount === 0) {
             $resultMsg = 'Based on your responses, you have no immediate red flags. However, if you are planning to conceive, a routine consultation with Dr. Yuvi is always a great first step.';
         } else if ($yesCount <= 3) {
-            $resultMsg = 'You answered "Yes" to ' . $yesCount . ' concern(s). There are some areas worth discussing with a specialist. We recommend booking a consultation to explore your options and get a personalised care plan.';
+            $resultMsg = 'You answered "Yes" to several concerns. Consider booking a consultation to explore options and get a personalised care plan.';
         } else {
-            $resultMsg = 'You answered "Yes" to ' . $yesCount . ' concern(s), indicating moderate to significant fertility-related factors. We strongly recommend a comprehensive clinical evaluation with Dr. Yuvi to identify the best path forward for you.';
+            $resultMsg = 'Your responses indicate multiple concerns; we recommend a comprehensive clinical evaluation with Dr. Yuvi.';
         }
 
         return response()->json([
             'success' => true,
-            'message' => $resultMsg,
-            'yes_count' => $yesCount
+            'message' => $resultMsg
         ]);
     }
 

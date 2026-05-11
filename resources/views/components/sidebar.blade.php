@@ -11,13 +11,17 @@
     </div>
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
-            <li class="sidebar-menu-group-title">MAIN MENU</li>
+            <!-- Main Dashboard -->
+            <li class="sidebar-menu-group-title">MAIN</li>
             <li>
                 <a href="{{ route('admin.index') }}" class="{{ request()->routeIs('admin.index') ? 'active' : '' }}">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
                     <span>Dashboard</span>
                 </a>
             </li>
+
+            <!-- Leads & Inquiries -->
+            <li class="sidebar-menu-group-title">LEADS & INQUIRIES</li>
             <li>
                 <a href="{{ route('admin.leads') }}" class="{{ request()->routeIs('admin.leads*') ? 'active' : '' }}">
                     <iconify-icon icon="solar:users-group-rounded-outline" class="menu-icon"></iconify-icon>
@@ -30,16 +34,18 @@
                     <span>Form Builder</span>
                 </a>
             </li>
+
+            <!-- Content Management -->
+            <li class="sidebar-menu-group-title">CONTENT MANAGEMENT</li>
             <li>
-                <a href="{{ route('admin.faqs') }}" class="{{ request()->routeIs('admin.faqs') ? 'active' : '' }}">
-                    <iconify-icon icon="solar:question-circle-outline" class="menu-icon"></iconify-icon>
-                    <span>Manage FAQs</span>
+                <a href="{{ route('admin.sliders') }}" class="{{ request()->routeIs('admin.sliders*') ? 'active' : '' }}">
+                    <span>Homepage Sliders</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.stories') }}" class="{{ request()->routeIs('admin.stories') ? 'active' : '' }}">
-                    <iconify-icon icon="solar:clapperboard-edit-outline" class="menu-icon"></iconify-icon>
-                    <span>Success Stories</span>
+                <a href="{{ route('admin.gallery') }}" class="{{ request()->routeIs('admin.gallery') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:gallery-outline" class="menu-icon"></iconify-icon>
+                    <span>Gallery</span>
                 </a>
             </li>
             <li>
@@ -54,6 +60,45 @@
                     <span>Blog Categories</span>
                 </a>
             </li>
+
+            <!-- Services & Stories -->
+            <li class="sidebar-menu-group-title">SERVICES & TESTIMONIALS</li>
+            <li>
+                <a href="{{ route('admin.services') }}" class="{{ request()->routeIs('admin.services*') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:medical-kit-outline" class="menu-icon"></iconify-icon>
+                    <span>Manage Services</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.treatment-types') }}" class="{{ request()->routeIs('admin.treatment-types') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:tag-outline" class="menu-icon"></iconify-icon>
+                    <span>Treatment Types</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.stories') }}" class="{{ request()->routeIs('admin.stories') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:clapperboard-edit-outline" class="menu-icon"></iconify-icon>
+                    <span>Video Stories</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.testimonials') }}" class="{{ request()->routeIs('admin.testimonials') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:chat-round-dots-outline" class="menu-icon"></iconify-icon>
+                    <span>Customer Reviews</span>
+                </a>
+            </li>
+
+            <!-- FAQs & Info -->
+            <li class="sidebar-menu-group-title">INFORMATION</li>
+            <li>
+                <a href="{{ route('admin.faqs') }}" class="{{ request()->routeIs('admin.faqs') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:question-circle-outline" class="menu-icon"></iconify-icon>
+                    <span>Manage FAQs</span>
+                </a>
+            </li>
+
+            <!-- Quiz -->
+            <li class="sidebar-menu-group-title">QUIZ & ENGAGEMENT</li>
             <li>
                 <a href="{{ route('admin.quiz.questions') }}" class="{{ request()->routeIs('admin.quiz.questions') ? 'active' : '' }}">
                     <iconify-icon icon="solar:clipboard-list-outline" class="menu-icon"></iconify-icon>
@@ -66,12 +111,9 @@
                     <span>User Submissions</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('admin.services') }}" class="{{ request()->routeIs('admin.services*') ? 'active' : '' }}">
-                    <iconify-icon icon="solar:medical-kit-outline" class="menu-icon"></iconify-icon>
-                    <span>Manage Services</span>
-                </a>
-            </li>
+
+            <!-- Settings -->
+            <li class="sidebar-menu-group-title">SETTINGS</li>
             <li>
                 <a href="{{ route('admin.settings') }}" class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                     <iconify-icon icon="solar:settings-outline" class="menu-icon"></iconify-icon>
@@ -79,7 +121,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-menu-group-title">AUTH</li>
+            <!-- Logout -->
+            <li class="sidebar-menu-group-title">ACCOUNT</li>
             <li>
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf

@@ -27,13 +27,6 @@
                 <label class="text-secondary-light text-xs fw-bold text-uppercase">City</label>
                 <div class="text-lg fw-medium">{{ $submission->city ?? 'N/A' }}</div>
             </div>
-            <hr class="my-20">
-            <div class="d-flex justify-content-between align-items-center">
-                <span class="text-secondary-light">Total "Yes"</span>
-                <span class="badge {{ $submission->yes_count > 3 ? 'bg-danger-focus text-danger-main' : 'bg-warning-focus text-warning-main' }} py-8 px-16 text-md">
-                    {{ $submission->yes_count }}
-                </span>
-            </div>
         </div>
         <a href="{{ route('admin.quiz.submissions') }}" class="btn btn-outline-secondary w-100 mt-20">Back to Submissions</a>
     </div>
@@ -58,7 +51,6 @@
                             <tr>
                                 <td>
                                     <div class="text-sm fw-medium">{{ $question->question ?? 'Question Deleted' }}</div>
-                                    <div class="text-xs text-secondary-light mt-4">ID: {{ $q_id }}</div>
                                 </td>
                                 <td>
                                     <span class="badge {{ $answer == 'Yes' ? 'bg-danger-focus text-danger-main' : 'bg-success-focus text-success-main' }}">

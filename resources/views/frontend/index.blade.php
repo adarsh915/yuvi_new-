@@ -9,15 +9,21 @@
   <!-- TOP BANNER SLIDER -->
   <section class="top-banner-slider-con reveal">
     <div class="top-banner-track" id="topBannerTrack">
-      <div class="top-banner-slide active">
-        <img src="{{ asset('storage/banner/banner1.avif') }}" alt="Medical Excellence">
-      </div>
-      <div class="top-banner-slide">
-        <img src="{{ asset('storage/banner/banner2.avif') }}" alt="Advanced Care">
-      </div>
-      <div class="top-banner-slide">
-        <img src="{{ asset('storage/banner/banner3.avif') }}" alt="Patient Support">
-      </div>
+      @forelse($sliders as $slider)
+        <div class="top-banner-slide @if($loop->first) active @endif">
+          <img src="{{ asset('storage/' . $slider->image) }}" alt="Homepage slider {{ $loop->iteration }}">
+        </div>
+      @empty
+        <div class="top-banner-slide active">
+          <img src="{{ asset('storage/banner/banner1.avif') }}" alt="Medical Excellence">
+        </div>
+        <div class="top-banner-slide">
+          <img src="{{ asset('storage/banner/banner2.avif') }}" alt="Advanced Care">
+        </div>
+        <div class="top-banner-slide">
+          <img src="{{ asset('storage/banner/banner3.avif') }}" alt="Patient Support">
+        </div>
+      @endforelse
     </div>
 
     <!-- Navigation Buttons -->

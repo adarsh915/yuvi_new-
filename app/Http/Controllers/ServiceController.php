@@ -23,6 +23,7 @@ class ServiceController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:services,slug',
             'category_tag' => 'required|string|max:255',
             'short_description' => 'required|string',
             'hero_lead' => 'required|string',
@@ -33,7 +34,8 @@ class ServiceController extends Controller
         ]);
 
         $data = $request->all();
-        $data['slug'] = Str::slug($request->title);
+    $slugBase = Str::slug($request->input('slug', $request->title));
+    $data['slug'] = $this->generateUniqueSlug($slugBase);
         $data['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('listing_image')) {
@@ -62,6 +64,7 @@ class ServiceController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:services,slug,' . $service->id,
             'category_tag' => 'required|string|max:255',
             'short_description' => 'required|string',
             'hero_lead' => 'required|string',
@@ -70,7 +73,8 @@ class ServiceController extends Controller
         ]);
 
         $data = $request->all();
-        $data['slug'] = Str::slug($request->title);
+    $slugBase = Str::slug($request->input('slug', $request->title));
+    $data['slug'] = $this->generateUniqueSlug($slugBase, $service->id);
         $data['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('listing_image')) {
@@ -93,5 +97,21 @@ class ServiceController extends Controller
     {
         $service->delete();
         return redirect()->route('admin.services')->with('success', 'Service deleted successfully.');
+    }
+
+    private function generateUniqueSlug(string $slug, ?int $ignoreId = null): string
+    {
+        $baseSlug = $slug !== '' ? $slug : 'service';
+        $candidate = $baseSlug;
+        $counter = 1;
+
+        while (Service::where('slug', $candidate)
+            ->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()) {
+            $candidate = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $candidate;
     }
 }

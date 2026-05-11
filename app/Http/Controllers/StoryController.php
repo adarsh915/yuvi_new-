@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\SuccessStory;
+use App\Models\TreatmentType;
 use Illuminate\Http\Request;
 
 class StoryController extends Controller
 {
     public function index()
     {
-        $stories = SuccessStory::orderBy('order')->get();
-        return view('admin.stories.index', compact('stories'));
+        $stories = SuccessStory::with('treatmentType')->orderBy('order')->get();
+        $treatmentTypes = TreatmentType::where('is_active', true)->orderBy('order')->get();
+        return view('admin.stories.index', compact('stories', 'treatmentTypes'));
     }
 
     public function store(Request $request)
@@ -18,7 +20,7 @@ class StoryController extends Controller
         $request->validate([
             'title' => 'required',
             'video_url' => 'required',
-            'treatment_type' => 'required',
+            'treatment_type_id' => 'required|exists:treatment_types,id',
         ]);
 
         $video_url = $this->convertEmbedUrl($request->video_url);
@@ -26,7 +28,7 @@ class StoryController extends Controller
         SuccessStory::create([
             'title' => $request->title,
             'video_url' => $video_url,
-            'treatment_type' => $request->treatment_type,
+            'treatment_type_id' => $request->treatment_type_id,
             'patient_name' => $request->patient_name,
             'order' => $request->order ?? 0,
             'is_active' => $request->has('is_active'),
@@ -40,7 +42,7 @@ class StoryController extends Controller
         $request->validate([
             'title' => 'required',
             'video_url' => 'required',
-            'treatment_type' => 'required',
+            'treatment_type_id' => 'required|exists:treatment_types,id',
         ]);
 
         $video_url = $this->convertEmbedUrl($request->video_url);
@@ -48,7 +50,7 @@ class StoryController extends Controller
         $story->update([
             'title' => $request->title,
             'video_url' => $video_url,
-            'treatment_type' => $request->treatment_type,
+            'treatment_type_id' => $request->treatment_type_id,
             'patient_name' => $request->patient_name,
             'order' => $request->order ?? 0,
             'is_active' => $request->has('is_active'),
@@ -97,3 +99,4 @@ class StoryController extends Controller
         return $url;
     }
 }
+

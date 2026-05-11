@@ -51,24 +51,92 @@
 
       <form id="contactForm" novalidate action="{{ route('frontend.contact.submit') }}" method="POST">
         @csrf
+        <input type="hidden" id="consultationType" name="consultation_type" value="inclinic_visit">
+        <div class="error-text mb-12" id="error-global"></div>
+        
         <div class="form-grid">
-          @foreach($dynamicFields as $field)
-            <div class="form-group {{ $field->type == 'textarea' ? 'full-width' : '' }}">
-                <label for="{{ $field->name }}">{{ $field->label }} @if($field->is_required)<span class="text-danger">*</span>@endif</label>
-                
-                @if($field->type == 'textarea')
-                    <textarea name="{{ $field->name }}" id="{{ $field->name }}" placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }}></textarea>
-                @elseif($field->type == 'select')
-                    <select name="{{ $field->name }}" id="{{ $field->name }}" {{ $field->is_required ? 'required' : '' }}>
-                        <option value="" disabled selected>{{ $field->placeholder ?? 'Select option' }}</option>
-                        @foreach(explode(',', $field->options) as $opt)
-                            <option value="{{ trim($opt) }}">{{ trim($opt) }}</option>
-                        @endforeach
-                    </select>
-                @else
-                    <input type="{{ $field->type }}" name="{{ $field->name }}" id="{{ $field->name }}" placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }}>
-                @endif
-                <span class="error-text" id="error-{{ $field->name }}"></span>
+          <!-- BASE FIELDS (Always shown) -->
+          <!-- First Name -->
+          <div class="form-group">
+            <label for="first_name">First Name <span class="text-danger">*</span></label>
+            <input type="text" name="first_name" id="first_name" placeholder="Enter your first name" required>
+            <span class="error-text" id="error-first_name"></span>
+          </div>
+
+          <!-- Last Name -->
+          <div class="form-group">
+            <label for="last_name">Last Name <span class="text-danger">*</span></label>
+            <input type="text" name="last_name" id="last_name" placeholder="Enter your last name" required>
+            <span class="error-text" id="error-last_name"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email Address <span class="text-danger">*</span></label>
+            <input type="email" name="email" id="email" placeholder="your.email@example.com" required>
+            <span class="error-text" id="error-email"></span>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="phone">Phone / WhatsApp <span class="text-danger">*</span></label>
+            <input type="tel" name="phone" id="phone" placeholder="10-digit phone number" maxlength="10" required>
+            <span class="error-text" id="error-phone"></span>
+          </div>
+
+          <!-- Subject/Concern (full width) -->
+          <div class="form-group full-width">
+            <label for="primary_concern">Primary Concern <span class="text-danger">*</span></label>
+            <select name="primary_concern" id="primary_concern" required>
+              <option value="" disabled selected>Select a concern</option>
+              <option value="IVF / ICSI Treatment">IVF / ICSI Treatment</option>
+              <option value="IUI Consultation">IUI Consultation</option>
+              <option value="PCOS / Hormonal Issues">PCOS / Hormonal Issues</option>
+              <option value="Male Fertility / Andrology">Male Fertility / Andrology</option>
+              <option value="Recurrent Pregnancy Loss">Recurrent Pregnancy Loss</option>
+              <option value="Fertility Preservation">Fertility Preservation</option>
+              <option value="General Women's Health">General Women's Health</option>
+              <option value="Other">Other</option>
+            </select>
+            <span class="error-text" id="error-primary_concern"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="preferred_location">Preferred Location </label>
+            <select name="preferred_location" id="preferred_location">
+              <option value="" disabled selected>Choose clinic</option>
+              <option value="Nimaaya Women's Center (Surat)">Nimaaya Women's Center (Surat)</option>
+              <option value="Nimaaya Baroda (Vadodara)">Nimaaya Baroda (Vadodara)</option>
+              <option value="Online (Video Call)">Online (Video Call)</option>
+            </select>
+            <span class="error-text" id="error-preferred_location"></span>
+          </div>
+
+          <!-- Message (full width) -->
+          <div class="form-group full-width">
+            <label for="message">Message <span class="text-danger">*</span></label>
+            <textarea name="message" id="message" placeholder="Tell us more about your concerns and what you'd like to discuss..." rows="4" required></textarea>
+            <span class="error-text" id="error-message"></span>
+          </div>
+
+          <!-- DYNAMIC FIELDS (filtered by category) -->
+          @foreach($dynamicFields->sortBy('order') as $field)
+            <div class="form-group dynamic-field {{ $field->type == 'textarea' ? 'full-width' : '' }}" data-category="{{ $field->category }}">
+              <label for="{{ $field->name }}">{{ $field->label }} @if($field->is_required)<span class="text-danger">*</span>@endif</label>
+              
+              @if($field->type == 'textarea')
+                <textarea name="{{ $field->name }}" id="{{ $field->name }}" placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }} rows="3"></textarea>
+              @elseif($field->type == 'select')
+                <select name="{{ $field->name }}" id="{{ $field->name }}" {{ $field->is_required ? 'required' : '' }}>
+                  <option value="" disabled selected>{{ $field->placeholder ?? 'Select option' }}</option>
+                  @foreach(explode(',', $field->options) as $opt)
+                    <option value="{{ trim($opt) }}">{{ trim($opt) }}</option>
+                  @endforeach
+                </select>
+              @else
+                <input type="{{ $field->type }}" name="{{ $field->name }}" id="{{ $field->name }}" placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }}>
+              @endif
+              <span class="error-text" id="error-{{ $field->name }}"></span>
             </div>
           @endforeach
         </div>
@@ -198,8 +266,18 @@
       btn.addEventListener('click', () => {
         tabBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const meta = tabMeta[btn.dataset.tab];
-        if (meta) { formTitle.textContent = meta.title; formSub.textContent = meta.sub; }
+       
+          // Update consultation type
+          const tabType = btn.getAttribute('data-tab');
+          const typeMap = { 'clinic': 'inclinic_visit', 'online': 'online_consultation', 'whatsapp': 'whatsapp' };
+          document.getElementById('consultationType').value = typeMap[tabType];
+       
+          // Update form text
+          formTitle.textContent = tabMeta[tabType].title;
+          formSub.textContent = tabMeta[tabType].sub;
+       
+          // Update dynamic fields visibility
+          updateDynamicFields(typeMap[tabType]);
       });
     });
 
@@ -207,16 +285,69 @@
     const successMsg = document.getElementById('successMsg');
     const submitBtn = document.getElementById('submitBtn');
 
+   // Phone validation - strict 10 digits only
+   const phoneInput = document.getElementById('phone');
+   phoneInput.addEventListener('input', function() {
+     this.value = this.value.replace(/\D/g, '').slice(0, 10);
+     const errorEl = document.getElementById('error-phone');
+     if (this.value.length === 10) {
+       errorEl.textContent = '';
+       this.style.borderColor = '#28a745';
+     } else if (this.value.length > 0) {
+       errorEl.textContent = 'Phone number must be exactly 10 digits.';
+       this.style.borderColor = '#dc3545';
+     } else {
+       this.style.borderColor = '';
+       errorEl.textContent = '';
+     }
+   });
+
+   // Dynamic fields filtering based on consultation type
+   function updateDynamicFields(selectedCategory) {
+     const dynamicFields = document.querySelectorAll('.dynamic-field');
+     dynamicFields.forEach(field => {
+       const fieldCategory = field.getAttribute('data-category');
+       const inputs = field.querySelectorAll('input, select, textarea');
+       if (fieldCategory === 'all' || fieldCategory === selectedCategory) {
+         field.style.display = '';
+         inputs.forEach(input => {
+           if (input.dataset.initialRequired === '1') {
+             input.required = true;
+           }
+         });
+       } else {
+         field.style.display = 'none';
+         inputs.forEach(input => {
+           if (input.required) {
+             input.dataset.initialRequired = '1';
+           }
+           input.required = false;
+           input.value = '';
+         });
+       }
+     });
+   }
+
+   // Initialize dynamic fields with default category
+   updateDynamicFields('inclinic_visit');
+
     form.addEventListener('submit', e => {
       e.preventDefault();
       
       // Clear previous errors
       document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
+      const globalError = document.getElementById('error-global');
       
       const consent = document.getElementById('consent');
       if (!consent.checked) {
         consent.style.outline = '2px solid #e24b4a';
+        globalError.textContent = 'Please provide consent before submitting.';
         setTimeout(() => consent.style.outline = '', 2000);
+        return;
+      }
+
+      if (phoneInput.value.length !== 10) {
+        document.getElementById('error-phone').textContent = 'Phone number must be exactly 10 digits.';
         return;
       }
 
@@ -230,21 +361,26 @@
         body: formData,
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
+      .then(response => response.json().then(data => ({ ok: response.ok, status: response.status, data })))
+      .then(res => {
+        const data = res.data;
+        if (res.ok && data.success) {
           form.style.opacity = '0';
           form.style.transition = 'all 0.4s ease';
           setTimeout(() => {
             form.style.display = 'none';
             successMsg.classList.add('show');
           }, 400);
-        } else if (data.errors) {
+        } else if (data && data.errors) {
             submitBtn.disabled = false;
             submitBtn.querySelector('span').textContent = 'Send Consultation Request';
             Object.keys(data.errors).forEach(key => {
                 const errorEl = document.getElementById('error-' + key);
-                if (errorEl) errorEl.textContent = data.errors[key][0];
+                if (errorEl) {
+                  errorEl.textContent = data.errors[key][0];
+                } else {
+                  globalError.textContent = data.errors[key][0];
+                }
             });
         } else {
           alert('Something went wrong. Please try again.');

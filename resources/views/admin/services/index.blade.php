@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($services as $service)
+                    @foreach($services as $service)
                     <tr>
                         <td>{{ $service->order }}</td>
                         <td>
@@ -52,6 +52,7 @@
                         </td>
                         <td>
                             <div class="fw-medium">{{ $service->title }}</div>
+                            <div class="text-xs text-secondary-light">/{{ $service->slug }}</div>
                             <div class="text-sm text-secondary-light text-truncate" style="max-width:220px;">{{ $service->short_description }}</div>
                         </td>
                         <td>
@@ -82,14 +83,7 @@
                             </div>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-center py-32 text-secondary-light">
-                            <iconify-icon icon="solar:bill-list-outline" class="text-4xl mb-8 d-block"></iconify-icon>
-                            No services yet. <a href="{{ route('admin.services.create') }}">Add your first service.</a>
-                        </td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
