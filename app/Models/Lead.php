@@ -17,6 +17,7 @@ class Lead extends Model
         'preferred_location',
         'status',
         'dynamic_data',
+        'is_read',
     ];
 
     protected $casts = [

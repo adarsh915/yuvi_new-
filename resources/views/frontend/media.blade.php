@@ -23,13 +23,13 @@
       </div>
     </div>
     <!-- <div class="media-scroll-down">
-                    <span class="scroll-text">Scroll to explore</span>
-                    <div class="scroll-line"></div>
-                  </div> -->
+                      <span class="scroll-text">Scroll to explore</span>
+                      <div class="scroll-line"></div>
+                    </div> -->
   </section>
 
   <!-- 2. PODCASTS SECTION -->
-  <section class="media-section bg-light-section reveal">
+  <section id="podcasts" class="media-section bg-light-section reveal">
     <div class="section-wrap">
       <div class="media-header reveal">
         <h2>Expert <em>Podcasts</em></h2>
@@ -85,7 +85,7 @@
   </section>
 
   <!-- 3. FEEL GOOD EVENTS -->
-  <section class="media-section reveal">
+  <section id="events" class="media-section reveal">
     <div class="section-wrap">
       <div class="media-header reveal">
         <h2>Feel Good <em>Events</em></h2>
@@ -93,7 +93,7 @@
       </div>
 
       <div class="events-gallery reveal delay-1">
-        <div class="event-gallery-item">
+        <a href="#" class="event-gallery-item">
           <img src="{{ asset('storage/media/img3.avif') }}" alt="Mother's Day Meetup">
           <div class="event-gallery-overlay">
             <div class="event-gallery-content">
@@ -102,9 +102,9 @@
               <p>A beautiful gathering of our successful IVF mothers sharing their journeys.</p>
             </div>
           </div>
-        </div>
+        </a>
 
-        <div class="event-gallery-item">
+        <a href="#" class="event-gallery-item">
           <img src="{{ asset('storage/media/img4.avif') }}" alt="Community Camp">
           <div class="event-gallery-overlay">
             <div class="event-gallery-content">
@@ -113,9 +113,9 @@
               <p>Providing free fertility consultations and awareness in rural areas.</p>
             </div>
           </div>
-        </div>
+        </a>
 
-        <div class="event-gallery-item">
+        <a href="#" class="event-gallery-item">
           <img src="{{ asset('storage/media/img6.avif') }}" alt="Team Awards">
           <div class="event-gallery-overlay">
             <div class="event-gallery-content">
@@ -124,7 +124,7 @@
               <p>Celebrating the hard work and dedication of our incredible clinic staff.</p>
             </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </section>
@@ -139,7 +139,7 @@
 
       <div class="highlights-gallery reveal delay-1">
         <!-- Item 1: Image -->
-        <div class="h-gallery-item">
+        <div class="h-gallery-item" onclick="openImageLightbox(this)" style="cursor: pointer;">
           <img src="{{ asset('storage/media/img6.avif') }}" alt="News Feature">
           <div class="h-gallery-overlay">
             <span>Press Clipping: Health Times</span>
@@ -147,7 +147,7 @@
         </div>
 
         <!-- Item 2: Video -->
-        <div class="h-gallery-item">
+        <div class="h-gallery-item" onclick="openImageLightbox(this)" style="cursor: pointer;">
           <img src="{{ asset('storage/media/img6.avif') }}" alt="Press Release">
           <div class="h-gallery-overlay">
             <span>Global Medical Journal Feature</span>
@@ -155,7 +155,7 @@
         </div>
 
         <!-- Item 3: Image -->
-        <div class="h-gallery-item">
+        <div class="h-gallery-item" onclick="openImageLightbox(this)" style="cursor: pointer;">
           <img src="{{ asset('storage/media/img6.avif') }}" alt="Press Release">
           <div class="h-gallery-overlay">
             <span>Global Medical Journal Feature</span>
@@ -163,7 +163,7 @@
         </div>
 
         <!-- Item 4: Image -->
-        <div class="h-gallery-item">
+        <div class="h-gallery-item" onclick="openImageLightbox(this)" style="cursor: pointer;">
           <img src="{{ asset('storage/media/img6.avif') }}" alt="Clinic News">
           <div class="h-gallery-overlay">
             <span>National Health Network</span>
@@ -172,8 +172,28 @@
       </div>
     </div>
   </section>
+  
+  <!-- IMAGE LIGHTBOX (Reusable from Gallery) -->
+  <div class="image-lightbox-sg" id="imageLightbox">
+    <button class="close-lightbox-sg" onclick="closeImageLightbox()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <div class="lightbox-content-sg">
+      <img id="lightboxImg" src="" alt="Enlarged Media Highlight">
+      <div class="lightbox-caption-sg">
+        <span id="lightboxCategory"></span>
+        <h3 id="lightboxTitle"></h3>
+      </div>
+    </div>
+  </div>
 
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     /* Gallery Styles */
     .highlights-gallery {
       display: grid;
@@ -676,6 +696,7 @@
       .media-hero-section {
         min-height: 60vh;
       }
+
     }
 
     /* Mobile Devices */
@@ -752,6 +773,12 @@
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
         gap: 1.5rem;
         margin-top: 2rem;
+      }
+
+      .podcast-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+        gap: 2.5rem;
       }
 
     }

@@ -41,6 +41,9 @@
         </svg>
       </button>
     </div>
+
+    <!-- Dots Indicators -->
+    <div class="top-banner-dots" id="topBannerDots"></div>
   </section>
 
   <section class="value-marquee-section reveal">
@@ -196,6 +199,32 @@
       transform: scale(1.1);
     }
 
+    .top-banner-dots {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .banner-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .banner-dot.active {
+      background: #fff;
+      width: 30px;
+      border-radius: 10px;
+    }
+
     /* Tablets (Landscape & Portrait) */
     @media (min-width: 601px) and (max-width: 991px) {
       .top-banner-slider-con {
@@ -251,6 +280,33 @@
       track.style.transition = 'none';
       track.style.transform = `translateX(-100%)`;
 
+      const dotsContainer = document.getElementById('topBannerDots');
+      if (dotsContainer) {
+        originalSlides.forEach((_, idx) => {
+          const dot = document.createElement('div');
+          dot.classList.add('banner-dot');
+          if (idx === 0) dot.classList.add('active');
+          dot.addEventListener('click', () => {
+            if (isTransitioning) return;
+            showSlide(idx + 1);
+            resetAutoSlide();
+          });
+          dotsContainer.appendChild(dot);
+        });
+      }
+
+      function updateDots(index) {
+        if (!dotsContainer) return;
+        const dots = dotsContainer.querySelectorAll('.banner-dot');
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        let realIdx = index - 1;
+        if (index === 0) realIdx = originalSlides.length - 1;
+        if (index === allSlides.length - 1) realIdx = 0;
+
+        if (dots[realIdx]) dots[realIdx].classList.add('active');
+      }
+
       function showSlide(index, animate = true) {
         if (isTransitioning) return;
         isTransitioning = true;
@@ -263,6 +319,7 @@
 
         track.style.transform = `translateX(-${index * 100}%)`;
         currentIdx = index;
+        updateDots(index);
       }
 
       track.addEventListener('transitionend', () => {
@@ -272,12 +329,14 @@
           track.style.transition = 'none';
           currentIdx = 1;
           track.style.transform = `translateX(-100%)`;
+          updateDots(1);
         }
         // If at first clone, jump to last real slide
         if (currentIdx === 0) {
           track.style.transition = 'none';
           currentIdx = allSlides.length - 2;
           track.style.transform = `translateX(-${currentIdx * 100}%)`;
+          updateDots(currentIdx);
         }
       });
 
@@ -315,124 +374,124 @@
   </script>
 
   <!-- <section class="hero-box5">
-                        <div class="hero-glow-1_box5"></div>
-                        <div class="hero-glow-2_box5"></div>
-                        <div class="hero-inner-box5">
-                          <div class="hero-left-box5 reveal-box5 reveal delay-2">
-                            <div class="hero-eyebrow-box5">
-                              <span class="hero-eyebrow-dot-box5"></span>
-                              Ethical Fertility Care · Ahmedabad
-                            </div>
-                            <h1>Science, Sensitivity<br>&amp; <em>Ethics</em><br>in Fertility.</h1>
-                            <p class="hero-lead-box5">Evidence-based fertility and women's health — designed precisely around you, your hopes,
-                              and your future family.</p>
-                            <div class="hero-actions-box5">
-                              <a href="{{ route('frontend.contact') }}" class="btn-hero-primary">
-                                Book Consultation
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                  stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
-                              </a>
-                              <a href="{{ route('frontend.services') }}" class="btn-hero-ghost">
-                                Explore Services
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
-                              </a>
-                            </div>
-                            <div class="hero-trust-box5">
-                                                              <div class="hero-trust-item-box5">
-                                                                <div class="hero-trust-icon-box5">
-                                                                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                                                  </svg>
+                            <div class="hero-glow-1_box5"></div>
+                            <div class="hero-glow-2_box5"></div>
+                            <div class="hero-inner-box5">
+                              <div class="hero-left-box5 reveal-box5 reveal delay-2">
+                                <div class="hero-eyebrow-box5">
+                                  <span class="hero-eyebrow-dot-box5"></span>
+                                  Ethical Fertility Care · Ahmedabad
+                                </div>
+                                <h1>Science, Sensitivity<br>&amp; <em>Ethics</em><br>in Fertility.</h1>
+                                <p class="hero-lead-box5">Evidence-based fertility and women's health — designed precisely around you, your hopes,
+                                  and your future family.</p>
+                                <div class="hero-actions-box5">
+                                  <a href="{{ route('frontend.contact') }}" class="btn-hero-primary">
+                                    Book Consultation
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                      stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                  </a>
+                                  <a href="{{ route('frontend.services') }}" class="btn-hero-ghost">
+                                    Explore Services
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                      stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                  </a>
+                                </div>
+                                <div class="hero-trust-box5">
+                                                                  <div class="hero-trust-item-box5">
+                                                                    <div class="hero-trust-icon-box5">
+                                                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                                      </svg>
+                                                                    </div>
+                                                                    Ethics-led practice
+                                                                  </div>
+                                                                  <div class="hero-trust-item-box5">
+                                                                    <div class="hero-trust-icon-box5">
+                                                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                        <polyline points="9 11 12 14 22 4" />
+                                                                      </svg>
+                                                                    </div>
+                                                                    Evidence-based protocols
+                                                                  </div>
+                                                                  <div class="hero-trust-item-box5">
+                                                                    <div class="hero-trust-icon-box5">
+                                                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                        <circle cx="12" cy="12" r="10" />
+                                                                        <polyline points="12 6 12 12 16 14" />
+                                                                      </svg>
+                                                                    </div>
+                                                                    24/7 patient support
+                                                                  </div>
                                                                 </div>
-                                                                Ethics-led practice
-                                                              </div>
-                                                              <div class="hero-trust-item-box5">
-                                                                <div class="hero-trust-icon-box5">
-                                                                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                                    <polyline points="9 11 12 14 22 4" />
-                                                                  </svg>
-                                                                </div>
-                                                                Evidence-based protocols
-                                                              </div>
-                                                              <div class="hero-trust-item-box5">
-                                                                <div class="hero-trust-icon-box5">
-                                                                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                                    <circle cx="12" cy="12" r="10" />
-                                                                    <polyline points="12 6 12 12 16 14" />
-                                                                  </svg>
-                                                                </div>
-                                                                24/7 patient support
-                                                              </div>
-                                                            </div>
-                          </div>
+                              </div>
 
-                          <div class="hero-right-box5 reveal delay-2">
-                            <div class="doctor-card-box5">
-                              <img
-                                src="https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/post_attachments/uploads/2022/10/MinistryOfMemories_Headshots-13_websize-1-min-1665749722.jpg"
-                                alt="Dr. Yuvraj Jadeja">
-                              <div class="doctor-card-overlay-box5"></div>
-                              <div class="doctor-card-info-box5">
-                                <div class="doctor-card-name-box5">Dr. Yuvraj Jadeja</div>
-                                <div class="doctor-card-role-box5">Reproductive Medicine Specialist</div>
+                              <div class="hero-right-box5 reveal delay-2">
+                                <div class="doctor-card-box5">
+                                  <img
+                                    src="https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/post_attachments/uploads/2022/10/MinistryOfMemories_Headshots-13_websize-1-min-1665749722.jpg"
+                                    alt="Dr. Yuvraj Jadeja">
+                                  <div class="doctor-card-overlay-box5"></div>
+                                  <div class="doctor-card-info-box5">
+                                    <div class="doctor-card-name-box5">Dr. Yuvraj Jadeja</div>
+                                    <div class="doctor-card-role-box5">Reproductive Medicine Specialist</div>
+                                  </div>
+                                </div>
+                                <div class="hero-stats-row-box5">
+                                  <div class="hero-stat-box5"><span class="hero-stat-num-box5">15+</span><span class="hero-stat-label-box5">Years
+                                      Experience</span></div>
+                                  <div class="hero-stat-box5"><span class="hero-stat-num-box5">98%</span><span
+                                      class="hero-stat-label-box5">Satisfaction</span></div>
+                                  <div class="hero-stat-box5"><span class="hero-stat-num-box5">5K+</span><span
+                                      class="hero-stat-label-box5">Families Helped</span></div>
+                                </div>
                               </div>
                             </div>
-                            <div class="hero-stats-row-box5">
-                              <div class="hero-stat-box5"><span class="hero-stat-num-box5">15+</span><span class="hero-stat-label-box5">Years
-                                  Experience</span></div>
-                              <div class="hero-stat-box5"><span class="hero-stat-num-box5">98%</span><span
-                                  class="hero-stat-label-box5">Satisfaction</span></div>
-                              <div class="hero-stat-box5"><span class="hero-stat-num-box5">5K+</span><span
-                                  class="hero-stat-label-box5">Families Helped</span></div>
-                            </div>
-                          </div>
-                        </div>
-                      </section> -->
+                          </section> -->
 
   <!-- TRUST BAND -->
   <!-- <div class="trust-band-1">
-                                                              <div class="trust-inner-1">
-                                                                <div class="trust-item-1">
-                                                                  <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                                                    </svg></div>
-                                                                  <div class="trust-text-1"><strong>Ethical Practice</strong><span>No unnecessary procedures</span></div>
-                                                                </div>
-                                                                <div class="trust-item-1">
-                                                                  <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                      <polyline points="9 11 12 14 22 4" />
-                                                                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                                                                    </svg></div>
-                                                                  <div class="trust-text-1"><strong>Evidence-Based</strong><span>Latest clinical protocols</span></div>
-                                                                </div>
-                                                                <div class="trust-item-1">
-                                                                  <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                      <path
-                                                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                                                                    </svg></div>
-                                                                  <div class="trust-text-1"><strong>Patient-First</strong><span>Compassionate every step</span></div>
-                                                                </div>
-                                                                <div class="trust-item-1">
-                                                                  <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                      <circle cx="12" cy="12" r="10" />
-                                                                      <polyline points="12 6 12 12 16 14" />
-                                                                    </svg></div>
-                                                                  <div class="trust-text-1"><strong>24/7 Support</strong><span>Always here when needed</span></div>
-                                                                </div>
-                                                              </div>
-                                                            </div> -->
+                                                                  <div class="trust-inner-1">
+                                                                    <div class="trust-item-1">
+                                                                      <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                                        </svg></div>
+                                                                      <div class="trust-text-1"><strong>Ethical Practice</strong><span>No unnecessary procedures</span></div>
+                                                                    </div>
+                                                                    <div class="trust-item-1">
+                                                                      <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                          <polyline points="9 11 12 14 22 4" />
+                                                                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                                                        </svg></div>
+                                                                      <div class="trust-text-1"><strong>Evidence-Based</strong><span>Latest clinical protocols</span></div>
+                                                                    </div>
+                                                                    <div class="trust-item-1">
+                                                                      <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                          <path
+                                                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                                                        </svg></div>
+                                                                      <div class="trust-text-1"><strong>Patient-First</strong><span>Compassionate every step</span></div>
+                                                                    </div>
+                                                                    <div class="trust-item-1">
+                                                                      <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                          <circle cx="12" cy="12" r="10" />
+                                                                          <polyline points="12 6 12 12 16 14" />
+                                                                        </svg></div>
+                                                                      <div class="trust-text-1"><strong>24/7 Support</strong><span>Always here when needed</span></div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div> -->
 
   <!-- VALUE SCROLL SECTION -->
 
@@ -892,7 +951,7 @@
                 title="{{ $story->title }}"></iframe>
               <div class="hp-video-overlay">
                 <span class="hp-patient-name">{{ $story->patient_name ?? $story->title }}</span>
-                <span class="hp-treatment-tag">{{ $story->treatment_type }}</span>
+                <span class="hp-treatment-tag">{{ $story->treatmentType->name ?? 'Success Story' }}</span>
               </div>
             </div>
           </article>
@@ -1007,7 +1066,7 @@
             <div class="blog-list-content">
               <div class="blog-list-meta">{{ $blog->created_at->format('M d, Y') }} · 5 min read</div>
               <h3 class="blog-list-title">{{ $blog->title }}</h3>
-              <p class="blog-list-excerpt">{{ $blog->excerpt }}</p>
+              <p class="blog-list-excerpt">{{ Str::limit($blog->excerpt, 100) }}</p>
               <a href="{{ route('frontend.blogDetails', $blog->slug) }}" class="blog-list-link">Read Article <svg width="12"
                   height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -1021,7 +1080,7 @@
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="testimonials-section reveal" style="padding: 6rem 0; background: var(--bg-light);">
+  <section class="testimonials-section reveal" style="padding: 4rem 0; background: var(--bg-light);">
     <div class="section-wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
       <div class="section-header reveal" style="text-align: center; margin-bottom: 3rem;">
         <h2
@@ -1043,124 +1102,19 @@
 
         <div class="testimonials-carousel-inner" style="overflow: hidden;">
           <div class="testimonials-carousel" id="testiCarousel">
-            <!-- Card 1 -->
-            <div class="testimonial-card">
-              <div class="stars">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
+            @foreach($testimonials as $testimonial)
+              <div class="testimonial-card">
+                <div class="stars">
+                  @for($i = 0; $i < ($testimonial->rating ?? 5); $i++)
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  @endfor
+                </div>
+                <p>"{{ $testimonial->review }}"</p>
+                <div class="author">— {{ $testimonial->name }}</div>
               </div>
-              <p>"Dr. Yuvi and his team were a beacon of hope for us. Their ethical approach made us feel completely
-                comfortable."</p>
-              <div class="author">— Sneha & Rahul D.</div>
-            </div>
-            <!-- Card 2 -->
-            <div class="testimonial-card">
-              <div class="stars">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-              </div>
-              <p>"After years of disappointment, we finally found the right guidance here. No false promises, just pure
-                medical expertise."</p>
-              <div class="author">— Anjali M.</div>
-            </div>
-            <!-- Card 3 -->
-            <div class="testimonial-card">
-              <div class="stars">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-              </div>
-              <p>"The entire staff is incredibly supportive. They walked us through every step, ensuring we fully
-                understood
-                our options."</p>
-              <div class="author">— Priya & Amit K.</div>
-            </div>
-            <!-- Card 4 -->
-            <div class="testimonial-card">
-              <div class="stars">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-              </div>
-              <p>"We travelled from another city just for Dr. Yuvi, and it was the best decision. His empathy and
-                expertise
-                are unmatched."</p>
-              <div class="author">— Neha S.</div>
-            </div>
-            <!-- Card 5 -->
-            <div class="testimonial-card">
-              <div class="stars">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-              </div>
-              <p>"Transparent, honest, and truly caring. We are blessed with a healthy baby today because of their
-                tireless
-                efforts."</p>
-              <div class="author">— Rohan & Meera V.</div>
-            </div>
+            @endforeach
           </div>
         </div>
 
@@ -1233,7 +1187,7 @@
 
       .testi-btn {
         position: absolute;
-        top: 45%;
+        top: 50%;
         transform: translateY(-50%);
         width: 44px;
         height: 44px;
@@ -1250,11 +1204,11 @@
       }
 
       .testi-prev {
-        left: 0;
+        left: -15px;
       }
 
       .testi-next {
-        right: 0;
+        right: -15px;
       }
 
       .testi-dots {
@@ -1473,7 +1427,7 @@
             stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg></a>
-        <a href="https://wa.me/{{ $settings['whatsapp_number'] ?? '919999999999' }}" target="_blank" rel="noopener"
+        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}" target="_blank" rel="noopener"
           class="btn-outline"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path

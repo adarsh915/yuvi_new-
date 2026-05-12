@@ -1,0 +1,229 @@
+@extends('layout.layout')
+
+@php
+    $title = 'FAQ Categories';
+    $subTitle = 'Manage FAQ Sections';
+    $script = '
+        <script>
+            $(document).ready(function() {
+                $("#categoryTable").DataTable();
+            });
+
+            function editCategory(id, name, order, is_active) {
+                $("#editModal").modal("show");
+                $("#edit_name").val(name);
+                $("#edit_order").val(order);
+                $("#edit_is_active").prop("checked", is_active == 1);
+                $("#editForm").attr("action", "/admin/faq-categories/" + id);
+            }
+        </script>
+    ';
+@endphp
+
+@section('content')
+<style>
+    .card {
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: none;
+    }
+
+    .form-label {
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #6c757d !important;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    /* ── Toggle Row ── */
+    .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 14px;
+        background: #f8f9fb;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all .15s;
+        margin: 0;
+        height: 42px;
+    }
+    .toggle-row:hover { background: #fff; border-color: #dee2e6; }
+    .toggle-row .tr-label { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+    .toggle-row .form-check { padding: 0; margin: 0; display: flex; align-items: center; }
+    .toggle-row .form-check-input {
+        width: 38px !important;
+        height: 20px !important;
+        cursor: pointer;
+        margin: 0 !important;
+        flex-shrink: 0;
+    }
+</style>
+
+<div class="row gy-4">
+    <div class="col-md-4">
+        <div class="card p-24 radius-12 bg-base">
+            <h6 class="text-lg fw-semibold mb-20 d-flex align-items-center gap-2">
+                <iconify-icon icon="solar:add-circle-outline" class="text-primary-600"></iconify-icon>
+                Add Category
+            </h6>
+            <form action="{{ route('admin.faq.categories.store') }}" method="POST">
+                @csrf
+                <div class="mb-20">
+                    <label class="form-label mb-8">Category Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="e.g. General, IVF, Treatments" required>
+                </div>
+                
+                <div class="row align-items-end mb-20">
+                    <div class="col-md-6">
+                        <label class="form-label mb-8">Order</label>
+                        <input type="number" name="order" class="form-control" placeholder="Optional">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="toggle-row" for="isActive">
+                            <span class="tr-label">Active</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="is_active" id="isActive" value="1" checked>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                    <iconify-icon icon="solar:check-circle-outline"></iconify-icon>
+                    Create Category
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card radius-12 bg-base h-100">
+            <div class="card-header border-bottom p-24">
+                <h6 class="text-lg fw-semibold mb-0 d-flex align-items-center gap-2">
+                    <iconify-icon icon="solar:list-outline" class="text-primary-600"></iconify-icon>
+                    Categories List
+                </h6>
+            </div>
+            <div class="card-body p-24">
+                <div class="table-responsive">
+                    <table class="table bordered-table mb-0" id="categoryTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th width="100">Order</th>
+                                <th width="100">FAQs</th>
+                                <th width="100">Status</th>
+                                <th width="100">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($categories as $category)
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold text-primary-600">{{ $category->name }}</div>
+                                </td>
+                                <td>
+                                    <span class="fw-semibold text-primary-600">{{ $category->order }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-info-focus text-info-main">
+                                        {{ $category->faqs_count }} Items
+                                    </span>
+                                </td>
+                                <td>
+                                    @if($category->is_active)
+                                        <span class="badge bg-success-focus text-success-main">Active</span>
+                                    @else
+                                        <span class="badge bg-danger-focus text-danger-main">Inactive</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center" 
+                                                style="width:32px; height:32px; padding:0; border-radius:8px;"
+                                                onclick="editCategory({{ $category->id }}, '{{ addslashes($category->name) }}', {{ $category->order }}, {{ $category->is_active ? 1 : 0 }})">
+                                            <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
+                                        </button>
+                                        <form action="{{ route('admin.faq.categories.destroy', $category->id) }}" method="POST" 
+                                              onsubmit="return confirm('Are you sure?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
+                                                    style="width:32px; height:32px; padding:0; border-radius:8px;">
+                                                <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content radius-16">
+            <div class="modal-header border-bottom bg-light">
+                <h6 class="modal-title d-flex align-items-center gap-2">
+                    <iconify-icon icon="solar:pen-new-square-outline" class="text-primary-600"></iconify-icon>
+                    Edit Category
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="editForm" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="mb-20">
+                        <label class="form-label mb-8">Category Name</label>
+                        <input type="text" name="name" id="edit_name" class="form-control" required>
+                    </div>
+                    
+                    <div class="row align-items-end mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label mb-8">Order</label>
+                            <input type="number" name="order" id="edit_order" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="toggle-row" for="edit_is_active">
+                                <span class="tr-label">Active</span>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="is_active" id="edit_is_active" value="1">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top bg-light">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">
+                        <iconify-icon icon="solar:check-read-outline"></iconify-icon>
+                        Update Category
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

@@ -18,6 +18,9 @@ class Blog extends Model
         'tags',
         'author',
         'is_active',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
     ];
 
     public function category_rel()

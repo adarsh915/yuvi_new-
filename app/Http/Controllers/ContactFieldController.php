@@ -20,7 +20,7 @@ class ContactFieldController extends Controller
             'label' => 'required|string|max:255',
             'type' => 'required|in:text,email,tel,number,date,select,textarea',
             'category' => 'required|in:inclinic_visit,online_consultation,whatsapp,all',
-            'order' => 'required|integer|unique:contact_fields,order'
+            'order' => 'nullable|integer|unique:contact_fields,order'
         ]);
 
         $name = Str::slug($request->label, '_');
@@ -32,7 +32,7 @@ class ContactFieldController extends Controller
             'category' => $request->category,
             'options' => $request->options,
             'is_required' => $request->has('is_required'),
-            'order' => $request->order,
+            'order' => $request->order ?: (ContactField::max('order') + 1),
             'placeholder' => $request->placeholder
         ]);
 

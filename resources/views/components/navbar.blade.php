@@ -17,8 +17,8 @@
         </div>
         <div class="col-auto">
             <div class="d-flex flex-wrap align-items-center gap-3">
-                <button type="button" data-theme-toggle class="w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center"></button>
-                <div class="dropdown d-none d-sm-inline-block">
+                {{-- <button type="button" data-theme-toggle class="w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center"></button> --}}
+                {{-- <div class="dropdown d-none d-sm-inline-block">
                     <button class="has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center" type="button" data-bs-toggle="dropdown">
                         <img src="{{ asset('assets/images/lang-flag.png') }}" alt="image" class="w-24 h-24 object-fit-cover rounded-circle">
                     </button>
@@ -110,203 +110,69 @@
                             </div>
                         </div>
                     </div>
-                </div><!-- Language dropdown end -->
+                </div> --}}<!-- Language dropdown end --><!-- Language dropdown end -->
 
-                <div class="dropdown">
-                    <button class="has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center" type="button" data-bs-toggle="dropdown">
-                        <iconify-icon icon="mage:email" class="text-primary-light text-xl"></iconify-icon>
-                    </button>
-                    <div class="dropdown-menu to-top dropdown-menu-lg p-0">
-                        <div class="m-16 py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
-                            <div>
-                                <h6 class="text-lg text-primary-light fw-semibold mb-0">Message</h6>
-                            </div>
-                            <span class="text-primary-600 fw-semibold text-lg w-40-px h-40-px rounded-circle bg-base d-flex justify-content-center align-items-center">05</span>
-                        </div>
+<!-- Message dropdown removed for unified notification system -->
 
-                        <div class="max-h-400-px overflow-y-auto scroll-sm pe-4">
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-40-px h-40-px rounded-circle flex-shrink-0 position-relative">
-                                        <img src="{{ asset('assets/images/notification/profile-3.png') }}" alt="">
-                                        <span class="w-8-px h-8-px bg-success-main rounded-circle position-absolute end-0 bottom-0"></span>
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Kathryn Murphy</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-100-px">hey! there i’m...</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column align-items-end">
-                                    <span class="text-sm text-secondary-light flex-shrink-0">12:30 PM</span>
-                                    <span class="mt-4 text-xs text-base w-16-px h-16-px d-flex justify-content-center align-items-center bg-warning-main rounded-circle">8</span>
-                                </div>
-                            </a>
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-40-px h-40-px rounded-circle flex-shrink-0 position-relative">
-                                        <img src="{{ asset('assets/images/notification/profile-4.png') }}" alt="">
-                                        <span class="w-8-px h-8-px  bg-neutral-300 rounded-circle position-absolute end-0 bottom-0"></span>
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Kathryn Murphy</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-100-px">hey! there i’m...</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column align-items-end">
-                                    <span class="text-sm text-secondary-light flex-shrink-0">12:30 PM</span>
-                                    <span class="mt-4 text-xs text-base w-16-px h-16-px d-flex justify-content-center align-items-center bg-warning-main rounded-circle">2</span>
-                                </div>
-                            </a>
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between bg-neutral-50">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-40-px h-40-px rounded-circle flex-shrink-0 position-relative">
-                                        <img src="{{ asset('assets/images/notification/profile-5.png') }}" alt="">
-                                        <span class="w-8-px h-8-px bg-success-main rounded-circle position-absolute end-0 bottom-0"></span>
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Kathryn Murphy</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-100-px">hey! there i’m...</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column align-items-end">
-                                    <span class="text-sm text-secondary-light flex-shrink-0">12:30 PM</span>
-                                    <span class="mt-4 text-xs text-base w-16-px h-16-px d-flex justify-content-center align-items-center bg-neutral-400 rounded-circle">0</span>
-                                </div>
-                            </a>
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between bg-neutral-50">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-40-px h-40-px rounded-circle flex-shrink-0 position-relative">
-                                        <img src="{{ asset('assets/images/notification/profile-6.png') }}" alt="">
-                                        <span class="w-8-px h-8-px bg-neutral-300 rounded-circle position-absolute end-0 bottom-0"></span>
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Kathryn Murphy</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-100-px">hey! there i’m...</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column align-items-end">
-                                    <span class="text-sm text-secondary-light flex-shrink-0">12:30 PM</span>
-                                    <span class="mt-4 text-xs text-base w-16-px h-16-px d-flex justify-content-center align-items-center bg-neutral-400 rounded-circle">0</span>
-                                </div>
-                            </a>
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-40-px h-40-px rounded-circle flex-shrink-0 position-relative">
-                                        <img src="{{ asset('assets/images/notification/profile-7.png') }}" alt="">
-                                        <span class="w-8-px h-8-px bg-success-main rounded-circle position-absolute end-0 bottom-0"></span>
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Kathryn Murphy</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-100-px">hey! there i’m...</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column align-items-end">
-                                    <span class="text-sm text-secondary-light flex-shrink-0">12:30 PM</span>
-                                    <span class="mt-4 text-xs text-base w-16-px h-16-px d-flex justify-content-center align-items-center bg-warning-main rounded-circle">8</span>
-                                </div>
-                            </a>
-
-                        </div>
-                        <div class="text-center py-12 px-16">
-                            <a href="javascript:void(0)" class="text-primary-600 fw-semibold text-md">See All Message</a>
-                        </div>
-                    </div>
-                </div><!-- Message dropdown end -->
-
+                @php 
+                    $unreadNotifsCount = \App\Http\Controllers\NotificationController::getUnreadCount(); 
+                    $recentNotifs = \App\Http\Controllers\NotificationController::getRecentNotifications(5);
+                @endphp
                 <div class="dropdown">
                     <button class="has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center" type="button" data-bs-toggle="dropdown">
                         <iconify-icon icon="iconoir:bell" class="text-primary-light text-xl"></iconify-icon>
+                        @if($unreadNotifsCount > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px; padding: 4px 6px;">
+                                {{ $unreadNotifsCount }}
+                            </span>
+                        @endif
                     </button>
                     <div class="dropdown-menu to-top dropdown-menu-lg p-0">
                         <div class="m-16 py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
                             <div>
                                 <h6 class="text-lg text-primary-light fw-semibold mb-0">Notifications</h6>
                             </div>
-                            <span class="text-primary-600 fw-semibold text-lg w-40-px h-40-px rounded-circle bg-base d-flex justify-content-center align-items-center">05</span>
+                            <span class="text-primary-600 fw-semibold text-lg w-40-px h-40-px rounded-circle bg-base d-flex justify-content-center align-items-center">{{ $unreadNotifsCount }}</span>
                         </div>
 
                         <div class="max-h-400-px overflow-y-auto scroll-sm pe-4">
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-44-px h-44-px bg-success-subtle text-success-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                        <iconify-icon icon="bitcoin-icons:verify-outline" class="icon text-xxl"></iconify-icon>
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Congratulations</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-200-px">Your profile has been Verified. Your profile has been Verified</p>
+                            @forelse($recentNotifs as $notif)
+                                @php
+                                    $isQuiz = (isset($notif->answers_json));
+                                    $icon = $isQuiz ? 'solar:quiz-outline' : 'solar:user-speak-outline';
+                                    $color = $isQuiz ? 'success' : 'primary';
+                                    $title = $isQuiz ? $notif->name : ($notif->first_name . ' ' . $notif->last_name);
+                                    $text = $isQuiz ? 'New quiz submission' : 'New consultation inquiry';
+                                @endphp
+                                <a href="{{ route('admin.notifications') }}" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
+                                    <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
+                                        <span class="w-44-px h-44-px bg-{{ $color }}-subtle text-{{ $color }}-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
+                                            <iconify-icon icon="{{ $icon }}" class="icon text-xxl"></iconify-icon>
+                                        </span>
+                                        <div>
+                                            <h6 class="text-md fw-semibold mb-4">{{ $title }}</h6>
+                                            <p class="mb-0 text-sm text-secondary-light text-w-200-px">{{ $text }}</p>
+                                        </div>
                                     </div>
+                                    <span class="text-sm text-secondary-light flex-shrink-0">{{ $notif->created_at->diffForHumans(null, true) }}</span>
+                                </a>
+                            @empty
+                                <div class="py-24 text-center">
+                                    <iconify-icon icon="solar:bell-off-outline" class="text-neutral-300 text-5xl mb-8"></iconify-icon>
+                                    <p class="text-sm text-secondary-light">No new notifications</p>
                                 </div>
-                                <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                            </a>
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between bg-neutral-50">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-44-px h-44-px bg-success-subtle text-success-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                        <img src="{{ asset('assets/images/notification/profile-1.png') }}" alt="">
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Ronald Richards</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-200-px">You can stitch between artboards</p>
-                                    </div>
-                                </div>
-                                <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                            </a>
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-44-px h-44-px bg-info-subtle text-info-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                        AM
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Arlene McCoy</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-200-px">Invite you to prototyping</p>
-                                    </div>
-                                </div>
-                                <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                            </a>
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between bg-neutral-50">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-44-px h-44-px bg-success-subtle text-success-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                        <img src="{{ asset('assets/images/notification/profile-2.png') }}" alt="">
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Annette Black</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-200-px">Invite you to prototyping</p>
-                                    </div>
-                                </div>
-                                <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                            </a>
-
-                            <a href="javascript:void(0)" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                    <span class="w-44-px h-44-px bg-info-subtle text-info-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                        DR
-                                    </span>
-                                    <div>
-                                        <h6 class="text-md fw-semibold mb-4">Darlene Robertson</h6>
-                                        <p class="mb-0 text-sm text-secondary-light text-w-200-px">Invite you to prototyping</p>
-                                    </div>
-                                </div>
-                                <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                            </a>
+                            @endforelse
                         </div>
 
-                        <div class="text-center py-12 px-16">
-                            <a href="javascript:void(0)" class="text-primary-600 fw-semibold text-md">See All Notification</a>
+                        <div class="text-center py-12 px-16 border-top">
+                            <a href="{{ route('admin.notifications') }}" class="text-primary-600 fw-semibold text-md">See All Notification</a>
                         </div>
-
                     </div>
                 </div><!-- Notification dropdown end -->
 
                 <div class="dropdown">
                     <button class="d-flex justify-content-center align-items-center rounded-circle" type="button" data-bs-toggle="dropdown">
-                        <img src="{{ asset('assets/images/user.png') }}" alt="image" class="w-40-px h-40-px object-fit-cover rounded-circle">
+                        <img src="{{ asset('assets/images/asset/user.jpg') }}" alt="image" class="w-40-px h-40-px object-fit-cover rounded-circle">
                     </button>
                     <div class="dropdown-menu to-top dropdown-menu-sm">
                         <div class="py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
@@ -319,7 +185,7 @@
                             </button>
                         </div>
                         <ul class="to-top-list">
-                            <li>
+                            {{-- <li>
                                 <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3" href="javascript:void(0)">
                                     <iconify-icon icon="solar:user-linear" class="icon text-xl"></iconify-icon> My Profile
                                 </a>
@@ -333,7 +199,7 @@
                                 <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3" href="javascript:void(0)">
                                     <iconify-icon icon="icon-park-outline:setting-two" class="icon text-xl"></iconify-icon> Setting
                                 </a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-danger d-flex align-items-center gap-3" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <iconify-icon icon="lucide:power" class="icon text-xl"></iconify-icon> Log Out

@@ -11,6 +11,37 @@
     <div class="col-md-4">
         <div class="card p-24 radius-12 bg-base">
             <h6 class="text-lg fw-semibold mb-20">User Information</h6>
+            
+            @php
+                $yesCount = 0;
+                $noCount = 0;
+                if (is_array($submission->answers_json)) {
+                    foreach ($submission->answers_json as $ans) {
+                        if ($ans === 'Yes') $yesCount++;
+                        if ($ans === 'No') $noCount++;
+                    }
+                }
+            @endphp
+            <div class="row mb-20">
+                <div class="col-6">
+                    <div class="p-12 radius-8 border text-center">
+                        <div class="text-xs text-secondary-light fw-bold text-uppercase mb-1">Yes</div>
+                        <div class="text-xl fw-bold text-danger-main">{{ $yesCount }}</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-12 radius-8 border text-center">
+                        <div class="text-xs text-secondary-light fw-bold text-uppercase mb-1">No</div>
+                        <div class="text-xl fw-bold text-success-main">{{ $noCount }}</div>
+                    </div>
+                </div>
+                <div class="col-12 mt-8">
+                    <span class="badge w-100 {{ $yesCount > 3 ? 'bg-danger-focus text-danger-main' : ($yesCount > 0 ? 'bg-warning-focus text-warning-main' : 'bg-success-focus text-success-main') }}">
+                        {{ $yesCount > 3 ? 'Critical Concern' : ($yesCount > 0 ? 'Potential Risk' : 'Normal Assessment') }}
+                    </span>
+                </div>
+            </div>
+
             <div class="mb-16">
                 <label class="text-secondary-light text-xs fw-bold text-uppercase">Full Name</label>
                 <div class="text-lg fw-medium">{{ $submission->name }}</div>

@@ -34,5 +34,5 @@
     <link rel="stylesheet" href="{{ asset('assets/css/lib/audioplayer.css') }}">
     <!-- main css -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/premium-admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/premium-admin.css') }}?v={{ filemtime(public_path('assets/css/premium-admin.css')) }}">
 </head>

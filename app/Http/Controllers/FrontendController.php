@@ -13,13 +13,14 @@ class FrontendController extends Controller
     public function index()
     {
         $faqs = \App\Models\Faq::where('is_active', true)->orderBy('order')->get();
-        $stories = \App\Models\SuccessStory::where('is_active', true)->orderBy('order')->take(4)->get();
+        $stories = \App\Models\SuccessStory::with('treatmentType')->where('is_active', true)->orderBy('order')->take(4)->get();
         $sliders = \App\Models\Slider::where('is_active', true)->orderBy('order')->get();
         $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
         $services = \App\Models\Service::where('is_active', true)->orderBy('order')->get();
-        $blogs = \App\Models\Blog::where('is_active', true)->orderBy('created_at', 'desc')->take(4)->get();
+        $blogs = \App\Models\Blog::with('category_rel')->where('is_active', true)->orderBy('created_at', 'desc')->take(4)->get();
+        $testimonials = \App\Models\Testimonial::where('is_active', true)->orderBy('order')->get();
 
-        return view('frontend.index', compact('faqs', 'stories', 'sliders', 'settings', 'services', 'blogs'));
+        return view('frontend.index', compact('faqs', 'stories', 'sliders', 'settings', 'services', 'blogs', 'testimonials'));
     }
 
     public function about()
@@ -29,11 +30,14 @@ class FrontendController extends Controller
 
     public function blog()
     {
-        $blogs = \App\Models\Blog::where('is_active', true)->orderBy('created_at', 'desc')->get();
-        $categories = \App\Models\Blog::where('is_active', true)
-            ->select('category', DB::raw('count(*) as total'))
-            ->groupBy('category')
-            ->get();
+        $blogs = \App\Models\Blog::with('category_rel')->where('is_active', true)->orderBy('created_at', 'desc')->get();
+        
+        // Fetch categories from Category model with active blog counts
+        $categories = \App\Models\Category::whereHas('blogs', function($q) {
+            $q->where('is_active', true);
+        })->withCount(['blogs' => function($q) {
+            $q->where('is_active', true);
+        }])->get();
 
         return view('frontend.blog', compact('blogs', 'categories'));
     }
@@ -46,14 +50,16 @@ class FrontendController extends Controller
             ->where('category_id', $blog->category_id)
             ->limit(2)
             ->get();
-        return view('frontend.blog-details', compact('blog', 'relatedBlogs'));
+        $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
+        return view('frontend.blog-details', compact('blog', 'relatedBlogs', 'settings'));
     }
 
     public function contact()
     {
         $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
+        $siteSettings = $settings;
         $dynamicFields = \App\Models\ContactField::orderBy('order')->get();
-        return view('frontend.contact', compact('settings', 'dynamicFields'));
+        return view('frontend.contact', compact('settings', 'siteSettings', 'dynamicFields'));
     }
 
     public function contactSubmit(Request $request)
@@ -158,15 +164,22 @@ class FrontendController extends Controller
 
     public function faq()
     {
-        $faqs = \App\Models\Faq::where('is_active', true)->orderBy('order')->get();
-        // Since category is nullable, we filter out nulls/empties. We also use values() to reset keys after filtering.
-        $categories = $faqs->pluck('category')->filter()->unique()->values();
+        $faqs = \App\Models\Faq::with('category')->where('is_active', true)->orderBy('order')->get();
+        $categories = \App\Models\FaqCategory::where('is_active', true)
+            ->withCount(['faqs' => function($q) {
+                $q->where('is_active', true);
+            }])
+            ->having('faqs_count', '>', 0)
+            ->orderBy('order')
+            ->get();
+            
         return view('frontend.faq', compact('faqs', 'categories'));
     }
 
     public function gallery()
     {
-        return view('frontend.gallery');
+        $galleries = \App\Models\Gallery::where('is_active', true)->orderBy('order')->get();
+        return view('frontend.gallery', compact('galleries'));
     }
 
     public function privacyPolicy()
@@ -221,7 +234,8 @@ class FrontendController extends Controller
     {
         $service = \App\Models\Service::where('slug', $slug)->where('is_active', true)->firstOrFail();
         $allServices = \App\Models\Service::where('id', '!=', $service->id)->where('is_active', true)->limit(4)->get();
-        return view('frontend.service-detail', compact('service', 'allServices'));
+        $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
+        return view('frontend.service-detail', compact('service', 'allServices', 'settings'));
     }
 
     public function services()
@@ -232,7 +246,7 @@ class FrontendController extends Controller
 
     public function successStories()
     {
-        $stories = \App\Models\SuccessStory::where('is_active', true)->orderBy('order')->get();
+        $stories = \App\Models\SuccessStory::with('treatmentType')->where('is_active', true)->orderBy('order')->get();
         return view('frontend.success-stories', compact('stories'));
     }
 

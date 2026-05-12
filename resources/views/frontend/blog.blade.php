@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'blog Page')
-@section('meta_description', 'Welcome to our website')
-@section('meta_keywords', 'home, laravel, website')
+@section('title', 'Health Blog | Dr. Yuvraj Jadeja')
+@section('meta_description', 'Stay updated with the latest in fertility science, women\'s health tips, and clinical insights from Dr. Yuvraj Jadeja.')
+@section('meta_keywords', 'fertility blog, women\'s health Ahmedabad, IVF updates, Dr. Yuvraj Jadeja blog')
 
 @section('content')
   <!-- HERO -->
@@ -39,9 +39,9 @@
           <span class="filter-count" id="count-all">{{ $blogs->count() }}</span>
         </button>
         @foreach($categories as $cat)
-          <button class="filter-btn" data-filter="{{ strtolower($cat->category) }}">
-            <span class="dot"></span> {{ ucwords($cat->category) }}
-            <span class="filter-count">{{ $cat->total }}</span>
+          <button class="filter-btn" data-filter="{{ $cat->slug }}">
+            <span class="dot"></span> {{ $cat->name }}
+            <span class="filter-count">{{ $cat->blogs_count }}</span>
           </button>
         @endforeach
       </div>
@@ -63,7 +63,7 @@
       <div class="grid" id="blogGrid">
 
         @forelse($blogs as $blog)
-          <article class="card reveal" data-category="{{ strtolower($blog->category) }}">
+          <article class="card reveal" data-category="{{ $blog->category_rel->slug ?? 'uncategorized' }}">
             <div class="card-img">
               @if($blog->image)
                 <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
@@ -73,9 +73,9 @@
               @endif
             </div>
             <div class="card-body">
-              <span class="card-tag" style="color:var(--crimson);">{{ strtoupper($blog->category) }}</span>
+              <span class="card-tag" style="color:var(--crimson);">{{ strtoupper($blog->category_rel->name ?? 'UNCATEGORIZED') }}</span>
               <h3 class="card-title">{{ $blog->title }}</h3>
-              <p style="color:var(--slate); font-size:0.9rem; margin-bottom:1rem; line-height:1.6;">{{ $blog->excerpt }}</p>
+              <p style="color:var(--slate); font-size:0.9rem; margin-bottom:1rem; line-height:1.6;">{{ Str::limit($blog->excerpt, 120) }}</p>
               <div class="card-hashtags">
                 @if($blog->tags)
                   @foreach(explode(',', $blog->tags) as $tag)
@@ -187,8 +187,10 @@
   </section>
 
   <style>
+    .grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
     @media (max-width: 1100px) {
-
       .sidebar-divider,
       .sidebar-note {
         display: none !important;
@@ -197,6 +199,14 @@
       .blog_main {
         grid-template-columns: 1fr;
         gap: 2rem;
+      }
+      .grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr !important;
       }
     }
   </style>

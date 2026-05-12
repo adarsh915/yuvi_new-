@@ -1,7 +1,8 @@
 @extends('frontend.layouts.app')
 
 @section('title', 'FAQs | Dr. Yuvraj Jadeja')
-@section('meta_description', 'Find answers to common questions about fertility treatments, IVF, clinic procedures, and more.')
+@section('meta_description', 'Find answers to common questions about fertility treatments, IVF procedures, clinic visits, and more.')
+@section('meta_keywords', 'IVF FAQs, fertility questions, Dr. Yuvraj Jadeja FAQs, fertility treatment help')
 
 @section('content')
   <section class="faq-hero reveal">
@@ -21,11 +22,21 @@
         <button class="filter-btn active" data-filter="all"><span class="dot"></span>All FAQs<span
             class="filter-count">{{ $faqs->count() }}</span></button>
         @foreach($categories as $cat)
-          <button class="filter-btn" data-filter="{{ strtolower(str_replace(' ', '-', $cat)) }}">
-            <span class="dot"></span>{{ $cat }}
-            <span class="filter-count">{{ $faqs->where('category', $cat)->count() }}</span>
+          <button class="filter-btn" data-filter="{{ $cat->id }}">
+            <span class="dot"></span>{{ $cat->name }}
+            <span class="filter-count">{{ $cat->faqs_count }}</span>
           </button>
         @endforeach
+
+        @php
+          $uncategorizedCount = $faqs->whereNull('faq_category_id')->count();
+        @endphp
+        @if($uncategorizedCount > 0)
+          <button class="filter-btn" data-filter="0">
+            <span class="dot"></span>General
+            <span class="filter-count">{{ $uncategorizedCount }}</span>
+          </button>
+        @endif
       </div>
     </aside>
 
@@ -44,7 +55,7 @@
           <div class="faq-list" id="faqPageGrid">
             @forelse($faqs as $faq)
               <div class="faq-item"
-                data-category="{{ $faq->category ? strtolower(str_replace(' ', '-', $faq->category)) : 'general' }}">
+                data-category="{{ $faq->faq_category_id ?? 0 }}">
                 <button class="faq-question">{{ $faq->question }}
                   <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -184,37 +195,58 @@
       const emptyState = document.getElementById('emptyState');
       const visibleCountEl = document.getElementById('visibleCount');
 
+      // --- Filter Logic ---
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          // Update active state on all buttons
-          document.querySelectorAll('.page-body .filter-btn').forEach(b => b.classList.remove('active'));
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
 
-          // Make clicked button active (and its mobile/desktop counterpart if matching)
           const filter = btn.getAttribute('data-filter');
-          document.querySelectorAll(`.page-body .filter-btn[data-filter="${filter}"]`).forEach(b => b.classList.add('active'));
-
           let visible = 0;
 
           faqItems.forEach(item => {
             const cat = item.getAttribute('data-category');
-
             if (filter === 'all' || cat === filter) {
               item.style.display = '';
               visible++;
             } else {
               item.style.display = 'none';
+              // Close answer if hidden
+              item.classList.remove('active');
+              const answer = item.querySelector('.faq-answer');
+              if(answer) answer.style.maxHeight = null;
             }
           });
 
-          if (emptyState) {
-            emptyState.style.display = visible === 0 ? 'block' : 'none';
-          }
-
+          if (emptyState) emptyState.style.display = visible === 0 ? 'block' : 'none';
           if (visibleCountEl) {
-            visibleCountEl.textContent =
-              visible === 0
-                ? "No FAQs found"
-                : `Showing ${visible} FAQ${visible === 1 ? "" : "s"}`;
+            visibleCountEl.textContent = visible === 0 ? "No FAQs found" : `Showing ${visible} FAQ${visible === 1 ? "" : "s"}`;
+          }
+        });
+      });
+
+      // --- Accordion Toggle Logic ---
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        question.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          
+          // Close others
+          faqItems.forEach(other => {
+            other.classList.remove('active');
+            const otherAns = other.querySelector('.faq-answer');
+            if(otherAns) otherAns.style.maxHeight = null;
+          });
+
+          // Toggle current
+          if (!isActive) {
+            item.classList.add('active');
+            answer.style.maxHeight = answer.scrollHeight + "px";
+          } else {
+            item.classList.remove('active');
+            answer.style.maxHeight = null;
           }
         });
       });

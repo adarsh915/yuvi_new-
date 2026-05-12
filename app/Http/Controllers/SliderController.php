@@ -25,8 +25,8 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'image' => 'required|image|max:2048',
-            'order' => 'required|integer|min:0',
+            'image' => 'required|image|max:5120',
+            'order' => 'nullable|integer|min:0|unique:sliders,order',
         ]);
 
         $validated['is_active'] = $request->boolean('is_active');
@@ -35,6 +35,7 @@ class SliderController extends Controller
             $validated['image'] = $request->file('image')->store('sliders', 'public');
         }
 
+        $validated['order'] = $request->input('order') ?: (Slider::max('order') + 1);
         Slider::create($validated);
 
         return redirect()->route('admin.sliders')->with('success', 'Slider created successfully.');
@@ -48,8 +49,8 @@ class SliderController extends Controller
     public function update(Request $request, Slider $slider)
     {
         $validated = $request->validate([
-            'image' => 'nullable|image|max:2048',
-            'order' => 'required|integer|min:0',
+            'image' => 'nullable|image|max:5120',
+            'order' => 'required|integer|min:0|unique:sliders,order,' . $slider->id,
         ]);
 
         $validated['is_active'] = $request->boolean('is_active');

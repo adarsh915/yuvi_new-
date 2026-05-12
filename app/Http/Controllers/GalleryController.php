@@ -31,7 +31,7 @@ class GalleryController extends Controller
             'title' => $request->title,
             'subtitle' => $request->subtitle,
             'image' => $imagePath,
-            'order' => $request->order ?? 0,
+            'order' => $request->order ?: (Gallery::max('order') + 1),
             'is_active' => $request->has('is_active'),
         ]);
 

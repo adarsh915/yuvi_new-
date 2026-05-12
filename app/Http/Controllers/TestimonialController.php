@@ -19,13 +19,14 @@ class TestimonialController extends Controller
             'name' => 'required|string|max:255',
             'rating' => 'required|integer|min:1|max:5',
             'review' => 'required|string|min:10',
+            'order' => 'nullable|integer|unique:testimonials,order',
         ]);
 
         Testimonial::create([
             'name' => $request->name,
             'rating' => $request->rating,
             'review' => $request->review,
-            'order' => $request->order ?? 0,
+            'order' => $request->order ?: (Testimonial::max('order') + 1),
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -38,13 +39,14 @@ class TestimonialController extends Controller
             'name' => 'required|string|max:255',
             'rating' => 'required|integer|min:1|max:5',
             'review' => 'required|string|min:10',
+            'order' => 'required|integer|unique:testimonials,order,' . $testimonial->id,
         ]);
 
         $testimonial->update([
             'name' => $request->name,
             'rating' => $request->rating,
             'review' => $request->review,
-            'order' => $request->order ?? 0,
+            'order' => $request->order,
             'is_active' => $request->has('is_active'),
         ]);
 

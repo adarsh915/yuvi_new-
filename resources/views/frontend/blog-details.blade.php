@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'blog-details Page')
-@section('meta_description', 'Welcome to our website')
-@section('meta_keywords', 'home, laravel, website')
+@section('title', $blog->meta_title ?? ($blog->title . ' | Dr. Yuvraj Jadeja Blog'))
+@section('meta_description', $blog->meta_description ?? $blog->excerpt)
+@section('meta_keywords', $blog->meta_keywords ?? $blog->tags)
 
 @section('content')
   <section class="article-hero reveal">
@@ -12,7 +12,18 @@
         <span>{{ $blog->title }}</span>
       </div>
       <div class="hero-eyebrow">{{ strtoupper(optional($blog->category_rel)->name ?? strtoupper($blog->category)) }}</div>
-      <h1>{!! str_replace(' ', ' <em>', $blog->title) . '</em>' !!}</h1>
+      <h1>
+        @php
+          $title = $blog->title;
+          $words = explode(' ', $title);
+          if (count($words) > 1) {
+              $lastWord = array_pop($words);
+              echo implode(' ', $words) . ' <em>' . $lastWord . '</em>';
+          } else {
+              echo $title;
+          }
+        @endphp
+      </h1>
       <div class="meta-info">
         <div class="author">
           <span>{{ $blog->author }}</span>
@@ -31,20 +42,19 @@
     <article class="bd-article reveal">
 
       @if($blog->image)
-        <img src="{{ asset('storage/' . $blog->image) }}"
-          alt="{{ $blog->title }}" class="bd-article__img-full">
+        <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}" class="bd-article__img-full">
       @endif
 
       <div class="bd-article__body">
-          {!! $blog->body !!}
+        {!! $blog->body !!}
       </div>
 
       <!-- Tags -->
       <div class="bd-article__tags">
         @if($blog->tags)
-            @foreach(explode(',', $blog->tags) as $tag)
-                <a href="#" class="bd-tag">{{ trim($tag) }}</a>
-            @endforeach
+          @foreach(explode(',', $blog->tags) as $tag)
+            <a href="#" class="bd-tag">{{ trim($tag) }}</a>
+          @endforeach
         @endif
       </div>
     </article>
@@ -58,44 +68,46 @@
       </div>
 
       <!-- Categories -->
-      <div class="bd-sidebar__card reveal">
-        <h4 class="bd-sidebar__card-title">Article Topics</h4>
-        <div class="bd-sidebar__tags">
-          <span class="bd-sidebar__cat-tag bd-sidebar__cat-tag--primary">Fertility</span>
-          <span class="bd-sidebar__cat-tag bd-sidebar__cat-tag--secondary">Clinical Updates</span>
-        </div>
-      </div>
+      <!-- <div class="bd-sidebar__card reveal">
+            <h4 class="bd-sidebar__card-title">Article Topics</h4>
+            <div class="bd-sidebar__tags">
+              <span class="bd-sidebar__cat-tag bd-sidebar__cat-tag--primary">Fertility</span>
+              <span class="bd-sidebar__cat-tag bd-sidebar__cat-tag--secondary">Clinical Updates</span>
+            </div>
+          </div> -->
 
       <!-- Related Articles -->
       <div class="bd-sidebar__card reveal">
         <h4 class="bd-sidebar__card-title">Related Articles</h4>
         <ul class="bd-related-list">
           @foreach($relatedBlogs as $related)
-          <li class="bd-related-item">
-            <a href="{{ route('frontend.blogDetails', $related->slug) }}" class="bd-related-link">
-              <div class="bd-related-thumb">
-                @if($related->image)
+            <li class="bd-related-item">
+              <a href="{{ route('frontend.blogDetails', $related->slug) }}" class="bd-related-link">
+                <div class="bd-related-thumb">
+                  @if($related->image)
                     <img src="{{ asset('storage/' . $related->image) }}" alt="{{ $related->title }}">
-                @else
-                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&q=80&w=150" alt="{{ $related->title }}">
-                @endif
-              </div>
-              <div class="bd-related-info">
-                <h5 class="bd-related-title">{{ $related->title }}</h5>
-                <span class="bd-related-meta">{{ $related->created_at->format('M d, Y') }} · {{ ucfirst(optional($related->category_rel)->name ?? $related->category) }}</span>
-              </div>
-            </a>
-          </li>
+                  @else
+                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&q=80&w=150"
+                      alt="{{ $related->title }}">
+                  @endif
+                </div>
+                <div class="bd-related-info">
+                  <h5 class="bd-related-title">{{ $related->title }}</h5>
+                  <span class="bd-related-meta">{{ $related->created_at->format('M d, Y') }} ·
+                    {{ ucfirst(optional($related->category_rel)->name ?? $related->category) }}</span>
+                </div>
+              </a>
+            </li>
           @endforeach
         </ul>
       </div>
 
       <!-- Newsletter -->
-      <div class="bd-sidebar__card bd-sidebar__card--newsletter reveal">
-        <h4 class="bd-sidebar__card-title">Health Blog</h4>
-        <p class="bd-sidebar__card-text">Receive the latest health tips and clinical updates directly in your inbox.</p>
-        <button class="bd-subscribe-btn">Subscribe to Blog</button>
-      </div>
+      <!-- <div class="bd-sidebar__card bd-sidebar__card--newsletter reveal">
+          <h4 class="bd-sidebar__card-title">Health Blog</h4>
+          <p class="bd-sidebar__card-text">Receive the latest health tips and clinical updates directly in your inbox.</p>
+          <button class="bd-subscribe-btn">Subscribe to Blog</button>
+        </div> -->
 
       <!-- Consult CTA -->
       <div class="bd-sidebar__card bd-sidebar__card--consult reveal">
@@ -118,7 +130,7 @@
           </div>
           <div class="bd-quick-contact__detail">
             <strong>WhatsApp</strong>
-            <a href="https://wa.me/919999999999">+91 999 999 9999</a>
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['footer_phone'] ?? '919999999999') }}">{{ $settings['footer_phone'] ?? '+91 999 999 9999' }}</a>
           </div>
         </div>
         <div class="bd-quick-contact__item">
@@ -131,7 +143,7 @@
           </div>
           <div class="bd-quick-contact__detail">
             <strong>Email</strong>
-            <a href="mailto:doctoryuvi@nimaaya.com">doctoryuvi@nimaaya.com</a>
+            <a href="mailto:{{ $settings['footer_email'] ?? 'doctoryuvi@nimaaya.com' }}">{{ $settings['footer_email'] ?? 'doctoryuvi@nimaaya.com' }}</a>
           </div>
         </div>
       </div>

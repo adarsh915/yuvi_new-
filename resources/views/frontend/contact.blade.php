@@ -8,8 +8,15 @@
   <section class="hero_box4 reveal">
     <div class="hero-inner_2">
       <div class="hero-eyebrow_2">Connect With Us</div>
-      <h1>Begin with <em>Clarity.</em></h1>
-      <p>Your journey to parenthood starts with a single conversation. We're here to listen, guide, and walk every step alongside you.</p>
+      <div class="hero-split-wrap">
+        <div class="hero-split-left">
+          <h1>Begin with <em>Clarity.</em></h1>
+        </div>
+        <div class="hero-split-right">
+          <p>Your journey to parenthood starts with a single conversation. We're here to listen, guide, and walk every
+            step alongside you.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -40,20 +47,22 @@
         <button class="tab-btn" data-tab="whatsapp" role="tab">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+            <path
+              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
           </svg>
           WhatsApp
         </button>
       </div>
 
       <p class="form-section-title" id="formTitle">Request a Consultation</p>
-      <p class="form-section-sub" id="formSub">Fill in your details and we'll reach out within 24 hours to confirm your appointment.</p>
+      <p class="form-section-sub" id="formSub">Fill in your details and we'll reach out within 24 hours to confirm your
+        appointment.</p>
 
       <form id="contactForm" novalidate action="{{ route('frontend.contact.submit') }}" method="POST">
         @csrf
         <input type="hidden" id="consultationType" name="consultation_type" value="inclinic_visit">
         <div class="error-text mb-12" id="error-global"></div>
-        
+
         <div class="form-grid">
           <!-- BASE FIELDS (Always shown) -->
           <!-- First Name -->
@@ -84,8 +93,8 @@
             <span class="error-text" id="error-phone"></span>
           </div>
 
-          <!-- Subject/Concern (full width) -->
-          <div class="form-group full-width">
+          <!-- Subject/Concern -->
+          <div class="form-group">
             <label for="primary_concern">Primary Concern <span class="text-danger">*</span></label>
             <select name="primary_concern" id="primary_concern" required>
               <option value="" disabled selected>Select a concern</option>
@@ -115,15 +124,24 @@
           <!-- Message (full width) -->
           <div class="form-group full-width">
             <label for="message">Message <span class="text-danger">*</span></label>
-            <textarea name="message" id="message" placeholder="Tell us more about your concerns and what you'd like to discuss..." rows="4" required></textarea>
+            <textarea name="message" id="message"
+              placeholder="Tell us more about your concerns and what you'd like to discuss..." rows="4"
+              required></textarea>
             <span class="error-text" id="error-message"></span>
           </div>
 
           <!-- DYNAMIC FIELDS (filtered by category) -->
           @foreach($dynamicFields->sortBy('order') as $field)
-            <div class="form-group dynamic-field {{ $field->type == 'textarea' ? 'full-width' : '' }}" data-category="{{ $field->category }}">
-              <label for="{{ $field->name }}">{{ $field->label }} @if($field->is_required)<span class="text-danger">*</span>@endif</label>
-              
+            {{-- Skip fields that are already hardcoded as base fields --}}
+            @if(in_array($field->name, ['first_name', 'last_name', 'email', 'phone', 'primary_concern', 'message', 'preferred_location']))
+              @continue
+            @endif
+
+            <div class="form-group dynamic-field {{ $field->type == 'textarea' ? 'full-width' : '' }}"
+              data-category="{{ $field->category }}">
+              <label for="{{ $field->name }}">{{ $field->label }} @if($field->is_required)<span
+              class="text-danger">*</span>@endif</label>
+
               @if($field->type == 'textarea')
                 <textarea name="{{ $field->name }}" id="{{ $field->name }}" placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }} rows="3"></textarea>
               @elseif($field->type == 'select')
@@ -134,7 +152,8 @@
                   @endforeach
                 </select>
               @else
-                <input type="{{ $field->type }}" name="{{ $field->name }}" id="{{ $field->name }}" placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }}>
+                <input type="{{ $field->type }}" name="{{ $field->name }}" id="{{ $field->name }}"
+                  placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }}>
               @endif
               <span class="error-text" id="error-{{ $field->name }}"></span>
             </div>
@@ -145,7 +164,8 @@
           <div class="form-group full">
             <div class="checkbox-group">
               <input type="checkbox" id="consent" required>
-              <label for="consent">I consent to Dr. Yuvi's team contacting me regarding my inquiry. My information will be kept strictly confidential.</label>
+              <label for="consent">I consent to Dr. Yuvi's team contacting me regarding my inquiry. My information will be
+                kept strictly confidential.</label>
             </div>
           </div>
         </div>
@@ -185,33 +205,31 @@
           <p class="quick-title">Quick Support</p>
           <div class="quick-item">
             <div class="quick-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                </path>
               </svg>
             </div>
             <div class="quick-item-text">
               <strong>WhatsApp</strong>
-              @if(isset($siteSettings['whatsapp_number']))
-                <a href="https://wa.me/{{ $siteSettings['whatsapp_number'] }}">{{ $siteSettings['whatsapp_number'] }}</a>
-              @else
-                <a href="#">Chat Now</a>
-              @endif
+              <a
+                href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}">{{ $siteSettings['footer_phone'] ?? '+91 999 999 9999' }}</a>
             </div>
           </div>
           <div class="quick-item">
             <div class="quick-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </div>
             <div class="quick-item-text">
               <strong>Email</strong>
-              @if(isset($siteSettings['email_address']))
-                <a href="mailto:{{ $siteSettings['email_address'] }}">{{ $siteSettings['email_address'] }}</a>
-              @else
-                <a href="#">Email Us</a>
-              @endif
+              <a href="mailto:{{ $siteSettings['footer_email'] ?? 'doctoryuvi@nimaaya.com' }}">{{
+                $siteSettings['footer_email'] ?? 'doctoryuvi@nimaaya.com' }}</a>
             </div>
           </div>
         </div>
@@ -226,30 +244,132 @@
 
   </div>
 
+  <!-- MAP SECTION -->
+  <section class="map-section reveal">
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.3121546733!2d73.1362!3d22.305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc88f5043831b%3A0x6b245a4a58434771!2sYash%20Complex%2C%20Gotri%20Rd%2C%20Vadodara%2C%20Gujarat%20390021!5e0!3m2!1sen!2sin!4v1715510000000!5m2!1sen!2sin"
+        width="100%" height="450" style="border:0; display: block;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
+
   <style>
     .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      /* Balanced gap */
     }
+
+    .map-section {
+      margin-top: 4rem;
+      margin-bottom: 4rem;
+      padding: 0 2rem;
+    }
+
+    .map-container {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 991px) {
+      .map-section {
+        padding: 0 1rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
     .form-group.full-width {
-        grid-column: span 2;
+      grid-column: span 2;
     }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--midnight);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      /* Tightened padding */
+      border: 1.5px solid rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s ease;
+      background: #fff;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--crimson);
+      box-shadow: 0 0 0 3px rgba(219, 69, 78, 0.1);
+    }
+
     @media (max-width: 600px) {
-        .form-grid {
-            grid-template-columns: 1fr;
-        }
-        .form-group.full-width {
-            grid-column: span 1;
-        }
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .form-group.full-width {
+        grid-column: span 1;
+      }
     }
+
     .error-text {
-        color: #e24b4a;
-        font-size: 0.75rem;
-        margin-top: 4px;
-        display: block;
+      color: #e24b4a;
+      font-size: 0.75rem;
+      margin-top: 4px;
+      display: block;
+      min-height: 1rem;
     }
-    .text-danger { color: #e24b4a; }
+
+    .text-danger {
+      color: #e24b4a;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .checkbox-group input {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .checkbox-group label {
+      font-size: 0.85rem;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--slate);
+      cursor: pointer;
+    }
   </style>
 
   <script>
@@ -266,18 +386,18 @@
       btn.addEventListener('click', () => {
         tabBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-       
-          // Update consultation type
-          const tabType = btn.getAttribute('data-tab');
-          const typeMap = { 'clinic': 'inclinic_visit', 'online': 'online_consultation', 'whatsapp': 'whatsapp' };
-          document.getElementById('consultationType').value = typeMap[tabType];
-       
-          // Update form text
-          formTitle.textContent = tabMeta[tabType].title;
-          formSub.textContent = tabMeta[tabType].sub;
-       
-          // Update dynamic fields visibility
-          updateDynamicFields(typeMap[tabType]);
+
+        // Update consultation type
+        const tabType = btn.getAttribute('data-tab');
+        const typeMap = { 'clinic': 'inclinic_visit', 'online': 'online_consultation', 'whatsapp': 'whatsapp' };
+        document.getElementById('consultationType').value = typeMap[tabType];
+
+        // Update form text
+        formTitle.textContent = tabMeta[tabType].title;
+        formSub.textContent = tabMeta[tabType].sub;
+
+        // Update dynamic fields visibility
+        updateDynamicFields(typeMap[tabType]);
       });
     });
 
@@ -285,59 +405,59 @@
     const successMsg = document.getElementById('successMsg');
     const submitBtn = document.getElementById('submitBtn');
 
-   // Phone validation - strict 10 digits only
-   const phoneInput = document.getElementById('phone');
-   phoneInput.addEventListener('input', function() {
-     this.value = this.value.replace(/\D/g, '').slice(0, 10);
-     const errorEl = document.getElementById('error-phone');
-     if (this.value.length === 10) {
-       errorEl.textContent = '';
-       this.style.borderColor = '#28a745';
-     } else if (this.value.length > 0) {
-       errorEl.textContent = 'Phone number must be exactly 10 digits.';
-       this.style.borderColor = '#dc3545';
-     } else {
-       this.style.borderColor = '';
-       errorEl.textContent = '';
-     }
-   });
+    // Phone validation - strict 10 digits only
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function () {
+      this.value = this.value.replace(/\D/g, '').slice(0, 10);
+      const errorEl = document.getElementById('error-phone');
+      if (this.value.length === 10) {
+        errorEl.textContent = '';
+        this.style.borderColor = '#28a745';
+      } else if (this.value.length > 0) {
+        errorEl.textContent = 'Phone number must be exactly 10 digits.';
+        this.style.borderColor = '#dc3545';
+      } else {
+        this.style.borderColor = '';
+        errorEl.textContent = '';
+      }
+    });
 
-   // Dynamic fields filtering based on consultation type
-   function updateDynamicFields(selectedCategory) {
-     const dynamicFields = document.querySelectorAll('.dynamic-field');
-     dynamicFields.forEach(field => {
-       const fieldCategory = field.getAttribute('data-category');
-       const inputs = field.querySelectorAll('input, select, textarea');
-       if (fieldCategory === 'all' || fieldCategory === selectedCategory) {
-         field.style.display = '';
-         inputs.forEach(input => {
-           if (input.dataset.initialRequired === '1') {
-             input.required = true;
-           }
-         });
-       } else {
-         field.style.display = 'none';
-         inputs.forEach(input => {
-           if (input.required) {
-             input.dataset.initialRequired = '1';
-           }
-           input.required = false;
-           input.value = '';
-         });
-       }
-     });
-   }
+    // Dynamic fields filtering based on consultation type
+    function updateDynamicFields(selectedCategory) {
+      const dynamicFields = document.querySelectorAll('.dynamic-field');
+      dynamicFields.forEach(field => {
+        const fieldCategory = field.getAttribute('data-category');
+        const inputs = field.querySelectorAll('input, select, textarea');
+        if (fieldCategory === 'all' || fieldCategory === selectedCategory) {
+          field.style.display = '';
+          inputs.forEach(input => {
+            if (input.dataset.initialRequired === '1') {
+              input.required = true;
+            }
+          });
+        } else {
+          field.style.display = 'none';
+          inputs.forEach(input => {
+            if (input.required) {
+              input.dataset.initialRequired = '1';
+            }
+            input.required = false;
+            input.value = '';
+          });
+        }
+      });
+    }
 
-   // Initialize dynamic fields with default category
-   updateDynamicFields('inclinic_visit');
+    // Initialize dynamic fields with default category
+    updateDynamicFields('inclinic_visit');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      
+
       // Clear previous errors
       document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
       const globalError = document.getElementById('error-global');
-      
+
       const consent = document.getElementById('consent');
       if (!consent.checked) {
         consent.style.outline = '2px solid #e24b4a';
@@ -355,45 +475,45 @@
       submitBtn.querySelector('span').textContent = 'Sending...';
 
       const formData = new FormData(form);
-      
+
       fetch(form.action, {
         method: 'POST',
         body: formData,
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       })
-      .then(response => response.json().then(data => ({ ok: response.ok, status: response.status, data })))
-      .then(res => {
-        const data = res.data;
-        if (res.ok && data.success) {
-          form.style.opacity = '0';
-          form.style.transition = 'all 0.4s ease';
-          setTimeout(() => {
-            form.style.display = 'none';
-            successMsg.classList.add('show');
-          }, 400);
-        } else if (data && data.errors) {
+        .then(response => response.json().then(data => ({ ok: response.ok, status: response.status, data })))
+        .then(res => {
+          const data = res.data;
+          if (res.ok && data.success) {
+            form.style.opacity = '0';
+            form.style.transition = 'all 0.4s ease';
+            setTimeout(() => {
+              form.style.display = 'none';
+              successMsg.classList.add('show');
+            }, 400);
+          } else if (data && data.errors) {
             submitBtn.disabled = false;
             submitBtn.querySelector('span').textContent = 'Send Consultation Request';
             Object.keys(data.errors).forEach(key => {
-                const errorEl = document.getElementById('error-' + key);
-                if (errorEl) {
-                  errorEl.textContent = data.errors[key][0];
-                } else {
-                  globalError.textContent = data.errors[key][0];
-                }
+              const errorEl = document.getElementById('error-' + key);
+              if (errorEl) {
+                errorEl.textContent = data.errors[key][0];
+              } else {
+                globalError.textContent = data.errors[key][0];
+              }
             });
-        } else {
-          alert('Something went wrong. Please try again.');
+          } else {
+            alert('Something went wrong. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.querySelector('span').textContent = 'Send Consultation Request';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
           submitBtn.disabled = false;
           submitBtn.querySelector('span').textContent = 'Send Consultation Request';
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
-        submitBtn.disabled = false;
-        submitBtn.querySelector('span').textContent = 'Send Consultation Request';
-      });
+        });
     });
   </script>
 @endsection

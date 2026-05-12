@@ -2,22 +2,43 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 
-<x-head/>
+<x-head />
+<style>
+    .auth-left img {
+        object-fit: cover;
+    }
 
-<body>
+    .icon-field .icon {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 5;
+    }
 
-    <section class="auth bg-base d-flex flex-wrap">
-        <div class="auth-left d-lg-block d-none">
-            <div class="d-flex align-items-center flex-column h-100 justify-content-center">
-                <img src="{{ asset('assets/images/auth/auth-img.png') }}" alt="">
+    .icon-field .form-control {
+        padding-left: 45px !important;
+        position: relative;
+        z-index: 1;
+    }
+</style>
+
+<body style="overflow: hidden;">
+
+    <section class="auth bg-base d-flex flex-wrap min-vh-100">
+        <div class="auth-left d-lg-block d-none w-50 p-0">
+            <div class="h-100 w-100">
+                <img src="{{ asset('assets/images/asset/admin.jpg') }}" alt="" class="w-100 h-100 object-fit-cover">
             </div>
         </div>
-        <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center">
+        <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center w-50">
             <div class="max-w-464-px mx-auto w-100">
                 <div>
-                    <a href="{{ route('frontend.index') }}" class="mb-40 max-w-290-px">
+                    <!-- <a href="{{ route('frontend.index') }}" class="mb-40 max-w-290-px">
                         <img src="{{ asset('assets/images/logo.png') }}" alt="">
-                    </a>
+                    </a> -->
                     <h4 class="mb-12">Sign In to your Account</h4>
                     <p class="mb-32 text-secondary-light text-lg">Welcome back! please enter your detail</p>
                 </div>
@@ -32,7 +53,7 @@
                             </ul>
                         </div>
                     @endif
-                    
+
                     @if(session('success'))
                         <div class="alert alert-success radius-12 mb-16 px-16 py-8 text-sm">
                             {{ session('success') }}
@@ -40,62 +61,70 @@
                     @endif
 
                     <div class="icon-field mb-16">
-                        <span class="icon top-50 translate-middle-y">
+                        <span class="icon">
                             <iconify-icon icon="mage:email"></iconify-icon>
                         </span>
-                        <input type="email" name="email" class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Email" value="{{ old('email') }}" required>
+                        <input type="email" name="email" class="form-control h-56-px bg-neutral-50 radius-12"
+                            placeholder="Email" value="{{ old('email') }}" required>
                     </div>
                     <div class="position-relative mb-20">
                         <div class="icon-field">
-                            <span class="icon top-50 translate-middle-y">
+                            <span class="icon">
                                 <iconify-icon icon="solar:lock-password-outline"></iconify-icon>
                             </span>
-                            <input type="password" name="password" class="form-control h-56-px bg-neutral-50 radius-12" id="your-password" placeholder="Password" required>
+                            <input type="password" name="password" class="form-control h-56-px bg-neutral-50 radius-12"
+                                id="your-password" placeholder="Password" required>
                         </div>
-                        <span class="toggle-password ri-eye-line cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light" data-toggle="#your-password"></span>
+                        <span
+                            class="toggle-password ri-eye-line cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light"
+                            data-toggle="#your-password"></span>
                     </div>
                     <div class="">
                         <div class="d-flex justify-content-between align-items-center gap-2">
                             <div class="form-check style-check d-flex align-items-center">
-                                <input class="form-check-input border border-neutral-300" type="checkbox" name="remember" id="remeber">
+                                <input class="form-check-input border border-neutral-300" type="checkbox"
+                                    name="remember" id="remeber">
                                 <label class="form-check-label" for="remeber">Remember me </label>
                             </div>
-                            <a  href="javascript:void(0)" class="text-primary-600 fw-medium">Forgot Password?</a>
+                            <a href="{{ route('password.request') }}" class="text-primary-600 fw-medium">Forgot Password?</a>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"> Sign In</button>
-
-                    <div class="mt-24 text-center text-sm">
-                        <p class="mb-0">Don't have an account? <a href="{{ route('signup') }}" class="text-primary-600 fw-semibold">Sign Up</a></p>
+                    <div class="text-center mt-32">
+                        <button type="submit" class="btn btn-primary text-sm btn-sm px-40 py-16 radius-12">Sign In</button>
                     </div>
+
+                    <!-- <div class="mt-24 text-center text-sm">
+                        <p class="mb-0">Don't have an account? <a href="{{ route('signup') }}"
+                                class="text-primary-600 fw-semibold">Sign Up</a></p>
+                    </div> -->
 
                 </form>
             </div>
         </div>
     </section>
 
-@php
+    @php
         $script = '<script>
-            // ================== Password Show Hide Js Start ==========
-            function initializePasswordToggle(toggleSelector) {
-                $(toggleSelector).on("click", function() {
-                    $(this).toggleClass("ri-eye-off-line");
-                    var input = $($(this).attr("data-toggle"));
-                    if (input.attr("type") === "password") {
-                        input.attr("type", "text");
-                    } else {
-                        input.attr("type", "password");
-                    }
-                });
-            }
-            // Call the function
-            initializePasswordToggle(".toggle-password");
-            // ========================= Password Show Hide Js End ===========================
-        </script>';
-@endphp
+                                                    // ================== Password Show Hide Js Start ==========
+                                                    function initializePasswordToggle(toggleSelector) {
+                                                        $(toggleSelector).on("click", function() {
+                                                            $(this).toggleClass("ri-eye-off-line");
+                                                            var input = $($(this).attr("data-toggle"));
+                                                            if (input.attr("type") === "password") {
+                                                                input.attr("type", "text");
+                                                            } else {
+                                                                input.attr("type", "password");
+                                                            }
+                                                        });
+                                                    }
+                                                    // Call the function
+                                                    initializePasswordToggle(".toggle-password");
+                                                    // ========================= Password Show Hide Js End ===========================
+                                                </script>';
+    @endphp
 
-<x-script />
+    <x-script />
 
 </body>
 

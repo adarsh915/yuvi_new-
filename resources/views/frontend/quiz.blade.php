@@ -6,6 +6,18 @@
 
 
 @section('content')
+  <style>
+    .text-danger {
+      color: #e24b4a !important;
+      font-weight: bold;
+    }
+    .error-text {
+      color: #e24b4a;
+      font-size: 0.75rem;
+      margin-top: 4px;
+      display: block;
+    }
+  </style>
   <!-- QUIZ SECTION -->
   <section class="quiz-section reveal" aria-label="Interactive Assessment">
     <div class="quiz-container reveal">
@@ -65,12 +77,14 @@
         <p class="quiz-lead-desc">Enter your details to instantly unlock your customised fertility map.</p>
         <div class="quiz-form">
           <div class="form-group">
-            <label for="leadName">Full Name</label>
+            <label for="leadName">Full Name <span class="text-danger">*</span></label>
             <input type="text" id="leadName" class="form-input" placeholder="Jane Doe" required>
+            <span class="error-text" id="error-leadName"></span>
           </div>
           <div class="form-group">
-            <label for="leadPhone">Phone Number</label>
-            <input type="tel" id="leadPhone" class="form-input" placeholder="+91 999 999 9999" required>
+            <label for="leadPhone">Phone Number <span class="text-danger">*</span></label>
+            <input type="tel" id="leadPhone" class="form-input" placeholder="10-digit phone number" maxlength="10" required>
+            <span class="error-text" id="error-leadPhone"></span>
           </div>
           <div class="form-group">
             <label for="leadEmail">Email Address (Optional)</label>
@@ -93,7 +107,7 @@
         <p class="quiz-final-text">Take the next step with expert guidance.</p>
         <div class="cta-btns flex-center">
           <a href="{{ route('frontend.contact') }}" class="btn-primary-dark">Book Free Consultation</a>
-          <a href="https://wa.me/919999999999" target="_blank" class="btn-outline">
+          <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}" target="_blank" class="btn-outline">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <path
@@ -227,12 +241,30 @@
     }
 
     function submitLead() {
+      // Clear previous errors
+      document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
+      
       const name = document.getElementById('leadName').value.trim();
       const phone = document.getElementById('leadPhone').value.trim();
       const email = document.getElementById('leadEmail').value.trim();
       const city = document.getElementById('leadCity').value.trim();
 
-      if (!name || !phone) { alert('Please enter at least your Name and Phone Number.'); return; }
+      let hasError = false;
+
+      if (!name) {
+          document.getElementById('error-leadName').textContent = 'Full name is required.';
+          hasError = true;
+      }
+
+      if (!phone) {
+          document.getElementById('error-leadPhone').textContent = 'Phone number is required.';
+          hasError = true;
+      } else if (phone.length !== 10) {
+          document.getElementById('error-leadPhone').textContent = 'Please enter a valid 10-digit phone number.';
+          hasError = true;
+      }
+
+      if (hasError) return;
 
       const submitBtn = event.target;
       submitBtn.disabled = true;
@@ -275,6 +307,14 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       renderQuizStep(0);
+
+      // Real-time phone validation for lead form
+      const leadPhone = document.getElementById('leadPhone');
+      if (leadPhone) {
+          leadPhone.addEventListener('input', function() {
+              this.value = this.value.replace(/\D/g, '').slice(0, 10);
+          });
+      }
     });
   </script>
 @endsection

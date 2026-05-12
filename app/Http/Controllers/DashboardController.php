@@ -18,7 +18,8 @@ class DashboardController extends Controller
             'blogs_count' => \App\Models\Blog::count(),
             'services_count' => \App\Models\Service::count(),
         ];
-        return view('admin.index', compact('stats'));
+        $recent_leads = \App\Models\Lead::orderBy('created_at', 'desc')->take(5)->get();
+        return view('admin.index', compact('stats', 'recent_leads'));
     }
 
     public function leads()

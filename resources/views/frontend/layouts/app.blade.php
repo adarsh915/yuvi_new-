@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dr. Yuvraj Jadeja | Ethical Fertility & Women's Health</title>
-  <meta name="description" content="Ethical, evidence-based fertility and women's health care in Ahmedabad.">
+  <title>@yield('title', 'Dr. Yuvraj Jadeja | Ethical Fertility & Women\'s Health')</title>
+  <meta name="description" content="@yield('meta_description', 'Ethical, evidence-based fertility and women\'s health care in Ahmedabad.')">
+  <meta name="keywords" content="@yield('meta_keywords', 'fertility, IVF, Dr. Yuvraj Jadeja, Ahmedabad, women\'s health')">
   <link rel="icon" type="image/png" href="{{ asset('assets/frontend/img/favicon.png') }}">
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"

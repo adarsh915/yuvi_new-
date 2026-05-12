@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'service Page')
-@section('meta_description', 'Welcome to our website')
-@section('meta_keywords', 'home, laravel, website')
+@section('title', 'Fertility Services & Treatments | Dr. Yuvraj Jadeja')
+@section('meta_description', 'Comprehensive fertility care including IVF, ICSI, IUI, and specialized women\'s health services by Dr. Yuvraj Jadeja in Ahmedabad.')
+@section('meta_keywords', 'IVF treatment, fertility clinic Ahmedabad, PCOS management, male infertility, Dr. Yuvraj Jadeja')
 
 <!-- HERO -->
 @section('content')
@@ -239,7 +239,7 @@
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
-        <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="btn-outline">
+        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}" target="_blank" rel="noopener" class="btn-outline">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <path

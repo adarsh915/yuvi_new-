@@ -9,6 +9,7 @@ class Service extends Model
     protected $fillable = [
         'title',
         'slug',
+        'service_category_id',
         'category_tag',
         'short_description',
         'accent_class',
@@ -33,6 +34,9 @@ class Service extends Model
         'safety_text',
         'is_active',
         'order',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
     ];
 
     protected $casts = [
@@ -41,4 +45,8 @@ class Service extends Model
         'expect_json' => 'array',
         'is_active' => 'boolean',
     ];
+    public function category()
+    {
+        return $this->belongsTo(ServiceCategory::class, 'service_category_id');
+    }
 }

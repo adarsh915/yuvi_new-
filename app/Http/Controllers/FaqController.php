@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Faq;
+use App\Models\FaqCategory;
 use Illuminate\Http\Request;
 
 class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::orderBy('order')->get();
-        return view('admin.faqs.index', compact('faqs'));
+        $faqs = Faq::with('category')->orderBy('order')->get();
+        $categories = FaqCategory::where('is_active', true)->orderBy('order')->get();
+        return view('admin.faqs.index', compact('faqs', 'categories'));
     }
 
     public function store(Request $request)
@@ -18,12 +20,15 @@ class FaqController extends Controller
         $request->validate([
             'question' => 'required',
             'answer' => 'required',
+            'faq_category_id' => 'nullable|exists:faq_categories,id',
+            'order' => 'nullable|integer',
         ]);
 
         Faq::create([
             'question' => $request->question,
             'answer' => $request->answer,
-            'order' => $request->order ?? 0,
+            'faq_category_id' => $request->faq_category_id,
+            'order' => $request->order ?: (Faq::max('order') + 1),
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -35,12 +40,15 @@ class FaqController extends Controller
         $request->validate([
             'question' => 'required',
             'answer' => 'required',
+            'faq_category_id' => 'nullable|exists:faq_categories,id',
+            'order' => 'required|integer',
         ]);
 
         $faq->update([
             'question' => $request->question,
             'answer' => $request->answer,
-            'order' => $request->order ?? 0,
+            'faq_category_id' => $request->faq_category_id,
+            'order' => $request->order,
             'is_active' => $request->has('is_active'),
         ]);
 

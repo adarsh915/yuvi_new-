@@ -4,9 +4,9 @@
     </button>
     <div>
         <a href="{{ route('frontend.index') }}" class="sidebar-logo">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="site logo" class="light-logo">
-            <img src="{{ asset('assets/images/logo-light.png') }}" alt="site logo" class="dark-logo">
-            <img src="{{ asset('assets/images/logo-icon.png') }}" alt="site logo" class="logo-icon">
+            <img src="{{ asset('assets/images/asset/logo.png') }}" alt="site logo" class="light-logo">
+            <img src="{{ asset('assets/images/asset/logo.png') }}" alt="site logo" class="dark-logo">
+            <img src="{{ asset('assets/images/asset/logo.png') }}" alt="site logo" class="logo-icon">
         </a>
     </div>
     <div class="sidebar-menu-area">
@@ -23,13 +23,26 @@
             <!-- Leads & Inquiries -->
             <li class="sidebar-menu-group-title">LEADS & INQUIRIES</li>
             <li>
+                <a href="{{ route('admin.notifications') }}"
+                    class="{{ request()->routeIs('admin.notifications') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:bell-outline" class="menu-icon"></iconify-icon>
+                    <span>Notifications</span>
+                    @php $unreadCount = \App\Http\Controllers\NotificationController::getUnreadCount(); @endphp
+                    @if($unreadCount > 0)
+                        <span class="badge bg-danger ms-auto radius-20"
+                            style="padding: 2px 8px; font-size: 10px;">{{ $unreadCount }}</span>
+                    @endif
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.leads') }}" class="{{ request()->routeIs('admin.leads*') ? 'active' : '' }}">
                     <iconify-icon icon="solar:users-group-rounded-outline" class="menu-icon"></iconify-icon>
                     <span>Contact Leads</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.contact.fields') }}" class="{{ request()->routeIs('admin.contact.fields') ? 'active' : '' }}">
+                <a href="{{ route('admin.contact.fields') }}"
+                    class="{{ request()->routeIs('admin.contact.fields') ? 'active' : '' }}">
                     <iconify-icon icon="solar:widget-add-outline" class="menu-icon"></iconify-icon>
                     <span>Form Builder</span>
                 </a>
@@ -38,12 +51,15 @@
             <!-- Content Management -->
             <li class="sidebar-menu-group-title">CONTENT MANAGEMENT</li>
             <li>
-                <a href="{{ route('admin.sliders') }}" class="{{ request()->routeIs('admin.sliders*') ? 'active' : '' }}">
+                <a href="{{ route('admin.sliders') }}"
+                    class="{{ request()->routeIs('admin.sliders*') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:gallery-wide-outline" class="menu-icon"></iconify-icon>
                     <span>Homepage Sliders</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.gallery') }}" class="{{ request()->routeIs('admin.gallery') ? 'active' : '' }}">
+                <a href="{{ route('admin.gallery') }}"
+                    class="{{ request()->routeIs('admin.gallery') ? 'active' : '' }}">
                     <iconify-icon icon="solar:gallery-outline" class="menu-icon"></iconify-icon>
                     <span>Gallery</span>
                 </a>
@@ -55,7 +71,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.categories') }}" class="{{ request()->routeIs('admin.categories') ? 'active' : '' }}">
+                <a href="{{ route('admin.categories') }}"
+                    class="{{ request()->routeIs('admin.categories') ? 'active' : '' }}">
                     <iconify-icon icon="solar:folder-with-files-outline" class="menu-icon"></iconify-icon>
                     <span>Blog Categories</span>
                 </a>
@@ -64,25 +81,36 @@
             <!-- Services & Stories -->
             <li class="sidebar-menu-group-title">SERVICES & TESTIMONIALS</li>
             <li>
-                <a href="{{ route('admin.services') }}" class="{{ request()->routeIs('admin.services*') ? 'active' : '' }}">
+                <a href="{{ route('admin.services') }}"
+                    class="{{ request()->routeIs('admin.services*') ? 'active' : '' }}">
                     <iconify-icon icon="solar:medical-kit-outline" class="menu-icon"></iconify-icon>
                     <span>Manage Services</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.treatment-types') }}" class="{{ request()->routeIs('admin.treatment-types') ? 'active' : '' }}">
+                <a href="{{ route('admin.service.categories') }}"
+                    class="{{ request()->routeIs('admin.service.categories*') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:folder-with-files-outline" class="menu-icon"></iconify-icon>
+                    <span>Service Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.treatment-types') }}"
+                    class="{{ request()->routeIs('admin.treatment-types') ? 'active' : '' }}">
                     <iconify-icon icon="solar:tag-outline" class="menu-icon"></iconify-icon>
                     <span>Treatment Types</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.stories') }}" class="{{ request()->routeIs('admin.stories') ? 'active' : '' }}">
+                <a href="{{ route('admin.stories') }}"
+                    class="{{ request()->routeIs('admin.stories') ? 'active' : '' }}">
                     <iconify-icon icon="solar:clapperboard-edit-outline" class="menu-icon"></iconify-icon>
                     <span>Video Stories</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.testimonials') }}" class="{{ request()->routeIs('admin.testimonials') ? 'active' : '' }}">
+                <a href="{{ route('admin.testimonials') }}"
+                    class="{{ request()->routeIs('admin.testimonials') ? 'active' : '' }}">
                     <iconify-icon icon="solar:chat-round-dots-outline" class="menu-icon"></iconify-icon>
                     <span>Customer Reviews</span>
                 </a>
@@ -96,17 +124,26 @@
                     <span>Manage FAQs</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.faq.categories') }}"
+                    class="{{ request()->routeIs('admin.faq.categories') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:folder-with-files-outline" class="menu-icon"></iconify-icon>
+                    <span>FAQ Categories</span>
+                </a>
+            </li>
 
             <!-- Quiz -->
             <li class="sidebar-menu-group-title">QUIZ & ENGAGEMENT</li>
             <li>
-                <a href="{{ route('admin.quiz.questions') }}" class="{{ request()->routeIs('admin.quiz.questions') ? 'active' : '' }}">
+                <a href="{{ route('admin.quiz.questions') }}"
+                    class="{{ request()->routeIs('admin.quiz.questions') ? 'active' : '' }}">
                     <iconify-icon icon="solar:clipboard-list-outline" class="menu-icon"></iconify-icon>
                     <span>Quiz Questions</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.quiz.submissions') }}" class="{{ request()->routeIs('admin.quiz.submissions*') ? 'active' : '' }}">
+                <a href="{{ route('admin.quiz.submissions') }}"
+                    class="{{ request()->routeIs('admin.quiz.submissions*') ? 'active' : '' }}">
                     <iconify-icon icon="solar:user-speak-outline" class="menu-icon"></iconify-icon>
                     <span>User Submissions</span>
                 </a>
@@ -115,7 +152,8 @@
             <!-- Settings -->
             <li class="sidebar-menu-group-title">SETTINGS</li>
             <li>
-                <a href="{{ route('admin.settings') }}" class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
+                <a href="{{ route('admin.settings') }}"
+                    class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                     <iconify-icon icon="solar:settings-outline" class="menu-icon"></iconify-icon>
                     <span>Site Settings</span>
                 </a>
@@ -127,7 +165,8 @@
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
-                <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a href="javascript:void(0)"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <iconify-icon icon="lucide:power" class="menu-icon"></iconify-icon>
                     <span>Log Out</span>
                 </a>

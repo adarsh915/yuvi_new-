@@ -19,13 +19,14 @@ class TreatmentTypeController extends Controller
         $request->validate([
             'name' => 'required|string|unique:treatment_types',
             'description' => 'nullable|string',
+            'order' => 'nullable|integer|unique:treatment_types,order',
         ]);
 
         TreatmentType::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'description' => $request->description,
-            'order' => $request->order ?? 0,
+            'order' => $request->order ?: (TreatmentType::max('order') + 1),
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -37,13 +38,14 @@ class TreatmentTypeController extends Controller
         $request->validate([
             'name' => 'required|string|unique:treatment_types,name,' . $treatmentType->id,
             'description' => 'nullable|string',
+            'order' => 'required|integer|unique:treatment_types,order,' . $treatmentType->id,
         ]);
 
         $treatmentType->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'description' => $request->description,
-            'order' => $request->order ?? 0,
+            'order' => $request->order,
             'is_active' => $request->has('is_active'),
         ]);
 

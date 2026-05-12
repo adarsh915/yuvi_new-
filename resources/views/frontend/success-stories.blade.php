@@ -20,7 +20,9 @@
   <!-- PAGE BODY -->
   <div class="page-body reveal">
     @php
-      $categories = $stories->pluck('treatment_type')->unique();
+      $categories = $stories->map(function($s) {
+          return $s->treatmentType->name ?? 'General';
+      })->unique();
     @endphp
     {{-- Sidebar moved to right --}}
 
@@ -31,9 +33,9 @@
         <button class="filter-btn story-filter-btn active" data-filter="all"><span class="dot"></span>All Journeys<span
             class="filter-count">{{ $stories->count() }}</span></button>
         @foreach($categories as $cat)
-          <button class="filter-btn story-filter-btn" data-filter="{{ strtolower(str_replace(' ', '-', $cat)) }}">
+          <button class="filter-btn story-filter-btn" data-filter="{{ Str::slug($cat) }}">
             <span class="dot"></span>{{ $cat }}
-            <span class="filter-count">{{ $stories->where('treatment_type', $cat)->count() }}</span>
+            <span class="filter-count">{{ $stories->filter(function($s) use ($cat) { return ($s->treatmentType->name ?? 'General') === $cat; })->count() }}</span>
           </button>
         @endforeach
       </div>
@@ -61,7 +63,7 @@
       <div class="story-page-grid" id="storyPageGrid">
         @foreach($stories as $story)
           <div class="story-page-card reveal"
-            data-category="{{ strtolower(str_replace(' ', '-', $story->treatment_type)) }}">
+            data-category="{{ Str::slug($story->treatmentType->name ?? 'General') }}">
             <div class="story-page-video-wrap">
               @if(Str::endsWith($story->video_url, ['.mp4', '.webm', '.ogg']))
                 <video autoplay loop muted playsinline class="story-short-video">
@@ -84,7 +86,7 @@
               @endif
               <div class="story-page-overlay">
                 <span class="story-page-patient-name">{{ $story->patient_name ?? $story->title }}</span>
-                <span class="story-page-treatment-tag">{{ $story->treatment_type }}</span>
+                <span class="story-page-treatment-tag">{{ $story->treatmentType->name ?? 'Success Story' }}</span>
               </div>
             </div>
           </div>

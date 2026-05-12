@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'service-details Page')
-@section('meta_description', 'Welcome to our website')
-@section('meta_keywords', 'home, laravel, website')
+@section('title', $service->meta_title ?? ($service->title . ' | Dr. Yuvraj Jadeja'))
+@section('meta_description', $service->meta_description ?? $service->short_description)
+@section('meta_keywords', $service->meta_keywords ?? $service->category_tag)
 
 @section('content')
   <!-- HERO -->
@@ -16,7 +16,18 @@
           <span id="heroTag">{{ $service->category_tag }}</span>
         </div>
         <div class="hero-eyebrow" id="heroEyebrow">{{ $service->hero_eyebrow }}</div>
-        <h1 id="heroTitle">{!! str_replace(' ', ' <em>', $service->title) . '</em>' !!}</h1>
+        <h1 id="heroTitle">
+          @php
+            $title = $service->title;
+            $words = explode(' ', $title);
+            if (count($words) > 1) {
+                $lastWord = array_pop($words);
+                echo implode(' ', $words) . ' <em>' . $lastWord . '</em>';
+            } else {
+                echo $title;
+            }
+          @endphp
+        </h1>
         <p class="hero-lead" id="heroLead">{{ $service->hero_lead }}</p>
         <div class="hero-pills" id="heroPills">
           @if($service->hero_pills && is_array($service->hero_pills))
@@ -116,7 +127,7 @@
         <h4>Ready to consult?</h4>
         <p>Speak with a coordinator or book a direct appointment — no pressure, just clarity.</p>
         <a href="{{ route('frontend.contact') }}" class="btn-cta-white">Book Appointment</a>
-        <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="btn-cta-outline">WhatsApp Us</a>
+        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}" target="_blank" rel="noopener" class="btn-cta-outline">WhatsApp Us</a>
       </div>
 
       <!-- Availability -->
@@ -182,33 +193,32 @@
       </div>
 
       <!-- Quick Contact -->
-      <div class="quick-card"
-        style="background: var(--midnight); color: #fff; padding:1.5rem; border-radius:12px; margin-top:1rem;">
-        <p
-          style="font-size:0.65rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--blue-mid); margin-bottom:1rem;">
-          Quick Support</p>
-        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue-mid)" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-          </svg>
-          <div style="font-size:0.8rem;">
-            <strong style="display:block;">WhatsApp</strong>
-            <a href="https://wa.me/919999999999" style="color:var(--blue-mid); text-decoration:none;">+91 999 999
-              9999</a>
+      <div class="bd-quick-contact reveal">
+        <p class="bd-quick-contact__label">Quick Support</p>
+        <div class="bd-quick-contact__item">
+          <div class="bd-quick-contact__icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+            </svg>
+          </div>
+          <div class="bd-quick-contact__detail">
+            <strong>WhatsApp</strong>
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['footer_phone'] ?? '919999999999') }}">{{ $settings['footer_phone'] ?? '+91 999 999 9999' }}</a>
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:0.75rem;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue-mid)" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          <div style="font-size:0.8rem;">
-            <strong style="display:block;">Email</strong>
-            <a href="mailto:doctoryuvi@nimaaya.com"
-              style="color:var(--blue-mid); text-decoration:none;">doctoryuvi@nimaaya.com</a>
+        <div class="bd-quick-contact__item">
+          <div class="bd-quick-contact__icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+          </div>
+          <div class="bd-quick-contact__detail">
+            <strong>Email</strong>
+            <a href="mailto:{{ $settings['footer_email'] ?? 'doctoryuvi@nimaaya.com' }}">{{ $settings['footer_email'] ?? 'doctoryuvi@nimaaya.com' }}</a>
           </div>
         </div>
       </div>
@@ -275,7 +285,7 @@
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
-        <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="btn-outline">
+        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}" target="_blank" rel="noopener" class="btn-outline">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <path

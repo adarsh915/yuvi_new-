@@ -21,6 +21,7 @@ class StoryController extends Controller
             'title' => 'required',
             'video_url' => 'required',
             'treatment_type_id' => 'required|exists:treatment_types,id',
+            'order' => 'nullable|integer|unique:success_stories,order',
         ]);
 
         $video_url = $this->convertEmbedUrl($request->video_url);
@@ -30,7 +31,7 @@ class StoryController extends Controller
             'video_url' => $video_url,
             'treatment_type_id' => $request->treatment_type_id,
             'patient_name' => $request->patient_name,
-            'order' => $request->order ?? 0,
+            'order' => $request->order ?: (SuccessStory::max('order') + 1),
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -43,6 +44,7 @@ class StoryController extends Controller
             'title' => 'required',
             'video_url' => 'required',
             'treatment_type_id' => 'required|exists:treatment_types,id',
+            'order' => 'required|integer|unique:success_stories,order,' . $story->id,
         ]);
 
         $video_url = $this->convertEmbedUrl($request->video_url);
@@ -52,7 +54,7 @@ class StoryController extends Controller
             'video_url' => $video_url,
             'treatment_type_id' => $request->treatment_type_id,
             'patient_name' => $request->patient_name,
-            'order' => $request->order ?? 0,
+            'order' => $request->order,
             'is_active' => $request->has('is_active'),
         ]);
 

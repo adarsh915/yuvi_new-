@@ -28,15 +28,18 @@ class BlogController extends Controller
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'title'    => 'required|string|max:255',
-            'slug'     => 'nullable|string|max:255|unique:blogs,slug',
+            'slug'     => 'nullable|string|max:255',
             'excerpt'  => 'nullable|string|max:500',
             'body'     => 'required|string',
             'tags'     => 'nullable|string|max:255',
-            'image'    => 'nullable|image|max:2048',
+            'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'is_active'=> 'boolean',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:500',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
-        $data = $request->only(['category_id', 'title', 'excerpt', 'body', 'tags']);
+        $data = $request->only(['category_id', 'title', 'excerpt', 'body', 'tags', 'meta_title', 'meta_description', 'meta_keywords']);
     $slugBase = Str::slug($request->input('slug', $request->title));
     $data['slug'] = $this->generateUniqueSlug($slugBase);
         $data['is_active'] = $request->boolean('is_active', true);
@@ -64,15 +67,18 @@ class BlogController extends Controller
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'title'    => 'required|string|max:255',
-            'slug'     => 'nullable|string|max:255|unique:blogs,slug,' . $blog->id,
+            'slug'     => 'nullable|string|max:255',
             'excerpt'  => 'nullable|string|max:500',
             'body'     => 'required|string',
             'tags'     => 'nullable|string|max:255',
-            'image'    => 'nullable|image|max:2048',
+            'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'is_active'=> 'boolean',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:500',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
-        $data = $request->only(['category_id', 'title', 'excerpt', 'body', 'tags']);
+        $data = $request->only(['category_id', 'title', 'excerpt', 'body', 'tags', 'meta_title', 'meta_description', 'meta_keywords']);
     $slugBase = Str::slug($request->input('slug', $request->title));
     $data['slug'] = $this->generateUniqueSlug($slugBase, $blog->id);
         $data['is_active'] = $request->boolean('is_active');

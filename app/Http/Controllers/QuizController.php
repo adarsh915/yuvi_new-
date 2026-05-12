@@ -20,10 +20,12 @@ class QuizController extends Controller
         $request->validate([
             'question' => 'required|string',
             'gender' => 'required|in:f,m',
-            'order' => 'required|integer'
+            'order' => 'nullable|integer|unique:quiz_questions,order'
         ]);
 
-        QuizQuestion::create($request->all());
+        $data = $request->all();
+        $data['order'] = $request->order ?: (QuizQuestion::max('order') + 1);
+        QuizQuestion::create($data);
 
         return redirect()->back()->with('success', 'Question added successfully.');
     }
@@ -33,7 +35,7 @@ class QuizController extends Controller
         $request->validate([
             'question' => 'required|string',
             'gender' => 'required|in:f,m',
-            'order' => 'required|integer'
+            'order' => 'required|integer|unique:quiz_questions,order,' . $quizQuestion->id
         ]);
 
         $quizQuestion->update($request->all());

@@ -15,11 +15,31 @@
 @endphp
 
 @section('content')
+<style>
+    .card {
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: none;
+    }
+
+    .card-header {
+        padding: 10px 20px !important;
+        background: #fff !important;
+        border-bottom: 1px solid #e9ecef !important;
+    }
+
+</style>
+
 <div class="card h-100 p-0 radius-12">
-    <div class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center justify-content-between">
-        <h6 class="text-lg fw-semibold mb-0">Blogs List</h6>
-        <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary btn-sm radius-8">
-            <iconify-icon icon="solar:add-circle-outline" class="me-1"></iconify-icon> Add New Post
+    <div class="card-header border-bottom bg-base d-flex align-items-center justify-content-between">
+        <h6 class="text-lg fw-semibold mb-0 d-flex align-items-center gap-2">
+            <iconify-icon icon="solar:document-text-outline" class="text-primary-600"></iconify-icon>
+            Blogs List
+        </h6>
+        <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary btn-sm radius-8 d-flex align-items-center gap-2">
+            <iconify-icon icon="solar:add-circle-outline"></iconify-icon>
+            Add New Post
         </a>
     </div>
 
@@ -30,7 +50,7 @@
                     <tr>
                         <th>Date</th>
                         <th>Image</th>
-                        <th>Title</th>
+                        <th>Blog Details</th>
                         <th>Category</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -39,45 +59,59 @@
                 <tbody>
                     @foreach($blogs as $blog)
                     <tr>
-                        <td>{{ $blog->created_at->format('d M, Y') }}</td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <iconify-icon icon="solar:calendar-outline" class="text-secondary-light"></iconify-icon>
+                                {{ $blog->created_at->format('d M, Y') }}
+                            </div>
+                        </td>
                         <td>
                             @if($blog->image)
                                 <img src="{{ asset('storage/' . $blog->image) }}" alt="" 
-                                     style="width:50px; height:50px; object-fit:cover; border-radius:6px;">
+                                     style="width:50px; height:50px; object-fit:cover; border-radius:10px; border: 1px solid #eee;">
                             @else
-                                <div style="width:50px; height:50px; background:#f1f5f9; border-radius:6px; display:flex; align-items:center; justify-content:center;">
-                                    <iconify-icon icon="solar:gallery-outline" class="text-secondary-light"></iconify-icon>
+                                <div style="width:50px; height:50px; background:#f8f9fa; border-radius:10px; display:flex; align-items:center; justify-content:center; border: 1px solid #eee;">
+                                    <iconify-icon icon="solar:gallery-outline" class="text-secondary-light" style="font-size: 20px;"></iconify-icon>
                                 </div>
                             @endif
                         </td>
                         <td>
-                            <div class="fw-medium">{{ $blog->title }}</div>
-                            <div class="text-xs text-secondary-light">/{{ $blog->slug }}</div>
-                            <div class="text-xs text-secondary-light">By {{ $blog->author ?? 'Admin' }}</div>
+                            <div class="fw-semibold text-dark">{{ $blog->title }}</div>
+                            <div class="text-xs text-secondary-light mt-1">/{{ $blog->slug }}</div>
+                            <div class="text-xs text-primary-600 mt-1 d-flex align-items-center gap-1">
+                                <iconify-icon icon="solar:user-outline"></iconify-icon>
+                                {{ $blog->author ?? 'Admin' }}
+                            </div>
                         </td>
                         <td>
-                            <span class="badge bg-info-focus text-info-main fw-medium px-8 py-4 radius-4 text-sm">
+                            <span class="badge bg-info-focus text-info-main">
                                 {{ $blog->category_rel->name ?? 'Uncategorized' }}
                             </span>
                         </td>
                         <td>
                             @if($blog->is_active)
-                                <span class="badge bg-success-focus text-success-main fw-medium">Active</span>
+                                <span class="badge bg-success-focus text-success-main d-inline-flex align-items-center gap-1">
+                                    <iconify-icon icon="solar:check-circle-outline"></iconify-icon>
+                                    Active
+                                </span>
                             @else
-                                <span class="badge bg-danger-focus text-danger-main fw-medium">Inactive</span>
+                                <span class="badge bg-danger-focus text-danger-main d-inline-flex align-items-center gap-1">
+                                    <iconify-icon icon="solar:close-circle-outline"></iconify-icon>
+                                    Inactive
+                                </span>
                             @endif
                         </td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                <a href="{{ route('admin.blogs.edit', $blog->id) }}" class="btn btn-sm btn-outline-info radius-8">
-                                    <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon> Edit
+                                <a href="{{ route('admin.blogs.edit', $blog->id) }}" class="btn btn-sm btn-outline-info" style="width:32px; height:32px; padding:0; border-radius:8px;">
+                                    <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
                                 </a>
                                 <form action="{{ route('admin.blogs.destroy', $blog->id) }}" method="POST" 
                                       onsubmit="return confirm('Are you sure you want to delete this post?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger radius-8">
-                                        <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon> Delete
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" style="width:32px; height:32px; padding:0; border-radius:8px;">
+                                        <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
                                     </button>
                                 </form>
                             </div>

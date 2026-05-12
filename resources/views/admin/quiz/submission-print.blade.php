@@ -134,10 +134,16 @@
             color: #1d4ed8;
         }
         @media print {
-            .print-controls { display: none; }
-            body { background: #fff; }
-            .page { padding: 0; }
-            .submission { break-inside: avoid; }
+            .print-controls { display: none !important; }
+            html, body { height: auto !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; }
+            .page { padding: 0 !important; margin: 0 !important; border: none !important; }
+            .submission { break-inside: avoid; margin-top: 0 !important; }
+            .report-header { display: block !important; border-bottom: 2px solid #000 !important; margin-bottom: 20px !important; }
+            .report-header h1 { margin-top: 0 !important; margin-bottom: 5px !important; font-size: 24px !important; }
+            .meta { text-align: left !important; margin-top: 5px !important; font-size: 12px !important; }
+        }
+        @page {
+            margin: 1.5cm;
         }
         @media (max-width: 720px) {
             .report-header, .meta { text-align: left; flex-direction: column; }
@@ -147,11 +153,6 @@
 </head>
 <body>
     <div class="page">
-        <div class="print-controls">
-            <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
-            <a href="{{ route('admin.quiz.submissions') }}" class="back-link">Back to Submissions</a>
-        </div>
-
         <div class="report-header">
             <div>
                 <h1>Quiz Submission Report</h1>
@@ -167,6 +168,36 @@
             <div class="submission__head">
                 <strong>{{ $submission->name }}</strong>
                 <span>{{ $submission->phone }} | {{ $submission->email ?? 'N/A' }} | {{ $submission->city ?? 'N/A' }}</span>
+            </div>
+            @php
+                $yesCount = 0;
+                $noCount = 0;
+                if (is_array($submission->answers_json)) {
+                    foreach ($submission->answers_json as $ans) {
+                        if ($ans === 'Yes') $yesCount++;
+                        if ($ans === 'No') $noCount++;
+                    }
+                }
+            @endphp
+            <div class="info-grid" style="grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid var(--border); background: #fff;">
+                <div class="info-item" style="border-right: 1px solid var(--border); padding-right: 10px;">
+                    <label>Total Questions</label>
+                    <div style="font-weight: 700;">{{ count($submission->answers_json) }}</div>
+                </div>
+                <div class="info-item" style="border-right: 1px solid var(--border); padding-right: 10px;">
+                    <label>Yes Responses</label>
+                    <div style="color: #dc2626; font-weight: 700;">{{ $yesCount }}</div>
+                </div>
+                <div class="info-item" style="border-right: 1px solid var(--border); padding-right: 10px;">
+                    <label>No Responses</label>
+                    <div style="color: #059669; font-weight: 700;">{{ $noCount }}</div>
+                </div>
+                <div class="info-item">
+                    <label>Risk Level</label>
+                    <div style="font-weight: 700; color: {{ $yesCount > 3 ? '#dc2626' : ($yesCount > 0 ? '#d97706' : '#059669') }}">
+                        {{ $yesCount > 3 ? 'Critical' : ($yesCount > 0 ? 'Moderate' : 'Low') }}
+                    </div>
+                </div>
             </div>
             <div class="info-grid">
                 <div class="info-item">
@@ -203,6 +234,11 @@
                 </tbody>
             </table>
         </section>
+    </div>
+
+    <div class="print-controls" style="padding: 20px 24px;">
+        <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+        <a href="{{ route('admin.quiz.submissions') }}" class="back-link">Back to Submissions</a>
     </div>
 </body>
 </html>

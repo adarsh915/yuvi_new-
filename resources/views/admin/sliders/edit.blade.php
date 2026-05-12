@@ -8,9 +8,13 @@
 @section('content')
 <div class="card h-100 p-0 radius-12">
     <div class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center justify-content-between">
-        <h6 class="text-lg fw-semibold mb-0">Edit Homepage Slider</h6>
-        <a href="{{ route('admin.sliders') }}" class="btn btn-outline-secondary btn-sm radius-8">
-            <iconify-icon icon="solar:arrow-left-outline" class="me-1"></iconify-icon> Back to List
+        <h6 class="text-lg fw-semibold mb-0 d-flex align-items-center gap-2">
+            <iconify-icon icon="solar:pen-new-square-outline" class="text-primary-600"></iconify-icon>
+            Edit Homepage Slider
+        </h6>
+        <a href="{{ route('admin.sliders') }}" class="btn btn-outline-secondary btn-sm radius-8 d-flex align-items-center gap-2">
+            <iconify-icon icon="solar:arrow-left-outline"></iconify-icon>
+            Back to List
         </a>
     </div>
 

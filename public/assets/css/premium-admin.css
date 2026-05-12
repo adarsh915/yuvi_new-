@@ -1,129 +1,462 @@
-/* Premium Admin UI Overrides */
+/* =============================================================
+   PREMIUM ADMIN UI — Global Overrides
+   Covers: buttons, icons, cards, tables, forms, badges, sidebar
+   ============================================================= */
 
+/* ── 1. DESIGN TOKENS ─────────────────────────────────────── */
 :root {
-    --primary-gradient: linear-gradient(135deg, #487FFF 0%, #4536B6 100%);
-    --info-gradient: linear-gradient(135deg, #144BD6 0%, #06307C 100%);
-    --success-gradient: linear-gradient(135deg, #45B369 0%, #006038 100%);
-    --danger-gradient: linear-gradient(135deg, #EF4A00 0%, #801D18 100%);
-    --warning-gradient: linear-gradient(135deg, #FF9F29 0%, #C28800 100%);
+    --pa-blue:        #487FFF;
+    --pa-blue-dark:   #3a6fd8;
+    --pa-green:       #22c55e;
+    --pa-red:         #ef4444;
+    --pa-orange:      #f97316;
+    --pa-teal:        #06b6d4;
+    --pa-radius-sm:   6px;
+    --pa-radius-md:   10px;
+    --pa-radius-lg:   14px;
+    --pa-shadow:      0 4px 16px rgba(0,0,0,0.07);
+    --pa-shadow-hover:0 8px 24px rgba(72,127,255,0.18);
+    --pa-border:      #e8edf4;
+    --pa-surface:     #f8fafc;
+    --pa-text-muted:  #64748b;
 }
 
-/* Button Patterns */
+/* ── 2. BUTTONS — consistent icon+text gap & padding ──────── */
 .btn {
-    border-radius: 8px !important;
-    padding: 10px 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;               /* icon ↔ label gap */
     font-weight: 500 !important;
-    transition: all 0.3s ease !important;
+    letter-spacing: 0.01em !important;
+    transition: all 0.25s ease !important;
     border: none !important;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    white-space: nowrap !important;
+    line-height: 1.4 !important;
 }
 
+/* Normal size */
+.btn:not(.btn-sm):not(.btn-lg) {
+    padding: 9px 18px !important;
+    border-radius: var(--pa-radius-md) !important;
+    font-size: 0.9375rem !important;
+}
+
+/* Small buttons (table actions) */
 .btn-sm {
-    padding: 6px 14px !important;
-    font-size: 0.85rem !important;
+    padding: 6px 12px !important;
+    font-size: 0.875rem !important;
+    border-radius: var(--pa-radius-sm) !important;
+    gap: 5px !important;
 }
 
-.btn-primary {
-    background: var(--primary-gradient) !important;
-    color: #fff !important;
-}
-.btn-primary:hover {
-    box-shadow: 0 6px 12px rgba(72, 127, 255, 0.3) !important;
-    transform: translateY(-1px);
+/* Large buttons */
+.btn-lg {
+    padding: 12px 24px !important;
+    border-radius: var(--pa-radius-lg) !important;
+    font-size: 1rem !important;
 }
 
-.btn-info {
-    background: var(--info-gradient) !important;
-    color: #fff !important;
-}
-.btn-info:hover {
-    box-shadow: 0 6px 12px rgba(20, 75, 214, 0.3) !important;
-    transform: translateY(-1px);
-}
-
-.btn-success {
-    background: var(--success-gradient) !important;
-    color: #fff !important;
-}
-.btn-success:hover {
-    box-shadow: 0 6px 12px rgba(69, 179, 105, 0.3) !important;
-    transform: translateY(-1px);
+/* Icon sizing inside buttons */
+.btn iconify-icon,
+.btn .icon {
+    font-size: 1rem !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    position: relative !important;
+    top: 0 !important;          /* reset any icon drift */
 }
 
-.btn-danger {
-    background: var(--danger-gradient) !important;
-    color: #fff !important;
-}
-.btn-danger:hover {
-    box-shadow: 0 6px 12px rgba(239, 74, 0, 0.3) !important;
-    transform: translateY(-1px);
+.btn-sm iconify-icon,
+.btn-sm .icon {
+    font-size: 0.9rem !important;
 }
 
+/* Filled button colours */
+.btn-primary   { background: linear-gradient(135deg, #487FFF 0%, #3a6fd8 100%) !important; color:#fff !important; }
+.btn-success   { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important; color:#fff !important; }
+.btn-danger    { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important; color:#fff !important; }
+.btn-warning   { background: linear-gradient(135deg, #f97316 0%, #c2410c 100%) !important; color:#fff !important; }
+.btn-info      { background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%) !important; color:#fff !important; }
+
+.btn-primary:hover  { box-shadow: 0 6px 16px rgba(72,127,255,0.35) !important; filter:brightness(1.05); }
+.btn-success:hover  { box-shadow: 0 6px 16px rgba(34,197,94,0.35)  !important; filter:brightness(1.05); }
+.btn-danger:hover   { box-shadow: 0 6px 16px rgba(239,68,68,0.35)  !important; filter:brightness(1.05); }
+.btn-warning:hover  { box-shadow: 0 6px 16px rgba(249,115,22,0.35) !important; filter:brightness(1.05); }
+.btn-info:hover     { box-shadow: 0 6px 16px rgba(6,182,212,0.35)  !important; filter:brightness(1.05); }
+
+/* Outline variants */
 .btn-outline-primary {
     background: transparent !important;
-    border: 1.5px solid #487FFF !important;
-    color: #487FFF !important;
+    border: 1.5px solid var(--pa-blue) !important;
+    color: var(--pa-blue) !important;
 }
 .btn-outline-primary:hover {
-    background: #487FFF !important;
+    background: var(--pa-blue) !important;
     color: #fff !important;
+    box-shadow: 0 4px 12px rgba(72,127,255,0.25) !important;
+}
+
+.btn-outline-info {
+    background: transparent !important;
+    border: 1.5px solid var(--pa-teal) !important;
+    color: var(--pa-teal) !important;
+}
+.btn-outline-info:hover {
+    background: var(--pa-teal) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(6,182,212,0.25) !important;
 }
 
 .btn-outline-danger {
     background: transparent !important;
-    border: 1.5px solid #EF4A00 !important;
-    color: #EF4A00 !important;
+    border: 1.5px solid var(--pa-red) !important;
+    color: var(--pa-red) !important;
 }
 .btn-outline-danger:hover {
-    background: #EF4A00 !important;
+    background: var(--pa-red) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(239,68,68,0.25) !important;
+}
+
+.btn-outline-success {
+    background: transparent !important;
+    border: 1.5px solid var(--pa-green) !important;
+    color: var(--pa-green) !important;
+}
+.btn-outline-success:hover {
+    background: var(--pa-green) !important;
     color: #fff !important;
 }
 
-/* Card Improvements */
+.btn-outline-warning {
+    background: transparent !important;
+    border: 1.5px solid var(--pa-orange) !important;
+    color: var(--pa-orange) !important;
+}
+.btn-outline-warning:hover {
+    background: var(--pa-orange) !important;
+    color: #fff !important;
+}
+
+/* ── 3. CARDS ─────────────────────────────────────────────── */
 .card {
-    border: none !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03) !important;
-    border-radius: 16px !important;
+    border: 1px solid var(--pa-border) !important;
+    border-radius: var(--pa-radius-lg) !important;
+    box-shadow: var(--pa-shadow) !important;
+    overflow: hidden;
 }
 
 .card-header {
-    background: transparent !important;
-    border-bottom: 1px solid #f1f5f9 !important;
-    padding: 20px 24px !important;
+    background: #fff !important;
+    border-bottom: 1px solid var(--pa-border) !important;
+    padding: 18px 24px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
 }
 
-/* Table Improvements */
-.table thead th {
-    background: #f8fafc !important;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-    color: #64748b;
-    border-top: none !important;
+.card-header h6 {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+    margin: 0 !important;
 }
 
-/* Form Controls */
-.form-control, .form-select {
-    border-radius: 10px !important;
-    padding: 12px 16px !important;
-    border: 1px solid #e2e8f0 !important;
-    background-color: #fcfdfe !important;
+.card-body {
+    padding: 24px !important;
 }
 
-.form-control:focus {
-    border-color: #487FFF !important;
-    box-shadow: 0 0 0 4px rgba(72, 127, 255, 0.1) !important;
-    background-color: #fff !important;
-}
-
-/* Summernote Overrides */
-.note-editor {
+/* ── 4. TABLE ─────────────────────────────────────────────── */
+.table.bordered-table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border: 1px solid var(--pa-border) !important;
     border-radius: 12px !important;
-    border: 1px solid #e2e8f0 !important;
+    overflow: hidden !important;
+}
+
+.table.bordered-table thead tr th {
+    background: var(--pa-surface) !important;
+    padding: 14px 16px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--pa-text-muted) !important;
+    border-top: none !important;
+    border-bottom: 1px solid var(--pa-border) !important;
+    white-space: nowrap;
+    vertical-align: middle !important;
+    text-align: left !important;
+}
+
+.table.bordered-table tbody tr td {
+    padding: 14px 16px !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    font-size: 0.9375rem !important;
+    color: #374151;
+    text-align: left !important;
+}
+
+/* Helper for centered columns */
+.table.bordered-table .text-center-column {
+    text-align: center !important;
+}
+
+/* Specific alignment for Action columns */
+.table.bordered-table th:last-child, 
+.table.bordered-table td:last-child {
+    text-align: center !important;
+}
+
+.table.bordered-table tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+.table.bordered-table tbody tr:hover td {
+    background: #f8faff !important;
+    transition: background 0.15s;
+}
+
+/* Action column — keep buttons tight & aligned */
+.table tbody td .d-flex.gap-2 {
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+}
+
+/* ── 5. BADGES ────────────────────────────────────────────── */
+.badge {
+    padding: 4px 10px !important;
+    border-radius: 20px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+}
+
+.bg-success-focus { background: #dcfce7 !important; }
+.text-success-main { color: #16a34a !important; }
+.bg-danger-focus  { background: #fee2e2 !important; }
+.text-danger-main { color: #dc2626 !important; }
+.bg-info-focus    { background: #e0f2fe !important; }
+.text-info-main   { color: #0284c7 !important; }
+.bg-warning-focus { background: #fef3c7 !important; }
+.text-warning-main{ color: #d97706 !important; }
+
+/* ── 6. FORM CONTROLS ─────────────────────────────────────── */
+.form-control,
+.form-select {
+    border-radius: var(--pa-radius-md) !important;
+    padding: 10px 14px !important;
+    border: 1.5px solid #dde3ed !important;
+    background: #fcfcfe !important;
+    font-size: 0.875rem !important;
+    color: #1e293b !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--pa-blue) !important;
+    box-shadow: 0 0 0 3px rgba(72,127,255,0.12) !important;
+    background: #fff !important;
+    outline: none !important;
+}
+
+.form-label {
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    margin-bottom: 6px !important;
+    display: block;
+}
+
+/* File input */
+input[type="file"].form-control {
+    padding: 8px 14px !important;
+}
+
+/* Textarea */
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Toggle switches */
+.form-check-input[type="checkbox"] {
+    width: 36px !important;
+    height: 20px !important;
+    border-radius: 12px !important;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 0 !important;
+}
+
+.form-check-label {
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ── 7. ALERTS ────────────────────────────────────────────── */
+.alert {
+    border-radius: var(--pa-radius-md) !important;
+    padding: 12px 18px !important;
+    font-size: 0.875rem !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.alert-success { background: #f0fdf4 !important; color: #166534 !important; }
+.alert-danger  { background: #fef2f2 !important; color: #991b1b !important; }
+.alert-warning { background: #fffbeb !important; color: #92400e !important; }
+
+/* ── 8. SIDEBAR — icon alignment fix ─────────────────────── */
+.sidebar-menu li a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 9px 16px !important;
+    border-radius: var(--pa-radius-sm) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    transition: background 0.2s, color 0.2s !important;
+    white-space: nowrap;
+}
+
+.sidebar-menu li a .menu-icon,
+.sidebar-menu li a iconify-icon {
+    font-size: 1.25rem !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.sidebar-menu-group-title {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    padding: 16px 16px 4px !important;
+    color: var(--pa-text-muted) !important;
+    text-transform: uppercase !important;
+}
+
+/* ── 9. BREADCRUMB ────────────────────────────────────────── */
+.d-flex.flex-wrap.align-items-center.justify-content-between.gap-3.mb-24 h6 {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+/* ── 10. SUMMERNOTE / RICH EDITOR ────────────────────────── */
+.note-editor {
+    border-radius: var(--pa-radius-md) !important;
+    border: 1.5px solid #dde3ed !important;
     overflow: hidden;
 }
 .note-toolbar {
-    background: #f8fafc !important;
-    border-bottom: 1px solid #e2e8f0 !important;
+    background: var(--pa-surface) !important;
+    border-bottom: 1px solid var(--pa-border) !important;
+    padding: 8px 10px !important;
 }
+
+/* ── 11. DASHBOARD STAT CARDS ─────────────────────────────── */
+.card.bg-gradient-start-1,
+.card.bg-gradient-start-2,
+.card.bg-gradient-start-3,
+.card.bg-gradient-start-4,
+.card.bg-gradient-start-5 {
+    border: none !important;
+    box-shadow: var(--pa-shadow) !important;
+}
+
+.card.bg-gradient-start-1 .card-body p,
+.card.bg-gradient-start-2 .card-body p,
+.card.bg-gradient-start-3 .card-body p,
+.card.bg-gradient-start-4 .card-body p {
+    font-size: 0.82rem !important;
+    margin-bottom: 4px !important;
+}
+
+.card.bg-gradient-start-1 .card-body h6,
+.card.bg-gradient-start-2 .card-body h6,
+.card.bg-gradient-start-3 .card-body h6,
+.card.bg-gradient-start-4 .card-body h6 {
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+}
+
+/* ── 12. QUICK LINKS (dashboard) — remove inline style hack ─ */
+.card-body .d-flex.flex-wrap.gap-3 .btn[style] {
+    /* Reset the inline blue/red colours applied to Manage Blogs / Services */
+    background: unset !important;
+    border-color: unset !important;
+}
+
+/* Give each quick-link a proper, differentiated style */
+.card-body .d-flex.flex-wrap.gap-3 a:nth-child(1)  { background: linear-gradient(135deg,#487FFF,#3a6fd8) !important; }
+.card-body .d-flex.flex-wrap.gap-3 a:nth-child(2)  { background: linear-gradient(135deg,#06b6d4,#0284c7) !important; }
+.card-body .d-flex.flex-wrap.gap-3 a:nth-child(3)  { background: linear-gradient(135deg,#22c55e,#16a34a) !important; }
+.card-body .d-flex.flex-wrap.gap-3 a:nth-child(4)  { background: linear-gradient(135deg,#f97316,#c2410c) !important; }
+.card-body .d-flex.flex-wrap.gap-3 a:nth-child(5)  { background: linear-gradient(135deg,#6366f1,#4338ca) !important; }
+.card-body .d-flex.flex-wrap.gap-3 a:nth-child(6)  { background: linear-gradient(135deg,#ec4899,#be185d) !important; }
+.card-body .d-flex.flex-wrap.gap-3 a:nth-child(7)  { background: linear-gradient(135deg,#eab308,#a16207) !important; }
+.card-body .d-flex.flex-wrap.gap-3 a { color: #fff !important; }
+
+/* ── 13. IMAGE PREVIEWS in tables ────────────────────────── */
+.table img {
+    border-radius: var(--pa-radius-sm) !important;
+    object-fit: cover !important;
+}
+
+/* ── 14. DATATABLE overrides ─────────────────────────────── */
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: var(--pa-radius-sm) !important;
+    border: 1.5px solid #dde3ed !important;
+    padding: 6px 12px !important;
+    font-size: 0.85rem !important;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border-radius: var(--pa-radius-sm) !important;
+    border: 1.5px solid #dde3ed !important;
+    padding: 5px 10px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: var(--pa-radius-sm) !important;
+    padding: 4px 10px !important;
+    font-size: 0.82rem !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--pa-blue) !important;
+    color: #fff !important;
+    border-color: var(--pa-blue) !important;
+}
+
+/* ── 15. RESPONSIVE TWEAKS ───────────────────────────────── */
+@media (max-width: 767px) {
+    .card-header {
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }
+    .card-body {
+        padding: 16px !important;
+    }
+    .btn-sm {
+        padding: 5px 10px !important;
+        font-size: 0.75rem !important;
+    }
+}
+

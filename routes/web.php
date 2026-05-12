@@ -15,7 +15,10 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\TreatmentTypeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\ServiceCategoryController;
+use App\Http\Controllers\NotificationController;
 
 // Frontend Routes
 Route::name('frontend.')->group(function () {
@@ -31,7 +34,7 @@ Route::name('frontend.')->group(function () {
         Route::get('/privacy-policy', 'privacyPolicy')->name('privacyPolicy');
         Route::get('/quiz', 'quiz')->name('quiz');
         Route::post('/quiz/submit', 'quizSubmit')->name('quiz.submit');
-        Route::get('/service-detail/{slug}', 'serviceDetail')->name('serviceDetail');
+        Route::get('/service/{slug}', 'serviceDetail')->name('serviceDetail');
         Route::get('/services', 'services')->name('services');
         Route::get('/success-stories', 'successStories')->name('successStories');
         Route::get('/team', 'team')->name('team');
@@ -56,6 +59,13 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::post('/store', 'store')->name('faqs.store');
         Route::put('/{faq}', 'update')->name('faqs.update');
         Route::delete('/{faq}', 'destroy')->name('faqs.destroy');
+    });
+
+    Route::controller(FaqCategoryController::class)->prefix('faq-categories')->group(function () {
+        Route::get('/', 'index')->name('faq.categories');
+        Route::post('/store', 'store')->name('faq.categories.store');
+        Route::put('/{faqCategory}', 'update')->name('faq.categories.update');
+        Route::delete('/{faqCategory}', 'destroy')->name('faq.categories.destroy');
     });
 
     Route::controller(SliderController::class)->prefix('sliders')->group(function () {
@@ -138,15 +148,33 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::put('/{service}', 'update')->name('services.update');
         Route::delete('/{service}', 'destroy')->name('services.destroy');
     });
+
+    Route::controller(ServiceCategoryController::class)->prefix('service-categories')->group(function () {
+        Route::get('/', 'index')->name('service.categories');
+        Route::post('/store', 'store')->name('service.categories.store');
+        Route::put('/{serviceCategory}', 'update')->name('service.categories.update');
+        Route::delete('/{serviceCategory}', 'destroy')->name('service.categories.destroy');
+    });
+
+    Route::controller(NotificationController::class)->prefix('notifications')->group(function () {
+        Route::get('/', 'index')->name('notifications');
+        Route::get('/mark-read/{type}/{id}', 'markAsRead')->name('notifications.markRead');
+        Route::get('/mark-all-read', 'markAllAsRead')->name('notifications.markAllRead');
+    });
 });
 
 // Authentication
 Route::prefix('authentication')->group(function () {
     Route::controller(AuthenticationController::class)->group(function () {
-        Route::get('/forgotpassword', 'forgotPassword')->name('forgotPassword');
         Route::get('/signin', 'signin')->name('signin');
         Route::post('/login', 'login')->name('admin.login.post');
         Route::post('/logout', 'logout')->name('admin.logout');
         Route::get('/signup', 'signup')->name('signup');
+        
+        // Password Reset
+        Route::get('/forgot-password', 'forgotPassword')->name('password.request');
+        Route::post('/forgot-password', 'sendResetLink')->name('password.email');
+        Route::get('/reset-password/{token}', 'resetPassword')->name('password.reset');
+        Route::post('/reset-password', 'updatePassword')->name('password.update');
     });
 });
