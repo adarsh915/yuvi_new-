@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $seoTitle ?? 'Dr. Yuvraj Jadeja | Ethical Fertility & Women\'s Health' }}</title>
-  <meta name="description" content="{{ $seoDescription ?? 'Ethical, evidence-based fertility and women\'s health care in Ahmedabad.' }}">
+  <meta name="description"
+    content="{{ $seoDescription ?? 'Ethical, evidence-based fertility and women\'s health care in Ahmedabad.' }}">
   <meta name="keywords" content="{{ $seoKeywords ?? 'fertility, IVF, Dr. Yuvraj Jadeja, Ahmedabad, women\'s health' }}">
   <link rel="icon" type="image/png" href="{{ asset('assets/frontend/img/favicon.png') }}?v={{ time() }}">
   <link
@@ -33,10 +34,10 @@
       padding: 0;
     }
 
-    .nav-inner {
+    /* .nav-inner {
       padding-left: 2rem;
       padding-right: 2rem;
-    }
+    } */
 
     .brand {
       padding: 0;

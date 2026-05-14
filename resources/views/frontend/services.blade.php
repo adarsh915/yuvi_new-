@@ -38,7 +38,7 @@
   <!-- PROCESS SECTION (HOW YOUR JOURNEY UNFOLDS) -->
   <section class="process-section-grid reveal">
     <div class="process-grid-inner">
-      <div class="section-header reveal" style="text-align: center; margin-bottom: 5rem;">
+      <div class="section-header reveal" style="margin-bottom: 5rem;">
         <h2 style="font-size: clamp(2.5rem, 5vw, 2.5rem); color: var(--midnight);">How your <em>journey</em><br>unfolds
           with us.</h2>
         <p style="max-width: 800px; margin: 0 auto; color: var(--muted); font-size: 1.15rem;">A clear, step-by-step
@@ -169,60 +169,60 @@
 
   <!-- TRUST BAND -->
   <!-- <section class="trust-band">
-      <div class="trust-inner">
-        <div class="trust-item">
-          <div class="trust-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
+        <div class="trust-inner">
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <div class="trust-text">
+              <strong>Ethical Practice</strong>
+              <span>No unnecessary procedures</span>
+            </div>
           </div>
-          <div class="trust-text">
-            <strong>Ethical Practice</strong>
-            <span>No unnecessary procedures</span>
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </div>
+            <div class="trust-text">
+              <strong>Patient-First Care</strong>
+              <span>Compassionate every step</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 11 12 14 22 4" />
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+              </svg>
+            </div>
+            <div class="trust-text">
+              <strong>Evidence-Based</strong>
+              <span>Latest clinical protocols</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <div class="trust-text">
+              <strong>24/7 Support</strong>
+              <span>Always here when you need us</span>
+            </div>
           </div>
         </div>
-        <div class="trust-item">
-          <div class="trust-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-          </div>
-          <div class="trust-text">
-            <strong>Patient-First Care</strong>
-            <span>Compassionate every step</span>
-          </div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 11 12 14 22 4" />
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-            </svg>
-          </div>
-          <div class="trust-text">
-            <strong>Evidence-Based</strong>
-            <span>Latest clinical protocols</span>
-          </div>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-          </div>
-          <div class="trust-text">
-            <strong>24/7 Support</strong>
-            <span>Always here when you need us</span>
-          </div>
-        </div>
-      </div>
-    </section> -->
+      </section> -->
 
   <!-- CTA -->
   <section class="cta-section reveal">
@@ -239,7 +239,8 @@
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
-        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}" target="_blank" rel="noopener" class="btn-outline">
+        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}"
+          target="_blank" rel="noopener" class="btn-outline">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <path
@@ -278,8 +279,13 @@
     }
 
     @keyframes heroZoom {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); }
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.1);
+      }
     }
 
     .services-hero-overlay {
@@ -385,9 +391,11 @@
       .services-hero-banner {
         min-height: 500px;
       }
+
       .custom-banner-inner {
         gap: 2.5rem;
       }
+
       .custom-banner-text h1 {
         font-size: 3rem;
       }

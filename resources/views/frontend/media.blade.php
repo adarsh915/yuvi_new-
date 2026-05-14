@@ -58,10 +58,17 @@
                   <span class="media-duration">{{ $podcast->duration }}</span>
                 </div>
                 <h3>{{ $podcast->title }}</h3>
-                <p>{{ $podcast->description }}</p>
+                <div class="podcast-description-wrap">
+                  <p class="podcast-desc" data-full-text="{{ $podcast->description }}">
+                    {{ Str::limit($podcast->description, 120) }}
+                  </p>
+                  @if(strlen($podcast->description) > 120)
+                    <button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
+                  @endif
+                </div>
                 <div class="d-flex gap-3">
                     @if($podcast->spotify_link)
-                        <a href="{{ $podcast->spotify_link }}" target="_blank" class="listen-link">Spotify &rarr;</a>
+                        <a href="{{ $podcast->spotify_link }}" target="_blank" class="listen-link">YouTube &rarr;</a>
                     @endif
                     @if($podcast->apple_link)
                         <a href="{{ $podcast->apple_link }}" target="_blank" class="listen-link">Apple &rarr;</a>
@@ -409,7 +416,7 @@
       background: #fff;
       border-radius: 16px;
       overflow: hidden;
-      min-height: 320px;
+      min-height: 200px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       border: 1px solid rgba(0, 0, 0, 0.03);
@@ -485,9 +492,9 @@
     }
 
     .podcast-info h3 {
-      font-size: 1.6rem;
+      font-size: 1.25rem;
       font-family: 'DM Serif Display', serif;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
       color: #111;
       line-height: 1.3;
     }
@@ -495,12 +502,25 @@
     .podcast-info p {
       color: #666;
       line-height: 1.5;
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: var(--crimson, #bc2b3d);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .listen-link {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       color: var(--crimson, #bc2b3d);
       font-weight: 600;
       text-decoration: none;
@@ -607,6 +627,11 @@
         grid-template-columns: 1fr;
       }
     }
+    @media (max-width: 767px) {
+    .highlights-gallery {
+        grid-template-columns: 1fr;
+    }
+}
   </style>
 
   <script>
@@ -621,6 +646,21 @@
 
     function closeImageLightbox() {
         document.getElementById('imageLightbox').classList.remove('active');
+    }
+
+    function toggleReadMore(btn) {
+        const wrap = btn.closest('.podcast-description-wrap');
+        const desc = wrap.querySelector('.podcast-desc');
+        const fullText = desc.getAttribute('data-full-text');
+        const isExpanded = btn.innerText === 'READ LESS';
+
+        if (isExpanded) {
+            desc.innerText = fullText.substring(0, 120) + '...';
+            btn.innerText = 'READ MORE';
+        } else {
+            desc.innerText = fullText;
+            btn.innerText = 'READ LESS';
+        }
     }
   </script>
 

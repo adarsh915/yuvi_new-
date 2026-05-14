@@ -78,8 +78,8 @@
                     <input type="file" name="image" class="form-control" accept="image/*">
                 </div>
                 <div class="mb-20">
-                    <label class="form-label mb-8">Spotify Link</label>
-                    <input type="url" name="spotify_link" class="form-control" placeholder="https://open.spotify.com/...">
+                    <label class="form-label mb-8">YouTube Link</label>
+                    <input type="url" name="spotify_link" class="form-control" placeholder="https://www.youtube.com/...">
                 </div>
                 <div class="mb-20">
                     <label class="form-label mb-8">Apple Podcasts Link</label>
@@ -142,7 +142,7 @@
                                     <div class="text-xs mb-4">Duration: <b>{{ $podcast->duration }}</b></div>
                                     <div class="d-flex gap-2">
                                         @if($podcast->spotify_link)
-                                            <iconify-icon icon="logos:spotify-icon" title="Spotify Link"></iconify-icon>
+                                            <iconify-icon icon="logos:youtube-icon" title="YouTube Link"></iconify-icon>
                                         @endif
                                         @if($podcast->apple_link)
                                             <iconify-icon icon="logos:apple-app-store" title="Apple Podcasts Link"></iconify-icon>
@@ -215,7 +215,7 @@
                             <input type="number" name="order" id="edit_order" class="form-control" min="0">
                         </div>
                         <div class="col-md-6 mb-20">
-                            <label class="form-label mb-8">Spotify Link</label>
+                            <label class="form-label mb-8">YouTube Link</label>
                             <input type="url" name="spotify_link" id="edit_spotify_link" class="form-control">
                         </div>
                         <div class="col-md-6 mb-20">

@@ -152,8 +152,8 @@
                             </div>
                         </td>
                         <td>
-                            <div class="text-xs text-secondary-light line-clamp-2" style="max-width: 300px;" title="{{ $testimonial->review }}">
-                                {{ $testimonial->review }}
+                            <div class="text-xs text-secondary-light" style="max-width: 300px;" title="{{ $testimonial->review }}">
+                                {{ \Illuminate\Support\Str::limit($testimonial->review, 60) }}
                             </div>
                         </td>
                         <td>

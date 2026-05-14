@@ -57,6 +57,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::delete('/leads/{lead}', 'destroyLead')->name('leads.destroy');
         Route::get('/settings', 'settings')->name('settings');
         Route::post('/settings/update', 'settingsUpdate')->name('settings.update');
+        Route::get('/profile', 'profile')->name('profile');
         Route::put('/account/email', 'updateEmail')->name('account.updateEmail');
         Route::put('/account/password', 'updatePassword')->name('account.updatePassword');
     });

@@ -193,6 +193,12 @@
             <!-- Logout -->
             <li class="sidebar-menu-group-title">ACCOUNT</li>
             <li>
+                <a href="{{ route('admin.profile') }}" class="{{ request()->routeIs('admin.profile') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:user-circle-outline" class="menu-icon"></iconify-icon>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li>
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>

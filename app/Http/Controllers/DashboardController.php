@@ -203,6 +203,11 @@ class DashboardController extends Controller
         return view('admin.settings.index', compact('settings'));
     }
 
+    public function profile()
+    {
+        return view('admin.profile');
+    }
+
     public function settingsUpdate(Request $request)
     {
         // Handle text settings
@@ -246,7 +251,7 @@ class DashboardController extends Controller
 
         $user->update(['email' => $request->email]);
 
-        return redirect()->route('admin.settings')->with('email_success', 'Admin email updated successfully.');
+        return redirect()->route('admin.profile')->with('email_success', 'Admin email updated successfully.');
     }
 
     public function updatePassword(Request $request)
@@ -266,6 +271,6 @@ class DashboardController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        return redirect()->route('admin.settings')->with('password_success', 'Password updated successfully. Please use your new password next time you log in.');
+        return redirect()->route('admin.profile')->with('password_success', 'Password updated successfully.');
     }
 }

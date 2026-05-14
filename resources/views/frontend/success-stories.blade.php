@@ -250,7 +250,10 @@
                       </svg>
                     @endfor
                   </div>
-                  <p>"{{ $testimonial->review }}"</p>
+                  <div class="review-content">
+                    <p class="testimonial-text">"{{ $testimonial->review }}"</p>
+                    <button class="read-more-btn" style="display: none;">Read More</button>
+                  </div>
                   <div class="author">— {{ $testimonial->name }}</div>
                 </div>
               @endforeach
@@ -322,6 +325,47 @@
           color: var(--blue-dark);
           letter-spacing: 0.5px;
           font-size: 0.95rem;
+          margin-top: auto;
+        }
+
+        .review-content {
+          position: relative;
+          margin-bottom: 1.5rem;
+        }
+
+        .testimonial-text {
+          font-size: 1.05rem;
+          color: var(--text-dark);
+          line-height: 1.7;
+          font-style: italic;
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+
+        .testimonial-text.expanded {
+          display: block;
+          overflow: visible;
+          -webkit-line-clamp: unset;
+        }
+
+        .read-more-btn {
+          background: none;
+          border: none;
+          color: var(--crimson);
+          font-weight: 600;
+          font-size: 0.9rem;
+          cursor: pointer;
+          padding: 0;
+          margin-top: 0.5rem;
+          display: inline-block;
+          transition: color 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+          color: var(--crimson-dark);
         }
 
         .testi-btn {
@@ -508,6 +552,33 @@
 
             carousel.addEventListener('mouseenter', stopAutoSlide);
             carousel.addEventListener('mouseleave', startAutoSlide);
+
+            // Read More / Read Less Functionality
+            const checkReadMore = () => {
+              const texts = document.querySelectorAll('.testimonial-text');
+              texts.forEach(text => {
+                const button = text.nextElementSibling;
+                if (text.scrollHeight > text.offsetHeight) {
+                  button.style.display = 'inline-block';
+                } else if (!text.classList.contains('expanded')) {
+                  button.style.display = 'none';
+                }
+              });
+            };
+
+            document.querySelectorAll('.read-more-btn').forEach(btn => {
+              btn.addEventListener('click', function() {
+                const text = this.previousElementSibling;
+                const isExpanded = text.classList.toggle('expanded');
+                this.textContent = isExpanded ? 'Read Less' : 'Read More';
+                
+                // Recalculate layout if needed
+              });
+            });
+
+            // Run check on load and resize
+            setTimeout(checkReadMore, 100);
+            window.addEventListener('resize', checkReadMore);
           }
         });
       </script>

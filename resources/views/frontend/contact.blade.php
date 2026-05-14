@@ -192,15 +192,90 @@
     <!-- RIGHT: INFO COLUMN -->
     <aside class="info-col reveal">
       <div class="info-col-grid">
+        
+        <!-- GUJARAT (VADODARA & ANAND) -->
         <div class="location-card">
           <span class="location-tag">Gujarat</span>
-          <h3 class="location-name">Vadodara</h3>
-          <p class="location-addr">5th floor, Yash complex, Gotri Road, Vadodara, Gujarat — 390021</p>
-          <a href="https://maps.google.com" target="_blank" rel="noopener" class="location-link">Open in Maps &rarr;</a>
+          
+          <!-- Vadodara Block -->
+          <div class="location-block mb-24">
+            <h3 class="location-name">Vadodara</h3>
+            <p class="location-addr">5th floor, Yash complex, Gotri Road, Vadodara, Gujarat — 390021</p>
+            <div class="location-hours">
+              <div class="hour-row">
+                <span class="day">Mon, Wed & Sat:</span>
+                <span class="time">10:00 AM – 1:00 PM <br> 5:00 PM – 7:00 PM</span>
+              </div>
+              <div class="hour-row">
+                <span class="day">Tue & Fri:</span>
+                <span class="time">10:00 AM – 1:00 PM</span>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/3f8HshF9f8HshF9f8" target="_blank" rel="noopener" class="location-link">Open in Maps &rarr;</a>
+          </div>
+
+          <!-- Divider -->
+          <div style="height: 1px; background: rgba(0,0,0,0.05); margin: 1.5rem 0;"></div>
+
+          <!-- Anand Block -->
+          <div class="location-block">
+            <h3 class="location-name">Anand</h3>
+            <p class="location-addr">Spandan Hospital 17, 100 Feet Rd, Nanikhodiyar, Anand, Gujarat 388001</p>
+            <div class="location-hours">
+              <div class="hour-row">
+                <span class="day">Every Friday:</span>
+                <span class="time">5:00 PM – 8:00 PM</span>
+              </div>
+            </div>
+            <div class="location-contact mb-12">
+              <a href="tel:9974704288" class="contact-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> 9974704288</a>
+            </div>
+            <a href="https://maps.google.com/?q=Spandan+Hospital+Anand+Nanikhodiyar" target="_blank" rel="noopener" class="location-link">Open in Maps &rarr;</a>
+          </div>
+        </div>
+
+        <!-- AHMEDABAD -->
+        <div class="location-card">
+          <span class="location-tag">Gujarat</span>
+          <h3 class="location-name">Ahmedabad</h3>
+          <p class="location-addr">Nimaaya Ahmedabad Marina One, Sarkhej - Gandhinagar Hwy, near TGB, Bodakdev, Ahmedabad, Gujarat 380054</p>
+          
+          <div class="location-hours">
+            <div class="hour-row">
+              <span class="day">Every Tuesday:</span>
+              <span class="time">5:00 PM – 8:00 PM</span>
+            </div>
+          </div>
+
+          <div class="location-contact">
+            <a href="tel:7961199900" class="contact-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> 7961199900</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=Nimaaya+Ahmedabad+Marina+One" target="_blank" rel="noopener" class="location-link">Open in Maps &rarr;</a>
+        </div>
+
+        <!-- DELHI -->
+        <div class="location-card">
+          <span class="location-tag">New Delhi</span>
+          <h3 class="location-name">Delhi</h3>
+          <p class="location-addr">Nandi IVF 1st floor, C3/9, Pocket C 3, Phase 2, Ashok Vihar, New Delhi - 110052</p>
+          
+          <div class="location-hours">
+            <div class="hour-row">
+              <span class="day">Scheduled:</span>
+              <span class="time">Usually once a month</span>
+            </div>
+          </div>
+
+          <div class="location-contact">
+            <a href="tel:8980770055" class="contact-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> 8980770055</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=Nandi+IVF+Ashok+Vihar+Delhi" target="_blank" rel="noopener" class="location-link">Open in Maps &rarr;</a>
         </div>
 
         <div class="quick-card">
-          <p class="quick-title">Quick Support</p>
+          <p class="quick-title">Support & Queries</p>
           <div class="quick-item">
             <div class="quick-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -211,9 +286,8 @@
               </svg>
             </div>
             <div class="quick-item-text">
-              <strong>WhatsApp</strong>
-              <a
-                href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}">{{ $siteSettings['footer_phone'] ?? '+91 999 999 9999' }}</a>
+              <strong>Whatsapp</strong>
+              <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['footer_phone'] ?? '919999999999') }}">{{ $siteSettings['footer_phone'] ?? '+91 999 999 9999' }}</a>
             </div>
           </div>
           <div class="quick-item">
@@ -225,17 +299,11 @@
               </svg>
             </div>
             <div class="quick-item-text">
-              <strong>Email</strong>
+              <strong>Official Email</strong>
               <a href="mailto:{{ $siteSettings['footer_email'] ?? 'doctoryuvi@nimaaya.com' }}">{{
                 $siteSettings['footer_email'] ?? 'doctoryuvi@nimaaya.com' }}</a>
             </div>
           </div>
-        </div>
-
-        <div class="hours-card">
-          <p class="hours-title">Clinic Hours</p>
-          <div class="hours-row"><span>Mon – Sat</span><span>9:00 AM – 7:00 PM</span></div>
-          <div class="hours-row"><span>Sunday</span><span style="color:var(--muted);">Closed</span></div>
         </div>
       </div>
     </aside>
