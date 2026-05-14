@@ -212,15 +212,19 @@
                                         <div class="order-badge">{{ $gallery->order }}</div>
                                     </div>
                                     <div class="gallery-actions">
-                                        <button class="btn-icon btn-outline-info" title="Edit Image"
+                                        <button class="btn-icon btn-outline-info d-flex align-items-center justify-content-center"
+                                                style="width:32px; height:32px; padding:0; border-radius:8px;"
+                                                title="Edit Image"
                                                 onclick="editGallery({{ $gallery->id }}, '{{ addslashes($gallery->title) }}', '{{ addslashes($gallery->subtitle) }}', '{{ asset('storage/' . $gallery->image) }}', {{ $gallery->order }}, {{ $gallery->is_active ? 'true' : 'false' }})">
-                                            <iconify-icon icon="solar:pen-new-square-outline" style="font-size: 18px;"></iconify-icon>
+                                            <i class="ri-edit-line" style="font-size: 18px;"></i>
                                         </button>
                                         <form action="{{ route('admin.gallery.destroy', $gallery->id) }}" method="POST" onsubmit="return confirm('Delete this image?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn-icon btn-outline-danger" title="Delete Image">
-                                                <iconify-icon icon="solar:trash-bin-trash-outline" style="font-size: 18px;"></iconify-icon>
+                                            <button type="submit" class="btn-icon btn-outline-danger d-flex align-items-center justify-content-center"
+                                                    style="width:32px; height:32px; padding:0; border-radius:8px;"
+                                                    title="Delete Image">
+                                                <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
                                             </button>
                                         </form>
                                     </div>

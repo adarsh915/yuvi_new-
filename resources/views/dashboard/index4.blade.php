@@ -2,7 +2,7 @@
 @php
     $title='Dashboard';
     $subTitle = 'Cryptocracy';
-    $script = ' <script src="' . asset('assets/js/homeFourChart.js') . '"></script>';
+    $script = ' <script src="' . asset('assets/js/homeFourChart.js') . '?v=' . time() . '"></script>';
 @endphp
 
 @section('content')

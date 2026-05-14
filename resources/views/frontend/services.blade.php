@@ -138,7 +138,7 @@
           <div class="card-body">
             <span class="card-tag">{{ $service->category_tag }}</span>
             <h3 class="card-title">{{ $service->title }}</h3>
-            <p class="card-desc">{{ $service->short_description }}</p>
+            <p class="card-desc">{{ $service->hero_lead }}</p>
             <div class="card-pills">
               @if($service->hero_pills && is_array($service->hero_pills))
                 @foreach($service->hero_pills as $pill)

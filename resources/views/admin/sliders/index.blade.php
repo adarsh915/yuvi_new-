@@ -133,14 +133,16 @@
                                         <div class="order-badge">{{ $slider->order }}</div>
                                     </div>
                                     <div class="slider-actions">
-                                        <a href="{{ route('admin.sliders.edit', $slider->id) }}" class="btn-icon btn-outline-info" title="Edit Slider">
-                                            <iconify-icon icon="solar:pen-new-square-outline" style="font-size: 18px;"></iconify-icon>
+                                        <a href="{{ route('admin.sliders.edit', $slider->id) }}" class="btn-icon btn-outline-info d-flex align-items-center justify-content-center" 
+                                           style="width:32px; height:32px; padding:0; border-radius:8px;" title="Edit Slider">
+                                            <i class="ri-edit-line" style="font-size: 18px;"></i>
                                         </a>
                                         <form action="{{ route('admin.sliders.destroy', $slider->id) }}" method="POST" onsubmit="return confirm('Delete this slider?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn-icon btn-outline-danger" title="Delete Slider">
-                                                <iconify-icon icon="solar:trash-bin-trash-outline" style="font-size: 18px;"></iconify-icon>
+                                            <button type="submit" class="btn-icon btn-outline-danger d-flex align-items-center justify-content-center"
+                                                    style="width:32px; height:32px; padding:0; border-radius:8px;" title="Delete Slider">
+                                                <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
                                             </button>
                                         </form>
                                     </div>

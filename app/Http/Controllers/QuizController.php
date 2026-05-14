@@ -108,7 +108,7 @@ class QuizController extends Controller
 
         foreach ($submissions as $submission) {
             $csvRows[] = [
-                $submission->created_at->format('Y-m-d H:i:s'),
+                $submission->created_at ? $submission->created_at->format('d-m-Y H:i') : '',
                 $submission->name,
                 $submission->phone,
                 $submission->email ?? '',
@@ -120,8 +120,12 @@ class QuizController extends Controller
 
         $callback = function () use ($csvRows) {
             $out = fopen('php://output', 'w');
+            
+            // Force Excel to use comma as separator
+            fwrite($out, "sep=,\n");
+            
             foreach ($csvRows as $row) {
-                fputcsv($out, $row);
+                fputcsv($out, $row, ',');
             }
             fclose($out);
         };

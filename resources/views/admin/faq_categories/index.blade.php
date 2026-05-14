@@ -156,8 +156,8 @@
                                     <div class="d-flex align-items-center gap-2">
                                         <button class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center" 
                                                 style="width:32px; height:32px; padding:0; border-radius:8px;"
-                                                onclick="editCategory({{ $category->id }}, '{{ addslashes($category->name) }}', {{ $category->order }}, {{ $category->is_active ? 1 : 0 }})">
-                                            <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
+                                                onclick='editCategory({{ $category->id }}, {{ json_encode($category->name) }}, {{ $category->order }}, {{ $category->is_active ? 1 : 0 }})'>
+                                            <i class="ri-edit-line" style="font-size: 18px;"></i>
                                         </button>
                                         <form action="{{ route('admin.faq.categories.destroy', $category->id) }}" method="POST" 
                                               onsubmit="return confirm('Are you sure?')">
@@ -165,7 +165,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
                                                     style="width:32px; height:32px; padding:0; border-radius:8px;">
-                                                <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
+                                                <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
                                             </button>
                                         </form>
                                     </div>

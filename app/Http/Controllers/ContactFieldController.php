@@ -32,6 +32,7 @@ class ContactFieldController extends Controller
             'category' => $request->category,
             'options' => $request->options,
             'is_required' => $request->has('is_required'),
+            'is_active' => $request->has('is_active'),
             'order' => $request->order ?: (ContactField::max('order') + 1),
             'placeholder' => $request->placeholder
         ]);
@@ -54,6 +55,7 @@ class ContactFieldController extends Controller
             'category' => $request->category,
             'options' => $request->options,
             'is_required' => $request->has('is_required'),
+            'is_active' => $request->has('is_active'),
             'order' => $request->order,
             'placeholder' => $request->placeholder
         ]);

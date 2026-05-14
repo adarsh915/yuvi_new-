@@ -101,10 +101,6 @@
                                 <input type="text" id="service_slug" name="slug" class="form-control radius-end-10 border-start-0 ps-0" value="{{ old('slug', $service->slug) }}" placeholder="url-friendly-slug">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <label class="svc-field-label">Short Excerpt <span class="req">*</span></label>
-                            <textarea name="short_description" rows="2" class="form-control radius-10" placeholder="A brief summary for listing cards..." required>{{ old('short_description', $service->short_description) }}</textarea>
-                        </div>
                     </div>
                 </div>
             </div>

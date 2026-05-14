@@ -159,14 +159,14 @@
                                 <button class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center" 
                                         style="width:32px; height:32px; padding:0; border-radius:8px;"
                                         onclick="editTreatment({{ $treatment->id }}, '{{ addslashes($treatment->name) }}', '{{ addslashes($treatment->description) }}', {{ $treatment->order }}, {{ $treatment->is_active ? 'true' : 'false' }})">
-                                    <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
+                                    <i class="ri-edit-line" style="font-size: 18px;"></i>
                                 </button>
                                 <form action="{{ route('admin.treatment-types.destroy', $treatment->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete this treatment type?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
                                             style="width:32px; height:32px; padding:0; border-radius:8px;">
-                                        <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
+                                        <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
                                     </button>
                                 </form>
                             </div>

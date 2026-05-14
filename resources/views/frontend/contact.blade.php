@@ -50,7 +50,7 @@
             <path
               d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
           </svg>
-          WhatsApp
+          NRI Patients
         </button>
       </div>
 
@@ -111,8 +111,8 @@
           </div>
 
           <div class="form-group">
-            <label for="preferred_location">Preferred Location </label>
-            <select name="preferred_location" id="preferred_location">
+            <label for="preferred_location">Preferred Location <span class="text-danger">*</span></label>
+            <select name="preferred_location" id="preferred_location" required>
               <option value="" disabled selected>Choose clinic</option>
               <option value="Nimaaya Women's Center (Surat)">Nimaaya Women's Center (Surat)</option>
               <option value="Nimaaya Baroda (Vadodara)">Nimaaya Baroda (Vadodara)</option>
@@ -132,20 +132,17 @@
 
           <!-- DYNAMIC FIELDS (filtered by category) -->
           @foreach($dynamicFields->sortBy('order') as $field)
-            {{-- Skip fields that are already hardcoded as base fields --}}
-            @if(in_array($field->name, ['first_name', 'last_name', 'email', 'phone', 'primary_concern', 'message', 'preferred_location']))
-              @continue
-            @endif
-
             <div class="form-group dynamic-field {{ $field->type == 'textarea' ? 'full-width' : '' }}"
               data-category="{{ $field->category }}">
               <label for="{{ $field->name }}">{{ $field->label }} @if($field->is_required)<span
               class="text-danger">*</span>@endif</label>
 
               @if($field->type == 'textarea')
-                <textarea name="{{ $field->name }}" id="{{ $field->name }}" placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }} rows="3"></textarea>
+                <textarea name="{{ $field->name }}" id="{{ $field->name }}" placeholder="{{ $field->placeholder }}" 
+                  {{ $field->is_required ? 'required' : '' }} data-initial-required="{{ $field->is_required ? '1' : '0' }}" rows="3"></textarea>
               @elseif($field->type == 'select')
-                <select name="{{ $field->name }}" id="{{ $field->name }}" {{ $field->is_required ? 'required' : '' }}>
+                <select name="{{ $field->name }}" id="{{ $field->name }}" 
+                  {{ $field->is_required ? 'required' : '' }} data-initial-required="{{ $field->is_required ? '1' : '0' }}">
                   <option value="" disabled selected>{{ $field->placeholder ?? 'Select option' }}</option>
                   @foreach(explode(',', $field->options) as $opt)
                     <option value="{{ trim($opt) }}">{{ trim($opt) }}</option>
@@ -153,7 +150,8 @@
                 </select>
               @else
                 <input type="{{ $field->type }}" name="{{ $field->name }}" id="{{ $field->name }}"
-                  placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }}>
+                  placeholder="{{ $field->placeholder }}" {{ $field->is_required ? 'required' : '' }} 
+                  data-initial-required="{{ $field->is_required ? '1' : '0' }}">
               @endif
               <span class="error-text" id="error-{{ $field->name }}"></span>
             </div>
@@ -163,7 +161,7 @@
         <div class="form-row" style="grid-template-columns: 1fr; margin-top: 1rem; margin-bottom: 0;">
           <div class="form-group full">
             <div class="checkbox-group">
-              <input type="checkbox" id="consent" required>
+              <input type="checkbox" id="consent" name="consent" required>
               <label for="consent">I consent to Dr. Yuvi's team contacting me regarding my inquiry. My information will be
                 kept strictly confidential.</label>
             </div>
@@ -379,7 +377,7 @@
     const tabMeta = {
       clinic: { title: 'Request a Clinic Visit', sub: "Fill in your details and we'll reach out within 24 hours to confirm your appointment." },
       online: { title: 'Book an Online Consultation', sub: 'Consult Dr. Yuvi from the comfort of your home via a secure video call.' },
-      whatsapp: { title: 'Connect on WhatsApp', sub: "Send us a message and we'll respond within a few hours on WhatsApp." }
+      whatsapp: { title: 'Connect for NRI Patients', sub: "Send us a message and we'll respond within a few hours." }
     };
 
     tabBtns.forEach(btn => {
@@ -457,17 +455,66 @@
       // Clear previous errors
       document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
       const globalError = document.getElementById('error-global');
+      let hasError = false;
 
-      const consent = document.getElementById('consent');
-      if (!consent.checked) {
-        consent.style.outline = '2px solid #e24b4a';
-        globalError.textContent = 'Please provide consent before submitting.';
-        setTimeout(() => consent.style.outline = '', 2000);
-        return;
+      // Validate required fields
+      const requiredInputs = form.querySelectorAll('[required], .dynamic-field:not([style*="display: none"]) [required]');
+      
+      requiredInputs.forEach(input => {
+        // 1. Skip if hidden inside a hidden dynamic-field container
+        const dynamicParent = input.closest('.dynamic-field');
+        if (dynamicParent && dynamicParent.style.display === 'none') {
+          return;
+        }
+
+        // 2. Identify error element (fallback to global if name missing)
+        const name = input.getAttribute('name') || input.id;
+        const errorEl = document.getElementById('error-' + name);
+        
+        // 3. Check if empty/invalid
+        let isInvalid = false;
+        if (input.type === 'checkbox') {
+          isInvalid = !input.checked;
+        } else if (input.tagName === 'SELECT') {
+          isInvalid = !input.value || input.value === "" || input.value === "null";
+        } else {
+          isInvalid = !input.value.trim();
+        }
+
+        if (isInvalid) {
+          console.warn('Validation failed for field:', name);
+          if (errorEl) errorEl.textContent = 'This field is required.';
+          input.style.borderColor = '#dc3545';
+          hasError = true;
+        } else {
+          input.style.borderColor = '';
+        }
+      });
+      
+      // Extra validation for specific types
+      if (!hasError) {
+        // Email validation
+        const emailInput = document.getElementById('email');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailInput.value.trim() && !emailPattern.test(emailInput.value.trim())) {
+          document.getElementById('error-email').textContent = 'Please enter a valid email address.';
+          emailInput.style.borderColor = '#dc3545';
+          hasError = true;
+        }
+
+        // Phone validation
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput && phoneInput.value.length !== 10) {
+          document.getElementById('error-phone').textContent = 'Phone number must be exactly 10 digits.';
+          phoneInput.style.borderColor = '#dc3545';
+          hasError = true;
+        }
       }
 
-      if (phoneInput.value.length !== 10) {
-        document.getElementById('error-phone').textContent = 'Phone number must be exactly 10 digits.';
+      if (hasError) {
+        globalError.textContent = 'Please fill in all required fields correctly.';
+        const firstError = form.querySelector('.error-text:not(:empty)');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
@@ -479,7 +526,10 @@
       fetch(form.action, {
         method: 'POST',
         body: formData,
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+        }
       })
         .then(response => response.json().then(data => ({ ok: response.ok, status: response.status, data })))
         .then(res => {

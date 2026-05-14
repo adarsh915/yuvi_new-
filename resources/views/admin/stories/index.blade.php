@@ -238,27 +238,27 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center gap-2">
-                                                <button
-                                                    class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center edit-story-btn"
-                                                    style="width:32px; height:32px; padding:0; border-radius:8px;"
-                                                    data-id="{{ $story->id }}" data-title="{{ $story->title }}"
-                                                    data-video_url="{{ $story->video_url }}"
-                                                    data-type_id="{{ $story->treatment_type_id }}"
-                                                    data-patient_name="{{ $story->patient_name }}"
-                                                    data-order="{{ $story->order }}"
-                                                    data-active="{{ $story->is_active ? 1 : 0 }}">
-                                                    <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
-                                                </button>
-                                                <form action="{{ route('admin.stories.destroy', $story->id) }}" method="POST"
-                                                    onsubmit="return confirm('Are you sure?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
-                                                        style="width:32px; height:32px; padding:0; border-radius:8px;">
-                                                        <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
+                                                    <button
+                                                        class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center edit-story-btn"
+                                                        style="width:32px; height:32px; padding:0; border-radius:8px;"
+                                                        data-id="{{ $story->id }}" data-title="{{ $story->title }}"
+                                                        data-video_url="{{ $story->video_url }}"
+                                                        data-type_id="{{ $story->treatment_type_id }}"
+                                                        data-patient_name="{{ $story->patient_name }}"
+                                                        data-order="{{ $story->order }}"
+                                                        data-active="{{ $story->is_active ? 1 : 0 }}">
+                                                        <i class="ri-edit-line" style="font-size: 18px;"></i>
                                                     </button>
-                                                </form>
+                                                    <form action="{{ route('admin.stories.destroy', $story->id) }}" method="POST"
+                                                        onsubmit="return confirm('Are you sure?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
+                                                            style="width:32px; height:32px; padding:0; border-radius:8px;">
+                                                            <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
+                                                        </button>
+                                                    </form>
                                             </div>
                                         </td>
                                     </tr>

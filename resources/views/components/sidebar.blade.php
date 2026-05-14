@@ -4,9 +4,9 @@
     </button>
     <div>
         <a href="{{ route('frontend.index') }}" class="sidebar-logo">
-            <img src="{{ asset('assets/images/asset/logo.png') }}" alt="site logo" class="light-logo">
-            <img src="{{ asset('assets/images/asset/logo.png') }}" alt="site logo" class="dark-logo">
-            <img src="{{ asset('assets/images/asset/logo.png') }}" alt="site logo" class="logo-icon">
+            <img src="{{ asset('assets/images/asset/logo.png') }}?v={{ time() }}" alt="site logo" class="light-logo">
+            <img src="{{ asset('assets/images/asset/logo.png') }}?v={{ time() }}" alt="site logo" class="dark-logo">
+            <img src="{{ asset('assets/images/asset/logo.png') }}?v={{ time() }}" alt="site logo" class="logo-icon">
         </a>
     </div>
     <div class="sidebar-menu-area">
@@ -75,6 +75,30 @@
                     class="{{ request()->routeIs('admin.categories') ? 'active' : '' }}">
                     <iconify-icon icon="solar:folder-with-files-outline" class="menu-icon"></iconify-icon>
                     <span>Blog Categories</span>
+                </a>
+            </li>
+
+            <!-- Media Management -->
+            <li class="sidebar-menu-group-title">MEDIA MANAGEMENT</li>
+            <li>
+                <a href="{{ route('admin.media-podcasts') }}"
+                    class="{{ request()->routeIs('admin.media-podcasts*') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:play-circle-outline" class="menu-icon"></iconify-icon>
+                    <span>Podcasts</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.media-events') }}"
+                    class="{{ request()->routeIs('admin.media-events*') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:calendar-outline" class="menu-icon"></iconify-icon>
+                    <span>Feel Good Events</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.media-highlights') }}"
+                    class="{{ request()->routeIs('admin.media-highlights*') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:videocamera-record-outline" class="menu-icon"></iconify-icon>
+                    <span>Media Highlights</span>
                 </a>
             </li>
 
@@ -156,6 +180,13 @@
                     class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                     <iconify-icon icon="solar:settings-outline" class="menu-icon"></iconify-icon>
                     <span>Site Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.seo.index') }}"
+                    class="{{ request()->routeIs('admin.seo.index') ? 'active' : '' }}">
+                    <iconify-icon icon="solar:global-outline" class="menu-icon"></iconify-icon>
+                    <span>SEO Settings</span>
                 </a>
             </li>
 

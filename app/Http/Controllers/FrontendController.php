@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\QuizQuestion;
 use App\Models\QuizSubmission;
+use App\Models\ContactField;
+use App\Models\Lead;
 
 class FrontendController extends Controller
 {
@@ -58,47 +60,38 @@ class FrontendController extends Controller
     {
         $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
         $siteSettings = $settings;
-        $dynamicFields = \App\Models\ContactField::orderBy('order')->get();
+        $dynamicFields = ContactField::where('is_active', true)->orderBy('order')->get();
         return view('frontend.contact', compact('settings', 'siteSettings', 'dynamicFields'));
     }
 
     public function contactSubmit(Request $request)
     {
         $selectedCategory = $request->input('consultation_type');
-        $fields = \App\Models\ContactField::where(function ($q) use ($selectedCategory) {
+        $fields = ContactField::where('is_active', true)->where(function ($q) use ($selectedCategory) {
             $q->where('category', 'all');
             if (!empty($selectedCategory)) {
                 $q->orWhere('category', $selectedCategory);
             }
         })->get();
-        $rules = [];
-        // Base field validations
-        $rules['first_name'] = ['required', 'string', 'max:255'];
-        $rules['last_name'] = ['required', 'string', 'max:255'];
-        $rules['email'] = ['required', 'email', 'max:255'];
-        $rules['phone'] = ['required', 'regex:/^\d{10}$/'];
-        $rules['primary_concern'] = ['required', 'string', 'max:255'];
-        $rules['preferred_location'] = ['nullable', 'string', 'max:255'];
-        $rules['consultation_type'] = ['required', 'in:inclinic_visit,online_consultation,whatsapp'];
-        $rules['message'] = ['required', 'string', 'min:10'];
+        
+        $rules = [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string',
+            'primary_concern' => 'required|string|max:255',
+            'preferred_location' => 'required|string|max:255',
+            'consultation_type' => 'required|string',
+            'message' => 'required|string',
+        ];
 
         foreach ($fields as $field) {
             $fieldRules = $field->is_required ? ['required'] : ['nullable'];
             switch ($field->type) {
-                case 'email':
-                    $fieldRules[] = 'email';
-                    break;
-                case 'tel':
-                    $fieldRules[] = 'regex:/^\d{10}$/';
-                    break;
-                case 'number':
-                    $fieldRules[] = 'numeric';
-                    break;
-                case 'date':
-                    $fieldRules[] = 'date';
-                    break;
+                case 'email': $fieldRules[] = 'email'; break;
+                case 'number': $fieldRules[] = 'numeric'; break;
+                case 'date': $fieldRules[] = 'date'; break;
                 case 'select':
-                    // build in: rule from options if available
                     if (!empty($field->options)) {
                         $opts = array_filter(array_map('trim', explode(',', $field->options)));
                         if (!empty($opts)) {
@@ -108,11 +101,8 @@ class FrontendController extends Controller
                         }
                     }
                     break;
-                default:
-                    $fieldRules[] = 'string';
-                    break;
+                default: $fieldRules[] = 'string'; break;
             }
-
             $rules[$field->name] = $fieldRules;
         }
 
@@ -125,38 +115,27 @@ class FrontendController extends Controller
             ], 422);
         }
 
-        // Prepare lead data
-        $firstName = $request->input('first_name', '');
-        $lastName = $request->input('last_name', '');
-        $email = $request->input('email', '');
-        $phone = $request->input('phone', '');
-        $subject = $request->input('primary_concern', 'General Inquiry');
-        $message = $request->input('message', 'No message provided');
-        $preferredLocation = $request->input('preferred_location', null);
-        $consultationType = $request->input('consultation_type', 'inclinic_visit');
-
         // Capture all dynamic data
         $dynamicData = [];
-        foreach ($fields as $field) {
-            // Skip fields already mapped to main columns
-            if (in_array($field->name, ['first_name', 'last_name', 'email', 'phone', 'message', 'primary_concern'])) {
-                continue;
-            }
-            if ($request->has($field->name)) {
-                $dynamicData[$field->label] = $request->input($field->name);
+        $activeFields = ContactField::where('is_active', true)->get();
+        foreach ($activeFields as $field) {
+            $value = $request->input($field->name);
+            if ($value !== null) {
+                $dynamicData[$field->label] = $value;
             }
         }
 
-        \App\Models\Lead::create([
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email,
-            'phone' => $phone,
-            'subject' => $subject,
-            'consultation_type' => $consultationType,
-            'preferred_location' => $preferredLocation,
-            'message' => $message,
-            'dynamic_data' => $dynamicData
+        Lead::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'subject' => $request->primary_concern,
+            'consultation_type' => $request->consultation_type,
+            'preferred_location' => $request->preferred_location,
+            'message' => $request->message,
+            'dynamic_data' => $dynamicData,
+            'status' => 'new'
         ]);
 
         return response()->json(['success' => true]);
@@ -164,7 +143,7 @@ class FrontendController extends Controller
 
     public function faq()
     {
-        $faqs = \App\Models\Faq::with('category')->where('is_active', true)->orderBy('order')->get();
+        $faqs = \App\Models\Faq::with('faqCategory')->where('is_active', true)->orderBy('order')->get();
         $categories = \App\Models\FaqCategory::where('is_active', true)
             ->withCount(['faqs' => function($q) {
                 $q->where('is_active', true);
@@ -247,7 +226,8 @@ class FrontendController extends Controller
     public function successStories()
     {
         $stories = \App\Models\SuccessStory::with('treatmentType')->where('is_active', true)->orderBy('order')->get();
-        return view('frontend.success-stories', compact('stories'));
+        $testimonials = \App\Models\Testimonial::where('is_active', true)->orderBy('order')->get();
+        return view('frontend.success-stories', compact('stories', 'testimonials'));
     }
 
     public function team()
@@ -257,6 +237,11 @@ class FrontendController extends Controller
 
     public function media()
     {
-        return view('frontend.media');
+        $podcasts = \App\Models\MediaPodcast::where('is_active', true)->orderBy('order')->get();
+        $events = \App\Models\MediaEvent::where('is_active', true)->orderBy('order')->get();
+        $highlights = \App\Models\MediaHighlight::where('is_active', true)->orderBy('order')->get();
+        $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
+
+        return view('frontend.media', compact('podcasts', 'events', 'highlights', 'settings'));
     }
 }

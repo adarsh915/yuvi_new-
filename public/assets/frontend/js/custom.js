@@ -217,75 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ── CONSULT TABS ──
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const formTitle = document.getElementById('formTitle');
-    const formSub = document.getElementById('formSub');
+    // ── CONSULT TABS HANDLED IN PAGE SPECIFIC SCRIPTS ──
 
-    const tabMeta = {
-        clinic: {
-            title: 'Request a Clinic Visit',
-            sub: "Fill in your details and we'll reach out within 24 hours to confirm your appointment."
-        },
-        online: {
-            title: 'Book an Online Consultation',
-            sub: 'Consult Dr. Yuvi from the comfort of your home via a secure video call.'
-        },
-        whatsapp: {
-            title: 'Connect on WhatsApp',
-            sub: "Send us a message and we'll respond within a few hours on WhatsApp."
-        }
-    };
-
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const meta = tabMeta[btn.dataset.tab];
-
-            if (meta && formTitle && formSub) {
-                formTitle.textContent = meta.title;
-                formSub.textContent = meta.sub;
-            }
-        });
-    });
-
-    // ── FORM SUBMIT ──
-    const form = document.getElementById('contactForm');
-    const successMsg = document.getElementById('successMsg');
-
-    if (form) {
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-
-            const consent = document.getElementById('consent');
-
-            if (consent && !consent.checked) {
-                consent.style.outline = '2px solid #e24b4a';
-
-                setTimeout(() => {
-                    consent.style.outline = '';
-                }, 2000);
-
-                return;
-            }
-
-            form.style.opacity = '0';
-            form.style.transform = 'translateY(-10px)';
-            form.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-
-            setTimeout(() => {
-                form.style.display = 'none';
-
-                if (successMsg) {
-                    successMsg.classList.add('show');
-                }
-
-            }, 300);
-        });
-    }
+    // ── FORM SUBMIT HANDLED IN PAGE SPECIFIC SCRIPTS ──
 
 });
 // -- PRELOADER HIDE -- 

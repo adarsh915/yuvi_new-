@@ -188,13 +188,13 @@
                                     <div class="d-flex align-items-center gap-2">
                                         <a href="{{ route('admin.quiz.submissions.details', $s->id) }}"
                                             class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center"
-                                            style="width:32px; height:32px; padding:0; border-radius:8px;">
-                                            <iconify-icon icon="solar:eye-outline"></iconify-icon>
+                                            style="width:32px; height:32px; padding:0; border-radius:8px;" title="View Details">
+                                            <i class="ri-eye-line" style="font-size: 18px;"></i>
                                         </a>
                                         <a href="{{ route('admin.quiz.submissions.print', $s->id) }}" target="_blank"
                                             class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center"
-                                            style="width:32px; height:32px; padding:0; border-radius:8px;">
-                                            <iconify-icon icon="solar:printer-outline"></iconify-icon>
+                                            style="width:32px; height:32px; padding:0; border-radius:8px;" title="Print">
+                                            <i class="ri-printer-line" style="font-size: 18px;"></i>
                                         </a>
                                         <form action="{{ route('admin.quiz.submissions.destroy', $s->id) }}" method="POST"
                                             onsubmit="return confirm('Are you sure?')">
@@ -202,8 +202,8 @@
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
-                                                style="width:32px; height:32px; padding:0; border-radius:8px;">
-                                                <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
+                                                style="width:32px; height:32px; padding:0; border-radius:8px;" title="Delete">
+                                                <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
                                             </button>
                                         </form>
                                     </div>

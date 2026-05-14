@@ -100,17 +100,17 @@
                         </td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                <a href="{{ route('admin.services.edit', $service->id) }}" class="btn btn-sm btn-outline-info d-inline-flex align-items-center gap-1">
-                                    <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
-                                    Edit
+                                <a href="{{ route('admin.services.edit', $service->id) }}" class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center"
+                                   style="width:32px; height:32px; padding:0; border-radius:8px;">
+                                    <i class="ri-edit-line" style="font-size: 18px;"></i>
                                 </a>
                                 <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST"
                                       onsubmit="return confirm('Delete this service? This cannot be undone.')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1">
-                                        <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
-                                        Delete
+                                    <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
+                                            style="width:32px; height:32px; padding:0; border-radius:8px;">
+                                        <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
                                     </button>
                                 </form>
                             </div>

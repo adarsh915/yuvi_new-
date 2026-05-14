@@ -144,7 +144,7 @@
                                     $title = $isQuiz ? $notif->name : ($notif->first_name . ' ' . $notif->last_name);
                                     $text = $isQuiz ? 'New quiz submission' : 'New consultation inquiry';
                                 @endphp
-                                <a href="{{ route('admin.notifications') }}" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
+                                <a href="{{ $notif->route }}" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
                                     <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
                                         <span class="w-44-px h-44-px bg-{{ $color }}-subtle text-{{ $color }}-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
                                             <iconify-icon icon="{{ $icon }}" class="icon text-xxl"></iconify-icon>

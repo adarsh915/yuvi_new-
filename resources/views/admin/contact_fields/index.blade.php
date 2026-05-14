@@ -7,7 +7,7 @@
         'all' => 'All Forms',
         'inclinic_visit' => 'In-Clinic Visit',
         'online_consultation' => 'Online Consultation',
-        'whatsapp' => 'WhatsApp'
+        'whatsapp' => 'NRI Patients'
     ];
     $fieldTypes = [
         'text' => 'Text Input',
@@ -112,7 +112,7 @@
                                                 "all": "All Forms",
                                                 "inclinic_visit": "In-Clinic Visit",
                                                 "online_consultation": "Online Consultation",
-                                                "whatsapp": "WhatsApp"
+                                                "whatsapp": "NRI Patients"
                                             };
                                             return labels[category] || category;
                                         }
@@ -770,7 +770,7 @@
                                                 @elseif($field->category === 'online_consultation')
                                                     <span class="badge bg-success-focus text-success-main fw-medium">Online</span>
                                                 @elseif($field->category === 'whatsapp')
-                                                    <span class="badge bg-warning-focus text-warning-main fw-medium">WhatsApp</span>
+                                                    <span class="badge bg-warning-focus text-warning-main fw-medium">NRI Patients</span>
                                                 @endif
                                             </span>
                                         </td>
@@ -793,16 +793,18 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center gap-2">
-                                                <button class="btn btn-sm btn-outline-info radius-8"
-                                                    onclick="editField({{ $field->id }}, '{{ addslashes($field->label) }}', '{{ $field->type }}', '{{ $field->category }}', '{{ addslashes($field->options) }}', {{ $field->order }}, '{{ addslashes($field->placeholder) }}', {{ $field->is_required }}, {{ $field->is_active ? 1 : 0 }})">
-                                                    <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
+                                                <button class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center"
+                                                    style="width:32px; height:32px; padding:0; border-radius:8px;"
+                                                    onclick='editField({{ $field->id }}, {{ json_encode($field->label) }}, "{{ $field->type }}", "{{ $field->category }}", {{ json_encode($field->options) }}, {{ $field->order }}, {{ json_encode($field->placeholder) }}, {{ $field->is_required ? 1 : 0 }}, {{ $field->is_active ? 1 : 0 }})'>
+                                                    <i class="ri-edit-line" style="font-size: 18px;"></i>
                                                 </button>
                                                 <form action="{{ route('admin.contact.fields.destroy', $field->id) }}" method="POST"
                                                     onsubmit="return confirm('Delete this field? This action cannot be undone.')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger radius-8">
-                                                        <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
+                                                        style="width:32px; height:32px; padding:0; border-radius:8px;">
+                                                        <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
                                                     </button>
                                                 </form>
                                             </div>

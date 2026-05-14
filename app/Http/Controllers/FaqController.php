@@ -10,7 +10,10 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::with('category')->orderBy('order')->get();
+        $faqs = Faq::with('faqCategory')
+            ->orderBy('faq_category_id')
+            ->orderBy('order')
+            ->get();
         $categories = FaqCategory::where('is_active', true)->orderBy('order')->get();
         return view('admin.faqs.index', compact('faqs', 'categories'));
     }
@@ -21,7 +24,7 @@ class FaqController extends Controller
             'question' => 'required',
             'answer' => 'required',
             'faq_category_id' => 'nullable|exists:faq_categories,id',
-            'order' => 'nullable|integer',
+            'order' => 'nullable|integer|unique:faqs,order',
         ]);
 
         Faq::create([
@@ -41,7 +44,7 @@ class FaqController extends Controller
             'question' => 'required',
             'answer' => 'required',
             'faq_category_id' => 'nullable|exists:faq_categories,id',
-            'order' => 'required|integer',
+            'order' => 'required|integer|unique:faqs,order,' . $faq->id,
         ]);
 
         $faq->update([

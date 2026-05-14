@@ -19,6 +19,11 @@ use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SeoSettingController;
+use App\Http\Controllers\MediaPodcastController;
+use App\Http\Controllers\MediaEventController;
+use App\Http\Controllers\MediaHighlightController;
+
 
 // Frontend Routes
 Route::name('frontend.')->group(function () {
@@ -52,6 +57,13 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::delete('/leads/{lead}', 'destroyLead')->name('leads.destroy');
         Route::get('/settings', 'settings')->name('settings');
         Route::post('/settings/update', 'settingsUpdate')->name('settings.update');
+        Route::put('/account/email', 'updateEmail')->name('account.updateEmail');
+        Route::put('/account/password', 'updatePassword')->name('account.updatePassword');
+    });
+
+    Route::controller(SeoSettingController::class)->prefix('seo')->group(function () {
+        Route::get('/', 'index')->name('seo.index');
+        Route::put('/{seoSetting}', 'update')->name('seo.update');
     });
 
     Route::controller(FaqController::class)->prefix('faqs')->group(function () {
@@ -160,6 +172,27 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', 'index')->name('notifications');
         Route::get('/mark-read/{type}/{id}', 'markAsRead')->name('notifications.markRead');
         Route::get('/mark-all-read', 'markAllAsRead')->name('notifications.markAllRead');
+    });
+
+    Route::controller(MediaPodcastController::class)->prefix('media-podcasts')->group(function () {
+        Route::get('/', 'index')->name('media-podcasts');
+        Route::post('/store', 'store')->name('media-podcasts.store');
+        Route::put('/{podcast}', 'update')->name('media-podcasts.update');
+        Route::delete('/{podcast}', 'destroy')->name('media-podcasts.destroy');
+    });
+
+    Route::controller(MediaEventController::class)->prefix('media-events')->group(function () {
+        Route::get('/', 'index')->name('media-events');
+        Route::post('/store', 'store')->name('media-events.store');
+        Route::put('/{event}', 'update')->name('media-events.update');
+        Route::delete('/{event}', 'destroy')->name('media-events.destroy');
+    });
+
+    Route::controller(MediaHighlightController::class)->prefix('media-highlights')->group(function () {
+        Route::get('/', 'index')->name('media-highlights');
+        Route::post('/store', 'store')->name('media-highlights.store');
+        Route::put('/{highlight}', 'update')->name('media-highlights.update');
+        Route::delete('/{highlight}', 'destroy')->name('media-highlights.destroy');
     });
 });
 

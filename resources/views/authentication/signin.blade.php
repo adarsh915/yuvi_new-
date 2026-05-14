@@ -23,6 +23,16 @@
         position: relative;
         z-index: 1;
     }
+
+    .auth-responsive {
+        width: 50%;
+    }
+
+    @media (max-width: 991px) {
+        .auth-responsive {
+            width: 100%;
+        }
+    }
 </style>
 
 <body style="overflow: hidden;">
@@ -33,7 +43,7 @@
                 <img src="{{ asset('assets/images/asset/admin.jpg') }}" alt="" class="w-100 h-100 object-fit-cover">
             </div>
         </div>
-        <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center w-50">
+        <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center auth-responsive">
             <div class="max-w-464-px mx-auto w-100">
                 <div>
                     <!-- <a href="{{ route('frontend.index') }}" class="mb-40 max-w-290-px">
@@ -86,12 +96,14 @@
                                     name="remember" id="remeber">
                                 <label class="form-check-label" for="remeber">Remember me </label>
                             </div>
-                            <a href="{{ route('password.request') }}" class="text-primary-600 fw-medium">Forgot Password?</a>
+                            <a href="{{ route('password.request') }}" class="text-primary-600 fw-medium">Forgot
+                                Password?</a>
                         </div>
                     </div>
 
                     <div class="text-center mt-32">
-                        <button type="submit" class="btn btn-primary text-sm btn-sm px-40 py-16 radius-12">Sign In</button>
+                        <button type="submit" class="btn btn-primary text-sm btn-sm px-60 py-16 radius-12">Sign
+                            In</button>
                     </div>
 
                     <!-- <div class="mt-24 text-center text-sm">
@@ -106,22 +118,22 @@
 
     @php
         $script = '<script>
-                                                    // ================== Password Show Hide Js Start ==========
-                                                    function initializePasswordToggle(toggleSelector) {
-                                                        $(toggleSelector).on("click", function() {
-                                                            $(this).toggleClass("ri-eye-off-line");
-                                                            var input = $($(this).attr("data-toggle"));
-                                                            if (input.attr("type") === "password") {
-                                                                input.attr("type", "text");
-                                                            } else {
-                                                                input.attr("type", "password");
-                                                            }
-                                                        });
-                                                    }
-                                                    // Call the function
-                                                    initializePasswordToggle(".toggle-password");
-                                                    // ========================= Password Show Hide Js End ===========================
-                                                </script>';
+                                                                                                                                                                            // ================== Password Show Hide Js Start ==========
+                                                                                                                                                                            function initializePasswordToggle(toggleSelector) {
+                                                                                                                                                                                $(toggleSelector).on("click", function() {
+                                                                                                                                                                                    $(this).toggleClass("ri-eye-off-line");
+                                                                                                                                                                                    var input = $($(this).attr("data-toggle"));
+                                                                                                                                                                                    if (input.attr("type") === "password") {
+                                                                                                                                                                                        input.attr("type", "text");
+                                                                                                                                                                                    } else {
+                                                                                                                                                                                        input.attr("type", "password");
+                                                                                                                                                                                    }
+                                                                                                                                                                                });
+                                                                                                                                                                            }
+                                                                                                                                                                            // Call the function
+                                                                                                                                                                            initializePasswordToggle(".toggle-password");
+                                                                                                                                                                            // ========================= Password Show Hide Js End ===========================
+                                                                                                                                                                        </script>';
     @endphp
 
     <x-script />

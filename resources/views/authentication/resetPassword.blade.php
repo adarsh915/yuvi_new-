@@ -23,6 +23,16 @@
         position: relative;
         z-index: 1;
     }
+
+    .auth-responsive {
+        width: 50%;
+    }
+
+    @media (max-width: 991px) {
+        .auth-responsive {
+            width: 100%;
+        }
+    }
 </style>
 
 <body style="overflow: hidden;">
@@ -33,11 +43,12 @@
                 <img src="{{ asset('assets/images/asset/admin.jpg') }}" alt="" class="w-100 h-100 object-fit-cover">
             </div>
         </div>
-        <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center w-50">
+        <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center auth-responsive">
             <div class="max-w-464-px mx-auto w-100">
                 <div>
                     <h4 class="mb-12">Reset Password</h4>
-                    <p class="mb-32 text-secondary-light text-lg">Enter your new password below to reset your account access.</p>
+                    <p class="mb-32 text-secondary-light text-lg">Enter your new password below to reset your account
+                        access.</p>
                 </div>
                 <form action="{{ route('password.update') }}" method="POST">
                     @csrf
@@ -57,29 +68,35 @@
                         <span class="icon">
                             <iconify-icon icon="mage:email"></iconify-icon>
                         </span>
-                        <input type="email" name="email" class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Enter Email" value="{{ request()->email }}" required>
+                        <input type="email" name="email" class="form-control h-56-px bg-neutral-50 radius-12"
+                            placeholder="Enter Email" value="{{ request()->email }}" required>
                     </div>
 
                     <div class="icon-field mb-16">
                         <span class="icon">
                             <iconify-icon icon="solar:lock-password-outline"></iconify-icon>
                         </span>
-                        <input type="password" name="password" class="form-control h-56-px bg-neutral-50 radius-12" placeholder="New Password" required>
+                        <input type="password" name="password" class="form-control h-56-px bg-neutral-50 radius-12"
+                            placeholder="New Password" required>
                     </div>
 
                     <div class="icon-field mb-16">
                         <span class="icon">
                             <iconify-icon icon="solar:lock-password-outline"></iconify-icon>
                         </span>
-                        <input type="password" name="password_confirmation" class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Confirm Password" required>
+                        <input type="password" name="password_confirmation"
+                            class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Confirm Password"
+                            required>
                     </div>
 
                     <div class="text-center mt-32">
-                        <button type="submit" class="btn btn-primary text-sm btn-sm px-40 py-16 radius-12">Reset Password</button>
+                        <button type="submit" class="btn btn-primary text-sm btn-sm px-60 py-16 radius-12">Reset
+                            Password</button>
                     </div>
 
                     <div class="text-center">
-                        <a href="{{ route('signin') }}" class="text-primary-600 fw-bold mt-24 d-inline-block">Back to Sign In</a>
+                        <a href="{{ route('signin') }}" class="text-primary-600 fw-bold mt-24 d-inline-block">Back to
+                            Sign In</a>
                     </div>
                 </form>
             </div>

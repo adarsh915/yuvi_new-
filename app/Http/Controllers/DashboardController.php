@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 
 class DashboardController extends Controller
 {
@@ -116,7 +120,7 @@ class DashboardController extends Controller
 
         $headers = array_merge([
             'id',
-            'created_at',
+            'Date',
             'first_name',
             'last_name',
             'full_name',
@@ -133,12 +137,16 @@ class DashboardController extends Controller
 
         return response()->streamDownload(function () use ($leads, $headers, $dynamicKeys) {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, $headers);
+            
+            // Force Excel to use comma as separator
+            fwrite($handle, "sep=,\n");
+            
+            fputcsv($handle, $headers, ',');
 
             foreach ($leads as $lead) {
                 $row = [
                     $lead->id,
-                    optional($lead->created_at)->format('Y-m-d H:i:s'),
+                    $lead->created_at ? $lead->created_at->format('d-m-Y H:i') : '',
                     $lead->first_name,
                     $lead->last_name,
                     trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '')),
@@ -157,7 +165,7 @@ class DashboardController extends Controller
                         : '';
                 }
 
-                fputcsv($handle, $row);
+                fputcsv($handle, $row, ',');
             }
 
             fclose($handle);
@@ -200,20 +208,64 @@ class DashboardController extends Controller
         // Handle text settings
         if ($request->has('settings')) {
             foreach ($request->settings as $key => $value) {
-                \App\Models\SiteSetting::where('key', $key)->update(['value' => $value]);
+                \App\Models\SiteSetting::updateOrCreate(
+                    ['key' => $key],
+                    ['value' => $value]
+                );
             }
         }
 
-        // Handle file uploads (Logos)
+        // Handle file uploads
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $key => $file) {
                 if ($file->isValid()) {
                     $path = $file->store('settings', 'public');
-                    \App\Models\SiteSetting::where('key', $key)->update(['value' => $path]);
+                    \App\Models\SiteSetting::updateOrCreate(
+                        ['key' => $key],
+                        ['value' => $path]
+                    );
                 }
             }
         }
 
         return redirect()->back()->with('success', 'Settings updated successfully.');
+    }
+
+    public function updateEmail(Request $request)
+    {
+        $request->validateWithBag('email_update', [
+            'email'            => 'required|email|unique:users,email,' . Auth::id(),
+            'current_password' => 'required',
+        ]);
+
+        $user = \App\Models\User::find(Auth::id());
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'The current password you entered is incorrect.'], 'email_update');
+        }
+
+        $user->update(['email' => $request->email]);
+
+        return redirect()->route('admin.settings')->with('email_success', 'Admin email updated successfully.');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validateWithBag('password_update', [
+            'current_password' => 'required',
+            'password'         => 'required|min:8|confirmed',
+        ]);
+
+        $user = \App\Models\User::find(Auth::id());
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'The current password you entered is incorrect.'], 'password_update');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return redirect()->route('admin.settings')->with('password_success', 'Password updated successfully. Please use your new password next time you log in.');
     }
 }

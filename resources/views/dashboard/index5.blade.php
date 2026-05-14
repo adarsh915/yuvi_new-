@@ -2,7 +2,7 @@
 @php
     $title='Dashboard';
     $subTitle = 'Investment';
-    $script = ' <script src="' . asset('assets/js/homeFiveChart.js') . '"></script>';
+    $script = ' <script src="' . asset('assets/js/homeFiveChart.js') . '?v=' . time() . '"></script>';
 @endphp
 
 @section('content')

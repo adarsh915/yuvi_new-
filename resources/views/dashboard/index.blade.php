@@ -3,7 +3,7 @@
 @php
     $title='Dashboard';
     $subTitle = 'AI';
-    $script= '<script src="' . asset('assets/js/homeOneChart.js') . '"></script>';
+    $script= '<script src="' . asset('assets/js/homeOneChart.js') . '?v=' . time() . '"></script>';
 @endphp
 
 @section('content')

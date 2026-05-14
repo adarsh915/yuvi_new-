@@ -194,12 +194,12 @@
                                             </div>
                                         </td>
                                         <td>
-                                            @if($faq->category)
-                                                <span class="badge bg-primary-focus text-primary-main">
-                                                    {{ $faq->category->name }}
+                                            @if($faq->faqCategory)
+                                                <span class="badge bg-primary text-white px-12 py-6 radius-8">
+                                                    {{ $faq->faqCategory->name }}
                                                 </span>
                                             @else
-                                                <span class="text-xs text-secondary-light">Uncategorized</span>
+                                                <span class="text-xs text-secondary-light">Uncategorized ({{ $faq->faq_category_id ?? 'No ID' }})</span>
                                             @endif
                                         </td>
                                         <td>

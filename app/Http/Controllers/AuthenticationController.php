@@ -23,8 +23,8 @@ class AuthenticationController extends Controller
         $status = Password::sendResetLink($request->only('email'));
 
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['success' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            ? back()->with(['success' => 'A password reset link has been sent to your email address.'])
+            : back()->withErrors(['email' => 'We could not find an admin account with that email address.']);
     }
 
     public function resetPassword($token)
@@ -53,14 +53,14 @@ class AuthenticationController extends Controller
             }
         );
 
-        return $status === Password::RESET_PASSWORD_SET
-            ? redirect()->route('signin')->with('success', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('signin')->with('success', 'Your password has been successfully reset. Please log in.')
+            : back()->withErrors(['email' => ['Invalid token or email address. Please try again.']]);
     }
 
     public function signIn()
     {
-        return view('authentication/signIn');
+        return view('authentication/signin');
     }
 
     public function login(Request $request)

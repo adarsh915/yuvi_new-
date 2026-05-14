@@ -14,7 +14,7 @@ class NotificationController extends Controller
             $item->type = 'Contact Lead';
             $item->icon = 'solar:user-speak-outline';
             $item->color = 'primary';
-            $item->route = route('admin.leads'); // Assuming this exists or will handle it
+            $item->route = route('admin.leads.details', $item->id);
             return $item;
         });
 
@@ -22,7 +22,7 @@ class NotificationController extends Controller
             $item->type = 'Quiz Submission';
             $item->icon = 'solar:quiz-outline';
             $item->color = 'success';
-            $item->route = route('admin.quiz.submissions'); // Assuming this exists
+            $item->route = route('admin.quiz.submissions.details', $item->id);
             return $item;
         });
 
@@ -57,8 +57,14 @@ class NotificationController extends Controller
      */
     public static function getRecentNotifications($limit = 5)
     {
-        $leads = Lead::where('is_read', false)->orderBy('created_at', 'desc')->take($limit)->get();
-        $quizzes = QuizSubmission::where('is_read', false)->orderBy('created_at', 'desc')->take($limit)->get();
+        $leads = Lead::where('is_read', false)->orderBy('created_at', 'desc')->take($limit)->get()->map(function($item) {
+            $item->route = route('admin.leads.details', $item->id);
+            return $item;
+        });
+        $quizzes = QuizSubmission::where('is_read', false)->orderBy('created_at', 'desc')->take($limit)->get()->map(function($item) {
+            $item->route = route('admin.quiz.submissions.details', $item->id);
+            return $item;
+        });
 
         return $leads->concat($quizzes)->sortByDesc('created_at')->take($limit);
     }

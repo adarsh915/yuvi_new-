@@ -7,25 +7,28 @@
 
   <section class="media-hero-section reveal">
     <div class="media-hero-bg-wrap">
-      <img src="{{ asset('storage/media/banner.avif') }}" class="media-hero-bg" alt="Media and Events">
+      @php 
+        $bannerImg = $settings['media_banner_image'] ?? 'media/banner.avif';
+        $bannerPath = str_contains($bannerImg, 'settings/') ? asset('storage/' . $bannerImg) : asset('assets/images/asset/' . $bannerImg);
+        // Fallback to the original path if asset doesn't exist in assets/images
+        if(!str_contains($bannerImg, 'settings/') && !file_exists(public_path('assets/images/asset/' . $bannerImg))) {
+            $bannerPath = asset('storage/' . $bannerImg);
+        }
+      @endphp
+      <img src="{{ $bannerPath }}" class="media-hero-bg" alt="Media and Events">
       <div class="media-hero-overlay"></div>
     </div>
     <div class="media-hero-content reveal">
       <div class="media-hero-eyebrow">
         <span class="hero-eyebrow-dot"></span> In The Spotlight
       </div>
-      <h1>Stories, Science & <br><em>Clinical Insights</em></h1>
-      <p>Exploring the intersection of modern reproductive medicine, community advocacy, and heartwarming patient journeys
-        beyond the clinic walls.</p>
+      <h1>{!! nl2br(e($settings['media_banner_title'] ?? 'Stories, Science & Clinical Insights')) !!}</h1>
+      <p>{{ $settings['media_banner_description'] ?? 'Exploring the intersection of modern reproductive medicine, community advocacy, and heartwarming patient journeys beyond the clinic walls.' }}</p>
       <div class="media-hero-actions">
         <a href="#podcasts" class="btn-hero-primary">Listen to Podcasts</a>
         <a href="#events" class="btn-hero-outline">View Events</a>
       </div>
     </div>
-    <!-- <div class="media-scroll-down">
-                      <span class="scroll-text">Scroll to explore</span>
-                      <div class="scroll-line"></div>
-                    </div> -->
   </section>
 
   <!-- 2. PODCASTS SECTION -->
@@ -37,49 +40,40 @@
       </div>
 
       <div class="podcast-grid reveal delay-1">
-        <!-- Podcast Item 1 -->
-        <div class="podcast-row-card">
-          <div class="podcast-img">
-            <img src="{{ asset('storage/media/img1.avif') }}" alt="Podcast Episode">
-            <div class="play-btn">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+        @forelse($podcasts as $podcast)
+            <div class="podcast-row-card">
+              <div class="podcast-img">
+                <img src="{{ asset('storage/' . ($podcast->image ?? 'media/img1.avif')) }}" alt="{{ $podcast->title }}">
+                @if($podcast->spotify_link || $podcast->apple_link)
+                <a href="{{ $podcast->spotify_link ?? $podcast->apple_link }}" target="_blank" class="play-btn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </a>
+                @endif
+              </div>
+              <div class="podcast-info">
+                <div class="podcast-meta-top">
+                  <span class="media-tag">{{ $podcast->episode_no }}</span>
+                  <span class="media-duration">{{ $podcast->duration }}</span>
+                </div>
+                <h3>{{ $podcast->title }}</h3>
+                <p>{{ $podcast->description }}</p>
+                <div class="d-flex gap-3">
+                    @if($podcast->spotify_link)
+                        <a href="{{ $podcast->spotify_link }}" target="_blank" class="listen-link">Spotify &rarr;</a>
+                    @endif
+                    @if($podcast->apple_link)
+                        <a href="{{ $podcast->apple_link }}" target="_blank" class="listen-link">Apple &rarr;</a>
+                    @endif
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="podcast-info">
-            <div class="podcast-meta-top">
-              <span class="media-tag">Episode 12</span>
-              <span class="media-duration">45 mins</span>
+        @empty
+            <div class="col-12 text-center p-40">
+                <p class="text-secondary">No podcast episodes available yet.</p>
             </div>
-            <h3>Navigating IVF: Myths vs Facts</h3>
-            <p>An in-depth conversation unraveling common misconceptions about IVF, embryo freezing, and success rates.
-            </p>
-            <a href="#" class="listen-link">Listen on Spotify &rarr;</a>
-          </div>
-        </div>
-
-        <!-- Podcast Item 2 -->
-        <div class="podcast-row-card">
-          <div class="podcast-img">
-            <img src="{{ asset('storage/media/img2.avif') }}" alt="Podcast Episode">
-            <div class="play-btn">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-          </div>
-          <div class="podcast-info">
-            <div class="podcast-meta-top">
-              <span class="media-tag">Episode 11</span>
-              <span class="media-duration">38 mins</span>
-            </div>
-            <h3>PCOS and Fertility Outcomes</h3>
-            <p>Dr. Yuvi explains the impact of PCOS on conception and actionable lifestyle changes to improve fertility.
-            </p>
-            <a href="#" class="listen-link">Listen on Apple Podcasts &rarr;</a>
-          </div>
-        </div>
+        @endforelse
       </div>
     </div>
   </section>
@@ -93,38 +87,22 @@
       </div>
 
       <div class="events-gallery reveal delay-1">
-        <a href="#" class="event-gallery-item">
-          <img src="{{ asset('storage/media/img3.avif') }}" alt="Mother's Day Meetup">
-          <div class="event-gallery-overlay">
-            <div class="event-gallery-content">
-              <span class="event-date">March 2026</span>
-              <h3>Annual Mother's Day Meetup</h3>
-              <p>A beautiful gathering of our successful IVF mothers sharing their journeys.</p>
+        @forelse($events as $event)
+            <a href="{{ $event->link ?? '#' }}" class="event-gallery-item">
+              <img src="{{ asset('storage/' . ($event->image ?? 'media/img3.avif')) }}" alt="{{ $event->title }}">
+              <div class="event-gallery-overlay">
+                <div class="event-gallery-content">
+                  <span class="event-date">{{ $event->date_text }}</span>
+                  <h3>{{ $event->title }}</h3>
+                  <p>{{ $event->description }}</p>
+                </div>
+              </div>
+            </a>
+        @empty
+            <div class="col-12 text-center p-40">
+                <p class="text-secondary">No events to display at the moment.</p>
             </div>
-          </div>
-        </a>
-
-        <a href="#" class="event-gallery-item">
-          <img src="{{ asset('storage/media/img4.avif') }}" alt="Community Camp">
-          <div class="event-gallery-overlay">
-            <div class="event-gallery-content">
-              <span class="event-date">Feb 2026</span>
-              <h3>Community Health Camp</h3>
-              <p>Providing free fertility consultations and awareness in rural areas.</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="#" class="event-gallery-item">
-          <img src="{{ asset('storage/media/img6.avif') }}" alt="Team Awards">
-          <div class="event-gallery-overlay">
-            <div class="event-gallery-content">
-              <span class="event-date">Jan 2026</span>
-              <h3>Team Excellence Awards</h3>
-              <p>Celebrating the hard work and dedication of our incredible clinic staff.</p>
-            </div>
-          </div>
-        </a>
+        @endforelse
       </div>
     </div>
   </section>
@@ -138,37 +116,21 @@
       </div>
 
       <div class="highlights-gallery reveal delay-1">
-        <!-- Item 1: Image -->
-        <div class="h-gallery-item" onclick="openImageLightbox(this)" style="cursor: pointer;">
-          <img src="{{ asset('storage/media/img6.avif') }}" alt="News Feature">
-          <div class="h-gallery-overlay">
-            <span>Press Clipping: Health Times</span>
-          </div>
-        </div>
-
-        <!-- Item 2: Video -->
-        <div class="h-gallery-item" onclick="openImageLightbox(this)" style="cursor: pointer;">
-          <img src="{{ asset('storage/media/img6.avif') }}" alt="Press Release">
-          <div class="h-gallery-overlay">
-            <span>Global Medical Journal Feature</span>
-          </div>
-        </div>
-
-        <!-- Item 3: Image -->
-        <div class="h-gallery-item" onclick="openImageLightbox(this)" style="cursor: pointer;">
-          <img src="{{ asset('storage/media/img6.avif') }}" alt="Press Release">
-          <div class="h-gallery-overlay">
-            <span>Global Medical Journal Feature</span>
-          </div>
-        </div>
-
-        <!-- Item 4: Image -->
-        <div class="h-gallery-item" onclick="openImageLightbox(this)" style="cursor: pointer;">
-          <img src="{{ asset('storage/media/img6.avif') }}" alt="Clinic News">
-          <div class="h-gallery-overlay">
-            <span>National Health Network</span>
-          </div>
-        </div>
+        @forelse($highlights as $highlight)
+            <div class="h-gallery-item" @if($highlight->type == 'image') onclick="openImageLightbox(this)" @else onclick="window.open('{{ $highlight->video_url }}', '_blank')" @endif style="cursor: pointer;">
+              <img src="{{ asset('storage/' . ($highlight->image ?? 'media/img6.avif')) }}" alt="{{ $highlight->title }}">
+              <div class="h-gallery-overlay">
+                <span>{{ $highlight->title }}</span>
+                @if($highlight->type == 'video')
+                    <iconify-icon icon="solar:play-circle-bold" class="ms-2" style="font-size: 20px; vertical-align: middle;"></iconify-icon>
+                @endif
+              </div>
+            </div>
+        @empty
+            <div class="col-12 text-center p-40">
+                <p class="text-secondary">No media highlights available.</p>
+            </div>
+        @endforelse
       </div>
     </div>
   </section>
@@ -239,6 +201,9 @@
       font-size: 0.9rem;
       font-weight: 500;
       pointer-events: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   </style>
 
@@ -338,8 +303,6 @@
       position: relative;
     }
 
-
-
     .media-hero-content p {
       font-family: 'DM Sans', sans-serif;
       font-size: 1.25rem;
@@ -393,56 +356,6 @@
       background: rgba(255, 255, 255, 0.1);
       border-color: #fff;
       transform: translateY(-3px);
-    }
-
-    /* Scroll Down Indicator */
-    .media-scroll-down {
-      position: absolute;
-      bottom: 3rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .scroll-text {
-      font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.5);
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-weight: 700;
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 60px;
-      background: linear-gradient(to bottom, #fff, transparent);
-      animation: scrollLine 2s infinite;
-    }
-
-    @keyframes scrollLine {
-      0% {
-        transform: scaleY(0);
-        transform-origin: top;
-      }
-
-      50% {
-        transform: scaleY(1);
-        transform-origin: top;
-      }
-
-      50.1% {
-        transform: scaleY(1);
-        transform-origin: bottom;
-      }
-
-      100% {
-        transform: scaleY(0);
-        transform-origin: bottom;
-      }
     }
 
     /* Common Section Styles */
@@ -675,113 +588,40 @@
     }
 
     /* Responsive */
-    /* Large Tablets & Small Laptops */
-    @media (min-width: 992px) and (max-width: 1199px) {
-      .podcast-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-      }
-    }
-
-    /* Standard Tablets (Landscape & Portrait) */
-    @media (min-width: 601px) and (max-width: 991px) {
+    @media (max-width: 600px) {
       .podcast-grid {
         grid-template-columns: 1fr;
       }
-
-      .events-gallery {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .media-hero-section {
-        min-height: 60vh;
-      }
-
-    }
-
-    /* Mobile Devices */
-    @media (max-width: 600px) {
-      .media-hero-section {
-        min-height: 450px;
-      }
-
-      .media-section {
-        padding: 4rem 0;
-      }
-
       .podcast-row-card {
         flex-direction: column;
-        min-height: auto;
       }
-
       .podcast-img {
         width: 100%;
         height: 250px;
       }
-
       .podcast-info {
         width: 100%;
         padding: 1.5rem;
       }
-
       .events-gallery {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
       }
-
-      .event-gallery-item {
-        aspect-ratio: 1/1;
-        /* Square aspect ratio on mobile for more vertical space */
-      }
-
-      .event-gallery-overlay {
-        padding: 1.5rem;
-        /* Reduced padding on mobile */
-      }
-
-      .event-gallery-content h3 {
-        font-size: 1.4rem;
-        /* Smaller heading on mobile */
-      }
-
-      .event-gallery-content p {
-        font-size: 0.85rem;
-        /* Smaller description on mobile */
-        opacity: 0.9;
-      }
-
-      .event-date {
-        padding: 0.3rem 0.8rem;
-        font-size: 0.65rem;
-        margin-bottom: 0.75rem;
-      }
-
-      /* Highlights Gallery Mobile Fix */
-      .h-gallery-item {
-        aspect-ratio: 3/2;
-        /* Taller aspect ratio on mobile */
-      }
-
-      .h-gallery-overlay {
-        padding: 1.2rem;
-        font-size: 0.85rem;
-        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-      }
-
-      .highlights-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-        gap: 1.5rem;
-        margin-top: 2rem;
-      }
-
-      .podcast-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-        gap: 2.5rem;
-      }
-
     }
   </style>
+
+  <script>
+    function openImageLightbox(el) {
+        const img = el.querySelector('img').src;
+        const caption = el.querySelector('.h-gallery-overlay span').innerText;
+        
+        document.getElementById('lightboxImg').src = img;
+        document.getElementById('lightboxTitle').innerText = caption;
+        document.getElementById('imageLightbox').classList.add('active');
+    }
+
+    function closeImageLightbox() {
+        document.getElementById('imageLightbox').classList.remove('active');
+    }
+  </script>
 
 @endsection

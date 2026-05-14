@@ -128,6 +128,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Subject</th>
+                                <th>Consultation</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </tr>
@@ -145,6 +146,18 @@
                                 </td>
                                 <td>{{ $lead->email }}</td>
                                 <td><span class="badge bg-light text-secondary-light">{{ $lead->subject ?? 'General' }}</span></td>
+                                <td>
+                                    @php $ctype = trim($lead->consultation_type); @endphp
+                                    @if($ctype == 'whatsapp')
+                                        <span class="badge bg-success text-white">NRI Patients</span>
+                                    @elseif($ctype == 'online_consultation')
+                                        <span class="badge bg-info text-white">Online</span>
+                                    @elseif($ctype == 'inclinic_visit')
+                                        <span class="badge bg-primary text-white">In-Clinic</span>
+                                    @else
+                                        <span class="badge bg-secondary text-white">{{ $ctype ?: 'Not Specified' }}</span>
+                                    @endif
+                                </td>
                                 <td>{{ $lead->created_at->format('d M, Y') }}</td>
                                 <td>
                                     <a href="{{ route('admin.leads.details', $lead->id) }}" class="btn btn-sm btn-outline-primary px-12" onclick="event.stopPropagation();">Details</a>

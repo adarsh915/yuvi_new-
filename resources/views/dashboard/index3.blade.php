@@ -2,7 +2,7 @@
 @php
     $title = 'Dashboard';
     $subTitle = 'eCommerce';
-    $script = '<script src="' . asset('assets/js/homethreeChart.js') . '"></script> ';
+    $script = '<script src="' . asset('assets/js/homethreeChart.js') . '?v=' . time() . '"></script> ';
 @endphp
 
 @section('content')

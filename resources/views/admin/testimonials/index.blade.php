@@ -174,15 +174,15 @@
                             <div class="d-flex align-items-center gap-2">
                                 <button class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center" 
                                         style="width:32px; height:32px; padding:0; border-radius:8px;"
-                                        onclick="editTestimonial({{ $testimonial->id }}, '{{ addslashes($testimonial->name) }}', {{ $testimonial->rating }}, '{{ addslashes($testimonial->review) }}', {{ $testimonial->order }}, {{ $testimonial->is_active ? 'true' : 'false' }})">
-                                    <iconify-icon icon="solar:pen-new-square-outline"></iconify-icon>
+                                        onclick='editTestimonial({{ $testimonial->id }}, {{ json_encode($testimonial->name) }}, {{ $testimonial->rating }}, {{ json_encode($testimonial->review) }}, {{ $testimonial->order }}, {{ $testimonial->is_active ? "true" : "false" }})'>
+                                    <i class="ri-edit-line" style="font-size: 18px;"></i>
                                 </button>
                                 <form action="{{ route('admin.testimonials.destroy', $testimonial->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete this review?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
                                             style="width:32px; height:32px; padding:0; border-radius:8px;">
-                                        <iconify-icon icon="solar:trash-bin-trash-outline"></iconify-icon>
+                                        <i class="ri-delete-bin-line" style="font-size: 18px;"></i>
                                     </button>
                                 </form>
                             </div>

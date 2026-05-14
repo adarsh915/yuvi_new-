@@ -129,10 +129,6 @@
                         </div>
                         <span class="field-hint">Leave blank to auto-generate from title</span>
                     </div>
-                    <div class="field-group">
-                        <label class="field-label">Short Description <span class="req">*</span></label>
-                        <textarea name="short_description" rows="2" class="form-control" placeholder="Brief summary shown on the services listing page…" required>{{ old('short_description') }}</textarea>
-                    </div>
                 </div>
             </div>
 

@@ -63,8 +63,15 @@
             <div class="mb-20">
                 <label class="text-secondary-light text-xs fw-bold text-uppercase">Consultation Type</label>
                 <div class="text-lg fw-medium">
+                    @php
+                        $types = [
+                            'inclinic_visit' => 'In-Clinic',
+                            'online_consultation' => 'Online',
+                            'whatsapp' => 'NRI Patients'
+                        ];
+                    @endphp
                     <span class="badge bg-info-focus text-info-main">
-                        {{ $lead->consultation_type ?? '-' }}
+                        {{ $types[$lead->consultation_type] ?? $lead->consultation_type ?? '-' }}
                     </span>
                 </div>
             </div>
