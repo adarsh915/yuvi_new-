@@ -50,6 +50,30 @@
         justify-content: center;
         gap: 6px;
     }
+    /* ── Toggle Row ── */
+    .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 14px;
+        background: #f8f9fb;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all .15s;
+        margin: 0;
+        height: 42px;
+    }
+    .toggle-row:hover { background: #fff; border-color: #dee2e6; }
+    .toggle-row .tr-label { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+    .toggle-row .form-check { padding: 0; margin: 0; display: flex; align-items: center; }
+    .toggle-row .form-check-input {
+        width: 38px !important;
+        height: 20px !important;
+        cursor: pointer;
+        margin: 0 !important;
+        flex-shrink: 0;
+    }
 </style>
 
 <div class="row gy-4">
@@ -71,11 +95,12 @@
                 </div>
                 <div class="mb-20">
                     <label class="form-label mb-8">Duration</label>
-                    <input type="text" name="duration" class="form-control" placeholder="e.g. 45 mins">
+                    <input type="text" name="duration" class="form-control" placeholder="e.g. 45 mins or 1 hr">
                 </div>
                 <div class="mb-20">
                     <label class="form-label mb-8">Cover Image</label>
                     <input type="file" name="image" class="form-control" accept="image/*">
+                    <span class="text-xs text-secondary-light mt-1 d-block"><iconify-icon icon="solar:info-circle-outline"></iconify-icon> Recommended Size: 800x1430px</span>
                 </div>
                 <div class="mb-20">
                     <label class="form-label mb-8">YouTube Link</label>
@@ -89,9 +114,17 @@
                     <label class="form-label mb-8">Description</label>
                     <textarea name="description" class="form-control" rows="3" placeholder="Brief summary..."></textarea>
                 </div>
-                <div class="mb-20 d-flex align-items-center gap-2">
-                    <input type="checkbox" name="is_active" id="is_active" class="form-check-input" checked>
-                    <label class="form-label mb-0" for="is_active">Active</label>
+                <div class="mb-20">
+                    <label class="form-label mb-8">Display Order</label>
+                    <input type="number" name="order" class="form-control" placeholder="Optional" min="0">
+                </div>
+                <div class="mb-20">
+                    <label class="toggle-row" for="is_active">
+                        <span class="tr-label">Active Status</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" checked>
+                        </div>
+                    </label>
                 </div>
                 <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
                     <iconify-icon icon="solar:check-circle-outline"></iconify-icon>
@@ -208,7 +241,7 @@
                         </div>
                         <div class="col-md-6 mb-20">
                             <label class="form-label mb-8">Duration</label>
-                            <input type="text" name="duration" id="edit_duration" class="form-control">
+                            <input type="text" name="duration" id="edit_duration" class="form-control" placeholder="e.g. 45 mins or 1 hr">
                         </div>
                         <div class="col-md-6 mb-20">
                             <label class="form-label mb-8">Order</label>
@@ -225,14 +258,19 @@
                         <div class="col-md-12 mb-20">
                             <label class="form-label mb-8">Cover Image (Optional)</label>
                             <input type="file" name="image" class="form-control" accept="image/*">
+                            <span class="text-xs text-secondary-light mt-1 d-block"><iconify-icon icon="solar:info-circle-outline"></iconify-icon> Recommended Size: 800x1430px</span>
                         </div>
                         <div class="col-md-12 mb-20">
                             <label class="form-label mb-8">Description</label>
                             <textarea name="description" id="edit_description" class="form-control" rows="4"></textarea>
                         </div>
-                        <div class="col-md-12 mb-20 d-flex align-items-center gap-2">
-                            <input type="checkbox" name="is_active" id="edit_is_active" class="form-check-input">
-                            <label class="form-label mb-0" for="edit_is_active">Active</label>
+                        <div class="col-md-12 mb-20">
+                            <label class="toggle-row" for="edit_is_active">
+                                <span class="tr-label">Active Status</span>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="is_active" id="edit_is_active" value="1">
+                                </div>
+                            </label>
                         </div>
                     </div>
                 </div>

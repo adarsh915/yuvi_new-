@@ -124,47 +124,26 @@
         expertise.</p>
     </div>
 
-    <div class="services-grid">
+    <div class="services-grid" id="servicesGrid">
 
-      @forelse($services as $service)
-        <article class="service-card reveal" data-category="{{ $service->accent_class }}">
-          <div class="card-img">
-            <div class="card-accent {{ $service->accent_class }}"></div>
-            <img src="{{ asset('storage/' . $service->listing_image) }}" alt="{{ $service->title }}">
-            <div class="card-img-overlay"></div>
-            <span class="card-num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }} /
-              {{ str_pad($services->count(), 2, '0', STR_PAD_LEFT) }}</span>
-          </div>
-          <div class="card-body">
-            <span class="card-tag">{{ $service->category_tag }}</span>
-            <h3 class="card-title">{{ $service->title }}</h3>
-            <p class="card-desc">{{ $service->hero_lead }}</p>
-            <div class="card-pills">
-              @if($service->hero_pills && is_array($service->hero_pills))
-                @foreach($service->hero_pills as $pill)
-                  <span class="pill">{{ $pill }}</span>
-                @endforeach
-              @endif
-            </div>
-            <div class="card-footer">
-              <a href="{{ route('frontend.serviceDetail', $service->slug) }}" class="card-link">
-                Learn More
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
-              <span class="availability"><span class="availability-dot"></span>Accepting</span>
-            </div>
-          </div>
-        </article>
-      @empty
+      @if($services->isEmpty())
         <div class="col-12 text-center py-5">
           <p>No services found at the moment. Please check back later.</p>
         </div>
-      @endforelse
+      @else
+        @include('frontend.partials.service_cards', ['services' => $services])
+      @endif
 
     </div>
+
+    <!-- Pagination -> Load More -->
+    @if($services->hasMorePages())
+    <div class="services-pagination reveal delay-1" id="servicesLoadMoreContainer" style="display: flex; justify-content: center; margin-top: 3rem;">
+        <button class="btn-outline load-more-btn" data-target="servicesGrid" data-container="servicesLoadMoreContainer" data-param="page" data-next-page="{{ $services->currentPage() + 1 }}" style="padding: 12px 30px; font-weight: 600; cursor: pointer;">
+            Load More Services
+        </button>
+    </div>
+    @endif
   </section>
 
   <!-- TRUST BAND -->
@@ -504,6 +483,52 @@
         top: 0.5rem;
         right: 1.5rem;
       }
+    }
+    /* Pagination Styles */
+    .services-pagination {
+      margin-top: 5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .services-pagination .pagination {
+      display: flex;
+      gap: 0.8rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    .services-pagination .page-item .page-link {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--midnight);
+      border: 1px solid var(--card-border);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .services-pagination .page-item.active .page-link {
+      background: var(--midnight);
+      color: #fff;
+      border-color: var(--midnight);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .services-pagination .page-item:hover .page-link {
+      background: var(--blue-light);
+      transform: translateY(-2px);
+    }
+
+    .services-pagination .page-item.disabled .page-link {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   </style>
 @endsection

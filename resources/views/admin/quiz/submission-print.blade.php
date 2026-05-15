@@ -243,7 +243,8 @@
                 $yesCount = 0;
                 $noCount = 0;
                 if (is_array($submission->answers_json)) {
-                    foreach ($submission->answers_json as $ans) {
+                    foreach ($submission->answers_json as $key => $val) {
+                        $ans = is_array($val) ? ($val['answer'] ?? '') : $val;
                         if ($ans === 'Yes')
                             $yesCount++;
                         if ($ans === 'No')
@@ -292,9 +293,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($submission->answers_json as $questionId => $answer)
+                    @foreach($submission->answers_json as $key => $val)
+                        @php
+                            if (is_array($val)) {
+                                $qText = $val['question'] ?? 'Unknown';
+                                $answer = $val['answer'] ?? '';
+                            } else {
+                                $qText = $questionMap[$key] ?? 'Question Deleted';
+                                $answer = $val;
+                            }
+                        @endphp
                         <tr>
-                            <td>{{ $questionMap[$questionId] ?? 'Question Deleted' }}</td>
+                            <td>{{ $qText }}</td>
                             <td>
                                 <span class="badge" style="{{ $answer == 'Yes' ? 'background:#d1fae5; color:#065f46;' : 'background:#fee2e2; color:#991b1b;' }}">
                                     {{ $answer }}

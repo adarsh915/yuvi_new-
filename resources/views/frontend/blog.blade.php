@@ -36,7 +36,7 @@
       <div class="filter-group">
         <button class="filter-btn active" data-filter="all">
           <span class="dot"></span> All Articles
-          <span class="filter-count" id="count-all">{{ $blogs->count() }}</span>
+          <span class="filter-count" id="count-all">{{ $blogs->total() }}</span>
         </button>
         @foreach($categories as $cat)
           <button class="filter-btn" data-filter="{{ $cat->slug }}">
@@ -57,42 +57,11 @@
     <div>
       <div class="grid-header reveal">
         <h2>Recent Articles</h2>
-        <span id="visibleCount">Showing {{ $blogs->count() }} articles</span>
+        <span id="visibleCount">Showing {{ $blogs->firstItem() }}-{{ $blogs->lastItem() }} of {{ $blogs->total() }} articles</span>
       </div>
 
       <div class="grid" id="blogGrid">
-
-        @forelse($blogs as $blog)
-          <article class="card reveal" data-category="{{ $blog->category_rel->slug ?? 'uncategorized' }}">
-            <div class="card-img">
-              @if($blog->image)
-                <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
-              @else
-                <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=700"
-                  alt="{{ $blog->title }}">
-              @endif
-            </div>
-            <div class="card-body">
-              <span class="card-tag" style="color:var(--crimson);">{{ strtoupper($blog->category_rel->name ?? 'UNCATEGORIZED') }}</span>
-              <h3 class="card-title">{{ $blog->title }}</h3>
-              <p style="color:var(--slate); font-size:0.9rem; margin-bottom:1rem; line-height:1.6;">{{ Str::limit($blog->excerpt, 120) }}</p>
-              <div class="card-hashtags">
-                @if($blog->tags)
-                  @foreach(explode(',', $blog->tags) as $tag)
-                    <span>{{ trim($tag) }}</span>
-                  @endforeach
-                @endif
-              </div>
-              <div class="card-meta"
-                style="justify-content:space-between; border-top:1px solid rgba(184,36,48,0.1); padding-top:1.2rem; margin-top:auto;">
-                <span class="card-meta-item">{{ $blog->created_at->format('M d, Y') }}</span>
-                <a href="{{ route('frontend.blogDetails', $blog->slug) }}"
-                  style="text-decoration:none; color:var(--blue); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:0.4rem;">Read
-                  Article &rarr;</a>
-              </div>
-            </div>
-          </article>
-        @empty
+        @if($blogs->isEmpty())
           <div class="empty-state" style="display: flex;" id="emptyState">
             <div class="empty-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f84ae" stroke-width="1.5"
@@ -105,9 +74,19 @@
             <h3>No articles found</h3>
             <p>We haven't published any articles yet. Please check back later!</p>
           </div>
-        @endforelse
-
+        @else
+            @include('frontend.partials.blog_cards', ['blogs' => $blogs])
+        @endif
       </div>
+
+      <!-- Pagination -> Load More -->
+      @if($blogs->hasMorePages())
+      <div class="blog-pagination reveal delay-2" id="blogLoadMoreContainer" style="display: flex; justify-content: center; margin-top: 3rem;">
+          <button class="btn-outline load-more-btn" data-target="blogGrid" data-container="blogLoadMoreContainer" data-param="page" data-next-page="{{ $blogs->currentPage() + 1 }}" style="padding: 12px 30px; font-weight: 600; cursor: pointer;">
+              Load More Articles
+          </button>
+      </div>
+      @endif
     </div>
   </div>
 
@@ -204,12 +183,54 @@
         grid-template-columns: repeat(2, 1fr) !important;
       }
     }
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr !important;
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: 1fr !important;
+        }
       }
-    }
-  </style>
+
+      /* Pagination Styles */
+      .blog-pagination {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+      }
+      .blog-pagination .pagination {
+        display: flex;
+        gap: 10px;
+        list-style: none;
+        padding: 0;
+      }
+      .blog-pagination .page-item .page-link {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--midnight);
+        border: 1px solid var(--card-border);
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .blog-pagination .page-item.active .page-link {
+        background: var(--midnight);
+        color: #fff;
+        border-color: var(--midnight);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      .blog-pagination .page-item:hover:not(.active):not(.disabled) .page-link {
+        background: var(--blue-light);
+        transform: translateY(-2px);
+      }
+      .blog-pagination .page-item.disabled .page-link {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    </style>
 
 
   <!-- FOOTER -->

@@ -17,12 +17,19 @@ class ServiceCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'order' => 'nullable|integer',
+            'order' => 'nullable|integer|min:0',
         ]);
+
+        $order = $request->order ?? (ServiceCategory::max('order') + 1);
+
+        // Shift if this order is already taken
+        if (ServiceCategory::where('order', $order)->exists()) {
+            ServiceCategory::where('order', '>=', $order)->increment('order');
+        }
 
         ServiceCategory::create([
             'name' => $request->name,
-            'order' => $request->order ?? 0,
+            'order' => $order,
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -33,12 +40,20 @@ class ServiceCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'order' => 'required|integer',
+            'order' => 'required|integer|min:0',
         ]);
+
+        $newOrder = (int)$request->order;
+
+        if ($newOrder !== $serviceCategory->order) {
+            if (ServiceCategory::where('order', $newOrder)->where('id', '!=', $serviceCategory->id)->exists()) {
+                ServiceCategory::where('order', '>=', $newOrder)->where('id', '!=', $serviceCategory->id)->increment('order');
+            }
+        }
 
         $serviceCategory->update([
             'name' => $request->name,
-            'order' => $request->order,
+            'order' => $newOrder,
             'is_active' => $request->has('is_active'),
         ]);
 

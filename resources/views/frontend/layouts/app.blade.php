@@ -16,6 +16,7 @@
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"> -->
   <!-- Custom CSS last — always wins -->
   <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}?v={{ time() }}">
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <style>
     /* ── Neutralize Bootstrap resets that break the custom navbar ── */
     .nav-center,

@@ -22,7 +22,7 @@ class MediaEventController extends Controller
             'date_text' => 'nullable|string',
             'image' => 'nullable|image|max:5120',
             'link' => 'nullable|url',
-            'order' => 'nullable|integer|min:0',
+            'order' => 'nullable|integer|min:0|unique:media_events,order',
         ]);
 
         $validated['is_active'] = $request->has('is_active');
@@ -48,7 +48,7 @@ class MediaEventController extends Controller
             'date_text' => 'nullable|string',
             'image' => 'nullable|image|max:5120',
             'link' => 'nullable|url',
-            'order' => 'required|integer|min:0',
+            'order' => 'required|integer|min:0|unique:media_events,order,' . $event->id,
         ]);
 
         $validated['is_active'] = $request->has('is_active');

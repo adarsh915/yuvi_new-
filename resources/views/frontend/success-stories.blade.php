@@ -19,11 +19,7 @@
 
   <!-- PAGE BODY -->
   <div class="page-body reveal">
-    @php
-      $categories = $stories->map(function ($s) {
-        return $s->treatmentType->name ?? 'General';
-      })->unique();
-    @endphp
+
     {{-- Sidebar moved to right --}}
 
     <!-- LEFT FILTER SIDEBAR -->
@@ -31,13 +27,11 @@
       <span class="fs-title">Filter Journeys</span>
       <div class="fs-filters">
         <button class="filter-btn story-filter-btn active" data-filter="all"><span class="dot"></span>All Journeys<span
-            class="filter-count">{{ $stories->count() }}</span></button>
+            class="filter-count">{{ $stories->total() }}</span></button>
         @foreach($categories as $cat)
-            <button class="filter-btn story-filter-btn" data-filter="{{ Str::slug($cat) }}">
-              <span class="dot"></span>{{ $cat }}
-              <span
-                class="filter-count">{{ $stories->filter(function ($s) use ($cat) {
-          return ($s->treatmentType->name ?? 'General') === $cat; })->count() }}</span>
+            <button class="filter-btn story-filter-btn" data-filter="{{ Str::slug($cat->name) }}">
+              <span class="dot"></span>{{ $cat->name }}
+              <span class="filter-count">{{ $cat->stories_count }}</span>
             </button>
         @endforeach
       </div>
@@ -63,46 +57,33 @@
 
       <div class="grid-header reveal">
         <h2>Patient Success Stories</h2>
-        <span id="storyVisibleCount">Showing {{ $stories->count() }} stories</span>
+        <span id="storyVisibleCount">Showing {{ $stories->firstItem() }}-{{ $stories->lastItem() }} of {{ $stories->total() }} stories</span>
       </div>
 
       <div class="story-page-grid" id="storyPageGrid">
-        @foreach($stories as $story)
-          <div class="story-page-card reveal" data-category="{{ Str::slug($story->treatmentType->name ?? 'General') }}">
-            <div class="story-page-video-wrap">
-              @if(Str::endsWith($story->video_url, ['.mp4', '.webm', '.ogg']))
-                <video autoplay loop muted playsinline class="story-short-video">
-                  <source src="{{ $story->video_url }}" type="video/mp4">
-                </video>
-              @else
-                {{-- Append controls=0 to YouTube/Vimeo embeds --}}
-                @php
-                  $url = $story->video_url;
-                  if (str_contains($url, '?')) {
-                    if (!str_contains($url, 'controls='))
-                      $url .= '&controls=0';
-                  } else {
-                    $url .= '?controls=0';
-                  }
-                  // Force modest branding and no related videos
-                  $url .= '&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3';
-                @endphp
-                <iframe src="{{ $url }}" loading="lazy" allow="autoplay; encrypted-media" allowfullscreen
-                  title="{{ $story->title }}"></iframe>
-              @endif
-              <div class="story-page-overlay">
-                <span class="story-page-patient-name">{{ $story->patient_name ?? $story->title }}</span>
-                <span class="story-page-treatment-tag">{{ $story->treatmentType->name ?? 'Success Story' }}</span>
-              </div>
-            </div>
+        @if($stories->isEmpty())
+          <div class="empty-state" id="storyEmptyState">
+            <h3>No stories found</h3>
+            <p>Try selecting a different category.</p>
           </div>
-        @endforeach
-
-        <div class="empty-state" id="storyEmptyState" style="display:none;">
-          <h3>No stories found</h3>
-          <p>Try selecting a different category.</p>
-        </div>
+        @else
+          @include('frontend.partials.story_cards', ['stories' => $stories])
+        @endif
       </div>
+
+      <div class="empty-state" id="storyEmptyState" style="display:none;">
+        <h3>No stories found</h3>
+        <p>Try selecting a different category.</p>
+      </div>
+
+      <!-- Pagination -> Load More -->
+      @if($stories->hasMorePages())
+      <div class="story-pagination reveal delay-2" id="storyLoadMoreContainer" style="display: flex; justify-content: center; margin-top: 3rem;">
+          <button class="btn-outline load-more-btn" data-target="storyPageGrid" data-container="storyLoadMoreContainer" data-param="page" data-next-page="{{ $stories->currentPage() + 1 }}" style="padding: 12px 30px; font-weight: 600; cursor: pointer;">
+              Load More Stories
+          </button>
+      </div>
+      @endif
     </div>
   </div>
 
@@ -199,25 +180,60 @@
           margin-bottom: 2rem;
         }
 
-        .mobile-filter-panel {
-          display: none;
-        }
-
         .story-page-grid {
           grid-template-columns: repeat(2, 1fr);
         }
       }
 
-      @media (max-width: 600px) {
+      @media (max-width: 768px) {
         .story-page-grid {
           grid-template-columns: 1fr;
         }
+      }
 
-        .grid-header h2 {
-          font-size: 1.8rem;
-        }
+      /* Pagination Styles */
+      .story-pagination {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+      }
+      .story-pagination .pagination {
+        display: flex;
+        gap: 10px;
+        list-style: none;
+        padding: 0;
+      }
+      .story-pagination .page-item .page-link {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--midnight);
+        border: 1px solid var(--card-border);
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .story-pagination .page-item.active .page-link {
+        background: var(--midnight);
+        color: #fff;
+        border-color: var(--midnight);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      .story-pagination .page-item:hover:not(.active):not(.disabled) .page-link {
+        background: var(--blue-light);
+        transform: translateY(-2px);
+      }
+      .story-pagination .page-item.disabled .page-link {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     </style>
+
     <!-- TESTIMONIALS -->
     <section class="testimonials-section reveal" style="padding: 4rem 0; background: var(--bg-light);">
       <div class="section-wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 2rem;">

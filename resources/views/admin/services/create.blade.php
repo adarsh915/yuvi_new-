@@ -82,6 +82,9 @@
     /* Slug prefix */
     .slug-wrap { position:relative; }
     .slug-prefix { position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:12px; color:#adb5bd; pointer-events:none; }
+
+    .invalid-feedback { display:block; font-size:11px; color:#dc3545; margin-top:4px; font-weight:500; }
+    .form-control.is-invalid, .form-select.is-invalid { border-color:#dc3545 !important; background-image:none !important; }
 </style>
 
 @section('content')
@@ -96,15 +99,9 @@
     </a>
 </div>
 
-@if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show mb-24" role="alert">
-        <strong>Please fix the following errors:</strong>
-        <ul class="mb-0 mt-1">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
 
-<form action="{{ route('admin.services.store') }}" method="POST" enctype="multipart/form-data">
+
+<form action="{{ route('admin.services.store') }}" method="POST" enctype="multipart/form-data" novalidate>
     @csrf
     <div class="svc-wrap">
 
@@ -119,7 +116,8 @@
                 <div class="panel-card__body">
                     <div class="field-group">
                         <label class="field-label">Service Title <span class="req">*</span></label>
-                        <input type="text" id="service_title" name="title" class="form-control" placeholder="e.g. IVF & Assisted Reproduction" value="{{ old('title') }}" required>
+                        <input type="text" id="service_title" name="title" class="form-control @error('title') is-invalid @enderror" placeholder="e.g. IVF & Assisted Reproduction" value="{{ old('title') }}" required>
+                        @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="field-group">
                         <label class="field-label">URL Slug</label>
@@ -141,11 +139,13 @@
                 <div class="panel-card__body">
                     <div class="field-group">
                         <label class="field-label">The Approach Content <span class="req">*</span></label>
-                        <textarea name="approach_text" id="approach_text" required>{{ old('approach_text') }}</textarea>
+                        <textarea name="approach_text" id="approach_text" class="@error('approach_text') is-invalid @enderror" required>{{ old('approach_text') }}</textarea>
+                        @error('approach_text')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="field-group" style="margin-top:24px;">
                         <label class="field-label">Safety & Ethics Content <span class="req">*</span></label>
-                        <textarea name="safety_text" id="safety_text" required>{{ old('safety_text') }}</textarea>
+                        <textarea name="safety_text" id="safety_text" class="@error('safety_text') is-invalid @enderror" required>{{ old('safety_text') }}</textarea>
+                        @error('safety_text')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@
                 <div class="panel-card__body">
                     <div class="field-group">
                         <label class="field-label" for="service_category_id">Clinical Category <span class="req">*</span></label>
-                        <select name="service_category_id" id="service_category_id" class="form-select" required>
+                        <select name="service_category_id" id="service_category_id" class="form-select @error('service_category_id') is-invalid @enderror" required>
                             <option value="">Select Category</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}" {{ old('service_category_id') == $cat->id ? 'selected' : '' }}>
@@ -239,10 +239,12 @@
                                 </option>
                             @endforeach
                         </select>
+                        @error('service_category_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="field-group">
                         <label class="field-label">Category Badge Text <span class="req">*</span></label>
-                        <input type="text" name="category_tag" class="form-control" placeholder="e.g. IVF & ART" value="{{ old('category_tag') }}" required>
+                        <input type="text" name="category_tag" class="form-control @error('category_tag') is-invalid @enderror" placeholder="e.g. IVF & ART" value="{{ old('category_tag') }}" required>
+                        @error('category_tag')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         <span class="field-hint">Visual tag shown on service card</span>
                     </div>
                     <div class="field-group">
@@ -259,11 +261,12 @@
                     <div class="field-group">
                         <label class="field-label">Listing Image <span class="req">*</span></label>
                         <input type="file" id="listing_image_file" name="listing_image" accept="image/*" style="display:none;" required>
-                        <div class="img-drop-zone" onclick="document.getElementById('listing_image_file').click()">
+                        <div class="img-drop-zone @error('listing_image') border-danger @enderror" onclick="document.getElementById('listing_image_file').click()">
                             <iconify-icon icon="solar:gallery-add-outline"></iconify-icon>
                             <div class="dz-label">Click to upload listing image</div>
                             <div class="dz-sub">PNG, JPG, WEBP · max 5 MB</div>
                         </div>
+                        @error('listing_image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         <img id="listing_preview" class="img-preview" src="" alt="">
                     </div>
                     <div class="field-group">
@@ -297,16 +300,18 @@
                     </div>
                     <div class="field-group">
                         <label class="field-label">Hero Lead Text <span class="req">*</span></label>
-                        <textarea name="hero_lead" rows="2" class="form-control" required placeholder="Short headline for the hero section…">{{ old('hero_lead') }}</textarea>
+                        <textarea name="hero_lead" rows="2" class="form-control @error('hero_lead') is-invalid @enderror" required placeholder="Short headline for the hero section…">{{ old('hero_lead') }}</textarea>
+                        @error('hero_lead')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="field-group">
                         <label class="field-label">Hero Image <span class="req">*</span></label>
                         <input type="file" id="hero_image_file" name="hero_image" accept="image/*" style="display:none;" required>
-                        <div class="img-drop-zone" onclick="document.getElementById('hero_image_file').click()">
+                        <div class="img-drop-zone @error('hero_image') border-danger @enderror" onclick="document.getElementById('hero_image_file').click()">
                             <iconify-icon icon="solar:gallery-add-outline"></iconify-icon>
                             <div class="dz-label">Click to upload hero image</div>
                             <div class="dz-sub">PNG, JPG, WEBP · max 5 MB</div>
                         </div>
+                        @error('hero_image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         <img id="hero_preview" class="img-preview" src="" alt="">
                     </div>
                     <div class="field-group">

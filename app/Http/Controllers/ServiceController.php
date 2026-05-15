@@ -44,8 +44,17 @@ class ServiceController extends Controller
             'stat3_num' => 'nullable|string|max:255',
             'stat3_label' => 'nullable|string|max:255',
         ], [
+            'title.required' => 'Service title is required.',
+            'service_category_id.required' => 'Please select a clinical category.',
+            'category_tag.required' => 'Category badge text is required for the service card.',
+            'hero_lead.required' => 'Hero lead text is required for the service banner.',
+            'listing_image.required' => 'A listing thumbnail image is required.',
             'listing_image.max' => 'Listing image must not exceed 5MB.',
+            'hero_image.required' => 'A hero banner image is required.',
             'hero_image.max' => 'Hero image must not exceed 5MB.',
+            'approach_text.required' => 'The approach section content cannot be empty.',
+            'safety_text.required' => 'The safety & ethics section content cannot be empty.',
+            'order.unique' => 'This display order number is already taken.',
         ]);
 
         $data = $request->all();
@@ -60,6 +69,9 @@ class ServiceController extends Controller
         if ($request->hasFile('hero_image')) {
             $data['hero_image'] = $request->file('hero_image')->store('services', 'public');
         }
+
+        // Handle short_description (hidden from form, but required in DB)
+        $data['short_description'] = $request->input('short_description', $request->hero_lead);
 
         // Handle dynamic array inputs
         $data['hero_pills'] = $request->input('hero_pills') ?: [];
@@ -99,6 +111,16 @@ class ServiceController extends Controller
             'stat2_label' => 'nullable|string|max:255',
             'stat3_num' => 'nullable|string|max:255',
             'stat3_label' => 'nullable|string|max:255',
+        ], [
+            'title.required' => 'Service title is required.',
+            'service_category_id.required' => 'Please select a clinical category.',
+            'category_tag.required' => 'Category badge text is required.',
+            'hero_lead.required' => 'Hero lead text is required.',
+            'approach_text.required' => 'The approach section content cannot be empty.',
+            'safety_text.required' => 'The safety & ethics section content cannot be empty.',
+            'listing_image.max' => 'Listing image must not exceed 5MB.',
+            'hero_image.max' => 'Hero image must not exceed 5MB.',
+            'order.unique' => 'This display order number is already taken.',
         ]);
 
         $data = $request->except(['listing_image', 'hero_image', 'slug']);
@@ -117,6 +139,8 @@ class ServiceController extends Controller
         if ($request->hasFile('hero_image')) {
             $data['hero_image'] = $request->file('hero_image')->store('services', 'public');
         }
+
+        $data['short_description'] = $request->input('short_description', $request->hero_lead);
 
         // Handle Arrays
         $data['hero_pills'] = $request->input('hero_pills') ?: [];

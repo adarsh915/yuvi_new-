@@ -46,7 +46,7 @@ class MediaHighlightController extends Controller
             'image' => 'nullable|image|max:5120',
             'type' => 'required|in:image,video',
             'video_url' => 'nullable|string',
-            'order' => 'required|integer|min:0',
+            'order' => 'required|integer|min:0|unique:media_highlights,order,' . $highlight->id,
         ]);
 
         $validated['is_active'] = $request->has('is_active');

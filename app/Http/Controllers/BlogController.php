@@ -29,14 +29,22 @@ class BlogController extends Controller
             'category_id' => 'required|exists:categories,id',
             'title'    => 'required|string|max:255',
             'slug'     => 'nullable|string|max:255',
-            'excerpt'  => 'nullable|string|max:500',
+            'excerpt'  => 'required|string|max:500',
             'body'     => 'required|string',
             'tags'     => 'nullable|string|max:255',
-            'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'image'    => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'is_active'=> 'boolean',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:500',
             'meta_keywords' => 'nullable|string|max:255',
+        ], [
+            'category_id.required' => 'Please select a category for this blog post.',
+            'title.required' => 'The blog title is required.',
+            'excerpt.required' => 'A short summary (excerpt) is required for the blog listing page.',
+            'body.required' => 'The blog content body cannot be empty.',
+            'image.required' => 'A feature image is required for the blog post.',
+            'image.image' => 'The file uploaded must be an image.',
+            'image.max' => 'The image size must not exceed 5MB.',
         ]);
 
         $data = $request->only(['category_id', 'title', 'excerpt', 'body', 'tags', 'meta_title', 'meta_description', 'meta_keywords']);
@@ -68,7 +76,7 @@ class BlogController extends Controller
             'category_id' => 'required|exists:categories,id',
             'title'    => 'required|string|max:255',
             'slug'     => 'nullable|string|max:255',
-            'excerpt'  => 'nullable|string|max:500',
+            'excerpt'  => 'required|string|max:500',
             'body'     => 'required|string',
             'tags'     => 'nullable|string|max:255',
             'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
@@ -76,6 +84,13 @@ class BlogController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:500',
             'meta_keywords' => 'nullable|string|max:255',
+        ], [
+            'category_id.required' => 'Please select a category for this blog post.',
+            'title.required' => 'The blog title is required.',
+            'excerpt.required' => 'A short summary (excerpt) is required for the blog listing page.',
+            'body.required' => 'The blog content body cannot be empty.',
+            'image.image' => 'The file uploaded must be an image.',
+            'image.max' => 'The image size must not exceed 5MB.',
         ]);
 
         $data = $request->only(['category_id', 'title', 'excerpt', 'body', 'tags', 'meta_title', 'meta_description', 'meta_keywords']);

@@ -24,7 +24,7 @@ class MediaPodcastController extends Controller
             'image' => 'nullable|image|max:5120',
             'spotify_link' => 'nullable|url',
             'apple_link' => 'nullable|url',
-            'order' => 'nullable|integer|min:0',
+            'order' => 'nullable|integer|min:0|unique:media_podcasts,order',
         ]);
 
         $validated['is_active'] = $request->has('is_active');
@@ -52,7 +52,7 @@ class MediaPodcastController extends Controller
             'image' => 'nullable|image|max:5120',
             'spotify_link' => 'nullable|url',
             'apple_link' => 'nullable|url',
-            'order' => 'required|integer|min:0',
+            'order' => 'required|integer|min:0|unique:media_podcasts,order,' . $podcast->id,
         ]);
 
         $validated['is_active'] = $request->has('is_active');

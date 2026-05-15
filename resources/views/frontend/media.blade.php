@@ -39,49 +39,24 @@
         <p>Tune in to insightful conversations on fertility, wellness, and medical breakthroughs.</p>
       </div>
 
-      <div class="podcast-grid reveal delay-1">
-        @forelse($podcasts as $podcast)
-            <div class="podcast-row-card">
-              <div class="podcast-img">
-                <img src="{{ asset('storage/' . ($podcast->image ?? 'media/img1.avif')) }}" alt="{{ $podcast->title }}">
-                @if($podcast->spotify_link || $podcast->apple_link)
-                <a href="{{ $podcast->spotify_link ?? $podcast->apple_link }}" target="_blank" class="play-btn">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </a>
-                @endif
-              </div>
-              <div class="podcast-info">
-                <div class="podcast-meta-top">
-                  <span class="media-tag">{{ $podcast->episode_no }}</span>
-                  <span class="media-duration">{{ $podcast->duration }}</span>
-                </div>
-                <h3>{{ $podcast->title }}</h3>
-                <div class="podcast-description-wrap">
-                  <p class="podcast-desc" data-full-text="{{ $podcast->description }}">
-                    {{ Str::limit($podcast->description, 120) }}
-                  </p>
-                  @if(strlen($podcast->description) > 120)
-                    <button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
-                  @endif
-                </div>
-                <div class="d-flex gap-3">
-                    @if($podcast->spotify_link)
-                        <a href="{{ $podcast->spotify_link }}" target="_blank" class="listen-link">YouTube &rarr;</a>
-                    @endif
-                    @if($podcast->apple_link)
-                        <a href="{{ $podcast->apple_link }}" target="_blank" class="listen-link">Apple &rarr;</a>
-                    @endif
-                </div>
-              </div>
-            </div>
-        @empty
+      <div class="podcast-grid reveal delay-1" id="podcastGrid">
+        @if($podcasts->isEmpty())
             <div class="col-12 text-center p-40">
                 <p class="text-secondary">No podcast episodes available yet.</p>
             </div>
-        @endforelse
+        @else
+            @include('frontend.partials.podcast_cards', ['podcasts' => $podcasts])
+        @endif
       </div>
+
+      <!-- Pagination for Podcasts -> Load More -->
+      @if($podcasts->hasMorePages())
+      <div class="media-pagination reveal delay-2" id="podcastLoadMoreContainer" style="margin-top: 3rem;">
+          <button class="btn-outline load-more-btn" data-target="podcastGrid" data-container="podcastLoadMoreContainer" data-param="podcasts_page" data-next-page="{{ $podcasts->currentPage() + 1 }}" style="padding: 12px 30px; font-weight: 600; cursor: pointer;">
+              Load More Episodes
+          </button>
+      </div>
+      @endif
     </div>
   </section>
 
@@ -93,24 +68,24 @@
         <p>Celebrating motherhood, patient milestones, and our dedicated team's outreach programs.</p>
       </div>
 
-      <div class="events-gallery reveal delay-1">
-        @forelse($events as $event)
-            <a href="{{ $event->link ?? '#' }}" class="event-gallery-item">
-              <img src="{{ asset('storage/' . ($event->image ?? 'media/img3.avif')) }}" alt="{{ $event->title }}">
-              <div class="event-gallery-overlay">
-                <div class="event-gallery-content">
-                  <span class="event-date">{{ $event->date_text }}</span>
-                  <h3>{{ $event->title }}</h3>
-                  <p>{{ $event->description }}</p>
-                </div>
-              </div>
-            </a>
-        @empty
+      <div class="events-gallery reveal delay-1" id="eventGrid">
+        @if($events->isEmpty())
             <div class="col-12 text-center p-40">
                 <p class="text-secondary">No events to display at the moment.</p>
             </div>
-        @endforelse
+        @else
+            @include('frontend.partials.event_cards', ['events' => $events])
+        @endif
       </div>
+      
+      <!-- Pagination for Events -> Load More -->
+      @if($events->hasMorePages())
+      <div class="media-pagination reveal delay-2" id="eventLoadMoreContainer" style="margin-top: 3rem;">
+          <button class="btn-outline load-more-btn" data-target="eventGrid" data-container="eventLoadMoreContainer" data-param="events_page" data-next-page="{{ $events->currentPage() + 1 }}" style="padding: 12px 30px; font-weight: 600; cursor: pointer;">
+              Load More Events
+          </button>
+      </div>
+      @endif
     </div>
   </section>
 
@@ -122,25 +97,75 @@
         <p>A visual collection of clinical recognitions, press releases, and news appearances.</p>
       </div>
 
-      <div class="highlights-gallery reveal delay-1">
-        @forelse($highlights as $highlight)
-            <div class="h-gallery-item" @if($highlight->type == 'image') onclick="openImageLightbox(this)" @else onclick="window.open('{{ $highlight->video_url }}', '_blank')" @endif style="cursor: pointer;">
-              <img src="{{ asset('storage/' . ($highlight->image ?? 'media/img6.avif')) }}" alt="{{ $highlight->title }}">
-              <div class="h-gallery-overlay">
-                <span>{{ $highlight->title }}</span>
-                @if($highlight->type == 'video')
-                    <iconify-icon icon="solar:play-circle-bold" class="ms-2" style="font-size: 20px; vertical-align: middle;"></iconify-icon>
-                @endif
-              </div>
-            </div>
-        @empty
+      <div class="highlights-gallery reveal delay-1" id="highlightGrid">
+        @if($highlights->isEmpty())
             <div class="col-12 text-center p-40">
                 <p class="text-secondary">No media highlights available.</p>
             </div>
-        @endforelse
+        @else
+            @include('frontend.partials.highlight_cards', ['highlights' => $highlights])
+        @endif
       </div>
+
+      <!-- Pagination -> Load More -->
+      @if($highlights->hasMorePages())
+      <div class="media-pagination reveal delay-2" id="highlightLoadMoreContainer" style="margin-top: 3rem;">
+          <button class="btn-outline load-more-btn" data-target="highlightGrid" data-container="highlightLoadMoreContainer" data-param="highlights_page" data-next-page="{{ $highlights->currentPage() + 1 }}" style="padding: 12px 30px; font-weight: 600; cursor: pointer;">
+              Load More Highlights
+          </button>
+      </div>
+      @endif
     </div>
   </section>
+
+  <style>
+    /* Pagination Styles */
+    .media-pagination {
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .media-pagination .pagination {
+      display: flex;
+      gap: 0.8rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    .media-pagination .page-item .page-link {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--midnight);
+      border: 1px solid var(--card-border);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .media-pagination .page-item.active .page-link {
+      background: var(--midnight);
+      color: #fff;
+      border-color: var(--midnight);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .media-pagination .page-item:hover .page-link {
+      background: var(--blue-light);
+      transform: translateY(-2px);
+    }
+
+    .media-pagination .page-item.disabled .page-link {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
   
   <!-- IMAGE LIGHTBOX (Reusable from Gallery) -->
   <div class="image-lightbox-sg" id="imageLightbox">
@@ -166,9 +191,21 @@
     /* Gallery Styles */
     .highlights-gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       margin-top: 2rem;
+    }
+
+    @media (max-width: 991px) {
+      .highlights-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .highlights-gallery {
+        grid-template-columns: 1fr;
+      }
     }
 
     .h-gallery-item {
@@ -407,8 +444,14 @@
     /* Podcasts Grid / Row Setup */
     .podcast-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 2.5rem;
+    }
+
+    @media (max-width: 991px) {
+      .podcast-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .podcast-row-card {
@@ -536,8 +579,20 @@
     /* Events Gallery Upgrade */
     .events-gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
+    }
+
+    @media (max-width: 991px) {
+      .events-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .events-gallery {
+        grid-template-columns: 1fr;
+      }
     }
 
     .event-gallery-item {
@@ -662,6 +717,7 @@
             btn.innerText = 'READ LESS';
         }
     }
+
   </script>
 
 @endsection

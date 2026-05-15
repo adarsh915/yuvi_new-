@@ -16,7 +16,9 @@
                     $yesCount = 0;
                     $noCount = 0;
                     if (is_array($submission->answers_json)) {
-                        foreach ($submission->answers_json as $ans) {
+                        foreach ($submission->answers_json as $key => $val) {
+                            // New format check
+                            $ans = is_array($val) ? ($val['answer'] ?? '') : $val;
                             if ($ans === 'Yes')
                                 $yesCount++;
                             if ($ans === 'No')
@@ -79,13 +81,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($submission->answers_json as $q_id => $answer)
+                            @foreach($submission->answers_json as $key => $val)
                                 @php
-                                    $question = \App\Models\QuizQuestion::where('id', $q_id)->first();
+                                    if (is_array($val)) {
+                                        // New format
+                                        $qText = $val['question'] ?? 'Unknown';
+                                        $answer = $val['answer'] ?? '';
+                                    } else {
+                                        // Old format
+                                        $question = \App\Models\QuizQuestion::find($key);
+                                        $qText = $question->question ?? 'Question Deleted';
+                                        $answer = $val;
+                                    }
                                 @endphp
                                 <tr>
                                     <td>
-                                        <div class="text-sm fw-medium">{{ $question->question ?? 'Question Deleted' }}</div>
+                                        <div class="text-sm fw-medium">{{ $qText }}</div>
                                     </td>
                                     <td>
                                         <span

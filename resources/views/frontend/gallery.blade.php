@@ -14,19 +14,24 @@
   </header>
 
   <section class="gallery-wrapper-sg">
-    <div class="gallery-grid-sg">
-      @foreach($galleries as $index => $gallery)
-      <div class="gallery-item-sg reveal {{ $index % 3 == 1 ? 'delay-1' : ($index % 3 == 2 ? 'delay-2' : '') }}" onclick="openImageLightbox(this)">
-        <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}" loading="lazy">
-        <div class="gallery-overlay-sg">
-          <div class="overlay-content-sg">
-            <span>{{ $gallery->subtitle }}</span>
-            <h3>{{ $gallery->title }}</h3>
-          </div>
+    <div class="gallery-grid-sg" id="galleryGrid">
+      @if($galleries->isEmpty())
+        <div class="col-12 text-center p-40" style="grid-column: 1 / -1;">
+            <p class="text-secondary">No gallery items available at the moment.</p>
         </div>
-      </div>
-      @endforeach
+      @else
+        @include('frontend.partials.gallery_cards', ['galleries' => $galleries])
+      @endif
     </div>
+
+    <!-- Pagination -> Load More -->
+    @if($galleries->hasMorePages())
+    <div class="gallery-pagination reveal delay-2" id="galleryLoadMoreContainer" style="display: flex; justify-content: center; margin-top: 4rem;">
+        <button class="btn-outline load-more-btn" data-target="galleryGrid" data-container="galleryLoadMoreContainer" data-param="page" data-next-page="{{ $galleries->currentPage() + 1 }}" style="padding: 12px 30px; font-weight: 600; cursor: pointer;">
+            Load More Gallery
+        </button>
+    </div>
+    @endif
   </section>
 
   <!-- IMAGE LIGHTBOX -->

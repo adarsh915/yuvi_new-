@@ -67,7 +67,7 @@
                 @endif
                 <p class="text-xs text-secondary-light mt-12">
                     <iconify-icon icon="solar:info-circle-outline"></iconify-icon>
-                    Upload a high-resolution image for the homepage banner. Recommended ratio: 16:9.
+                    Upload a high-resolution image for the homepage banner. Recommended size: 1600 x 694 pixels.
                 </p>
             </div>
         </div>

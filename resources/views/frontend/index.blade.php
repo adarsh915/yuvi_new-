@@ -244,7 +244,7 @@
     /* Mobile Devices */
     @media (max-width: 600px) {
       .top-banner-slider-con {
-        height: 27vh;
+        height: 21vh;
       }
 
       .top-banner-nav {
@@ -374,124 +374,124 @@
   </script>
 
   <!-- <section class="hero-box5">
-                                                <div class="hero-glow-1_box5"></div>
-                                                <div class="hero-glow-2_box5"></div>
-                                                <div class="hero-inner-box5">
-                                                  <div class="hero-left-box5 reveal-box5 reveal delay-2">
-                                                    <div class="hero-eyebrow-box5">
-                                                      <span class="hero-eyebrow-dot-box5"></span>
-                                                      Ethical Fertility Care · Ahmedabad
+                                                  <div class="hero-glow-1_box5"></div>
+                                                  <div class="hero-glow-2_box5"></div>
+                                                  <div class="hero-inner-box5">
+                                                    <div class="hero-left-box5 reveal-box5 reveal delay-2">
+                                                      <div class="hero-eyebrow-box5">
+                                                        <span class="hero-eyebrow-dot-box5"></span>
+                                                        Ethical Fertility Care · Ahmedabad
+                                                      </div>
+                                                      <h1>Science, Sensitivity<br>&amp; <em>Ethics</em><br>in Fertility.</h1>
+                                                      <p class="hero-lead-box5">Evidence-based fertility and women's health — designed precisely around you, your hopes,
+                                                        and your future family.</p>
+                                                      <div class="hero-actions-box5">
+                                                        <a href="{{ route('frontend.contact') }}" class="btn-hero-primary">
+                                                          Book Consultation
+                                                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M5 12h14M12 5l7 7-7 7" />
+                                                          </svg>
+                                                        </a>
+                                                        <a href="{{ route('frontend.services') }}" class="btn-hero-ghost">
+                                                          Explore Services
+                                                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M5 12h14M12 5l7 7-7 7" />
+                                                          </svg>
+                                                        </a>
+                                                      </div>
+                                                      <div class="hero-trust-box5">
+                                                                                        <div class="hero-trust-item-box5">
+                                                                                          <div class="hero-trust-icon-box5">
+                                                                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                                              stroke-linecap="round" stroke-linejoin="round">
+                                                                                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                                                            </svg>
+                                                                                          </div>
+                                                                                          Ethics-led practice
+                                                                                        </div>
+                                                                                        <div class="hero-trust-item-box5">
+                                                                                          <div class="hero-trust-icon-box5">
+                                                                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                                              stroke-linecap="round" stroke-linejoin="round">
+                                                                                              <polyline points="9 11 12 14 22 4" />
+                                                                                            </svg>
+                                                                                          </div>
+                                                                                          Evidence-based protocols
+                                                                                        </div>
+                                                                                        <div class="hero-trust-item-box5">
+                                                                                          <div class="hero-trust-icon-box5">
+                                                                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
+                                                                                              stroke-linecap="round" stroke-linejoin="round">
+                                                                                              <circle cx="12" cy="12" r="10" />
+                                                                                              <polyline points="12 6 12 12 16 14" />
+                                                                                            </svg>
+                                                                                          </div>
+                                                                                          24/7 patient support
+                                                                                        </div>
+                                                                                      </div>
                                                     </div>
-                                                    <h1>Science, Sensitivity<br>&amp; <em>Ethics</em><br>in Fertility.</h1>
-                                                    <p class="hero-lead-box5">Evidence-based fertility and women's health — designed precisely around you, your hopes,
-                                                      and your future family.</p>
-                                                    <div class="hero-actions-box5">
-                                                      <a href="{{ route('frontend.contact') }}" class="btn-hero-primary">
-                                                        Book Consultation
-                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                                          stroke-linecap="round" stroke-linejoin="round">
-                                                          <path d="M5 12h14M12 5l7 7-7 7" />
-                                                        </svg>
-                                                      </a>
-                                                      <a href="{{ route('frontend.services') }}" class="btn-hero-ghost">
-                                                        Explore Services
-                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                          stroke-linecap="round" stroke-linejoin="round">
-                                                          <path d="M5 12h14M12 5l7 7-7 7" />
-                                                        </svg>
-                                                      </a>
-                                                    </div>
-                                                    <div class="hero-trust-box5">
-                                                                                      <div class="hero-trust-item-box5">
-                                                                                        <div class="hero-trust-icon-box5">
-                                                                                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                                                                          </svg>
-                                                                                        </div>
-                                                                                        Ethics-led practice
-                                                                                      </div>
-                                                                                      <div class="hero-trust-item-box5">
-                                                                                        <div class="hero-trust-icon-box5">
-                                                                                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                                                            <polyline points="9 11 12 14 22 4" />
-                                                                                          </svg>
-                                                                                        </div>
-                                                                                        Evidence-based protocols
-                                                                                      </div>
-                                                                                      <div class="hero-trust-item-box5">
-                                                                                        <div class="hero-trust-icon-box5">
-                                                                                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(79,132,174,0.9)" stroke-width="2.5"
-                                                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                                                            <circle cx="12" cy="12" r="10" />
-                                                                                            <polyline points="12 6 12 12 16 14" />
-                                                                                          </svg>
-                                                                                        </div>
-                                                                                        24/7 patient support
-                                                                                      </div>
-                                                                                    </div>
-                                                  </div>
 
-                                                  <div class="hero-right-box5 reveal delay-2">
-                                                    <div class="doctor-card-box5">
-                                                      <img
-                                                        src="https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/post_attachments/uploads/2022/10/MinistryOfMemories_Headshots-13_websize-1-min-1665749722.jpg"
-                                                        alt="Dr. Yuvraj Jadeja">
-                                                      <div class="doctor-card-overlay-box5"></div>
-                                                      <div class="doctor-card-info-box5">
-                                                        <div class="doctor-card-name-box5">Dr. Yuvraj Jadeja</div>
-                                                        <div class="doctor-card-role-box5">Reproductive Medicine Specialist</div>
+                                                    <div class="hero-right-box5 reveal delay-2">
+                                                      <div class="doctor-card-box5">
+                                                        <img
+                                                          src="https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/post_attachments/uploads/2022/10/MinistryOfMemories_Headshots-13_websize-1-min-1665749722.jpg"
+                                                          alt="Dr. Yuvraj Jadeja">
+                                                        <div class="doctor-card-overlay-box5"></div>
+                                                        <div class="doctor-card-info-box5">
+                                                          <div class="doctor-card-name-box5">Dr. Yuvraj Jadeja</div>
+                                                          <div class="doctor-card-role-box5">Reproductive Medicine Specialist</div>
+                                                        </div>
+                                                      </div>
+                                                      <div class="hero-stats-row-box5">
+                                                        <div class="hero-stat-box5"><span class="hero-stat-num-box5">15+</span><span class="hero-stat-label-box5">Years
+                                                            Experience</span></div>
+                                                        <div class="hero-stat-box5"><span class="hero-stat-num-box5">98%</span><span
+                                                            class="hero-stat-label-box5">Satisfaction</span></div>
+                                                        <div class="hero-stat-box5"><span class="hero-stat-num-box5">5K+</span><span
+                                                            class="hero-stat-label-box5">Families Helped</span></div>
                                                       </div>
                                                     </div>
-                                                    <div class="hero-stats-row-box5">
-                                                      <div class="hero-stat-box5"><span class="hero-stat-num-box5">15+</span><span class="hero-stat-label-box5">Years
-                                                          Experience</span></div>
-                                                      <div class="hero-stat-box5"><span class="hero-stat-num-box5">98%</span><span
-                                                          class="hero-stat-label-box5">Satisfaction</span></div>
-                                                      <div class="hero-stat-box5"><span class="hero-stat-num-box5">5K+</span><span
-                                                          class="hero-stat-label-box5">Families Helped</span></div>
-                                                    </div>
                                                   </div>
-                                                </div>
-                                              </section> -->
+                                                </section> -->
 
   <!-- TRUST BAND -->
   <!-- <div class="trust-band-1">
-                                                                                      <div class="trust-inner-1">
-                                                                                        <div class="trust-item-1">
-                                                                                          <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                                                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                                                                            </svg></div>
-                                                                                          <div class="trust-text-1"><strong>Ethical Practice</strong><span>No unnecessary procedures</span></div>
+                                                                                        <div class="trust-inner-1">
+                                                                                          <div class="trust-item-1">
+                                                                                            <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                                                              </svg></div>
+                                                                                            <div class="trust-text-1"><strong>Ethical Practice</strong><span>No unnecessary procedures</span></div>
+                                                                                          </div>
+                                                                                          <div class="trust-item-1">
+                                                                                            <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                                                <polyline points="9 11 12 14 22 4" />
+                                                                                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                                                                              </svg></div>
+                                                                                            <div class="trust-text-1"><strong>Evidence-Based</strong><span>Latest clinical protocols</span></div>
+                                                                                          </div>
+                                                                                          <div class="trust-item-1">
+                                                                                            <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                                                <path
+                                                                                                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                                                                              </svg></div>
+                                                                                            <div class="trust-text-1"><strong>Patient-First</strong><span>Compassionate every step</span></div>
+                                                                                          </div>
+                                                                                          <div class="trust-item-1">
+                                                                                            <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                                                <circle cx="12" cy="12" r="10" />
+                                                                                                <polyline points="12 6 12 12 16 14" />
+                                                                                              </svg></div>
+                                                                                            <div class="trust-text-1"><strong>24/7 Support</strong><span>Always here when needed</span></div>
+                                                                                          </div>
                                                                                         </div>
-                                                                                        <div class="trust-item-1">
-                                                                                          <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                                                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                                              <polyline points="9 11 12 14 22 4" />
-                                                                                              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                                                                                            </svg></div>
-                                                                                          <div class="trust-text-1"><strong>Evidence-Based</strong><span>Latest clinical protocols</span></div>
-                                                                                        </div>
-                                                                                        <div class="trust-item-1">
-                                                                                          <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                                                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                                              <path
-                                                                                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                                                                                            </svg></div>
-                                                                                          <div class="trust-text-1"><strong>Patient-First</strong><span>Compassionate every step</span></div>
-                                                                                        </div>
-                                                                                        <div class="trust-item-1">
-                                                                                          <div class="trust-icon-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                                                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                                              <circle cx="12" cy="12" r="10" />
-                                                                                              <polyline points="12 6 12 12 16 14" />
-                                                                                            </svg></div>
-                                                                                          <div class="trust-text-1"><strong>24/7 Support</strong><span>Always here when needed</span></div>
-                                                                                        </div>
-                                                                                      </div>
-                                                                                    </div> -->
+                                                                                      </div> -->
 
   <!-- VALUE SCROLL SECTION -->
 

@@ -217,21 +217,78 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ── CONSULT TABS HANDLED IN PAGE SPECIFIC SCRIPTS ──
+    // ── UNIVERSAL LOAD MORE ──
+    const loadMoreBtns = document.querySelectorAll('.load-more-btn');
+    if(loadMoreBtns.length > 0) {
+        loadMoreBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetGridId = this.getAttribute('data-target');
+                const containerId = this.getAttribute('data-container');
+                const paramName = this.getAttribute('data-param');
+                const nextPage = this.getAttribute('data-next-page');
+                
+                const grid = document.getElementById(targetGridId);
+                const originalText = this.innerHTML;
+                
+                this.innerHTML = 'Loading...';
+                this.style.opacity = '0.7';
+                this.disabled = true;
 
-    // ── FORM SUBMIT HANDLED IN PAGE SPECIFIC SCRIPTS ──
+                // Make sure to preserve existing query parameters
+                const url = new URL(window.location.href);
+                url.searchParams.set(paramName, nextPage);
+
+                fetch(url.toString(), {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.html) {
+                        grid.insertAdjacentHTML('beforeend', data.html);
+                        
+                        // Force reveal animations for newly added items
+                        setTimeout(() => {
+                            const newReveals = grid.querySelectorAll('.reveal:not(.visible)');
+                            newReveals.forEach((el, index) => {
+                                setTimeout(() => {
+                                    el.classList.add('visible');
+                                }, index * 70);
+                            });
+                        }, 50);
+                    }
+                    
+                    if(data.has_more) {
+                        this.setAttribute('data-next-page', parseInt(nextPage) + 1);
+                        this.innerHTML = originalText;
+                        this.style.opacity = '1';
+                        this.disabled = false;
+                    } else {
+                        const container = document.getElementById(containerId);
+                        if(container) container.style.display = 'none';
+                        this.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading more items:', error);
+                    this.innerHTML = 'Error. Try Again.';
+                    this.style.opacity = '1';
+                    this.disabled = false;
+                });
+            });
+        });
+    }
 
 });
 // -- PRELOADER HIDE -- 
 window.addEventListener('load', () => { 
     const preloader = document.getElementById('preloader'); 
     if (preloader) { 
-        // Force preloader to stay for at least 1.5 seconds after load
-        setTimeout(() => {
-            preloader.classList.add('fade-out'); 
-            setTimeout(() => { 
-                preloader.style.display = 'none'; 
-            }, 600); 
-        }, 800); 
+        preloader.classList.add('fade-out'); 
+        setTimeout(() => { 
+            preloader.style.display = 'none'; 
+        }, 600); 
     } 
 });

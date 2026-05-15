@@ -173,7 +173,8 @@
                                         $yesCount = 0;
                                         $noCount = 0;
                                         if (is_array($s->answers_json)) {
-                                            foreach ($s->answers_json as $ans) {
+                                            foreach ($s->answers_json as $val) {
+                                                $ans = is_array($val) ? ($val['answer'] ?? '') : $val;
                                                 if ($ans === 'Yes') $yesCount++;
                                                 if ($ans === 'No') $noCount++;
                                             }

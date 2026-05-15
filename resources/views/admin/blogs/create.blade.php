@@ -30,20 +30,13 @@
                         reader.onload = function(e) {
                             $("#imgPreview").attr("src", e.target.result).show();
                             $("#imgPlaceholder").hide();
-                            $("#removeImg").show();
+                            $("#imgOverlay").show();
                         };
                         reader.readAsDataURL(file);
                     }
                 });
 
-                $("#removeImg").on("click", function() {
-                    $("#feature_image").val("");
-                    $("#imgPreview").hide();
-                    $("#imgPlaceholder").show();
-                    $(this).hide();
-                });
-
-                $("#imageDropZone").on("click", function() {
+                $("#changeImgBtn").on("click", function() {
                     $("#feature_image").click();
                 });
             });
@@ -196,6 +189,9 @@
     }
 
     textarea.form-control {
+        resize: vertical;
+        min-height: 90px;
+    }
 
     .field-hint {
         font-size: 11px;
@@ -204,68 +200,80 @@
         display: block;
     }
 
-    /* ── Image Drop Zone ── */
-    .img-drop-zone {
-        border: 2px dashed #dee2e6;
+    /* ── Image Box ── */
+    .img-edit-box {
         border-radius: 12px;
-        padding: 24px 16px;
-        text-align: center;
-        cursor: pointer;
-        transition: all .2s ease;
-        background: #f8f9fb;
+        overflow: hidden;
         position: relative;
+        background: #f0f2f5;
+        border: 1px solid #e9ecef;
     }
 
-    .img-drop-zone:hover {
-        border-color: #86b7fe;
-        background: #f0f7ff;
-    }
-
-    .img-drop-zone .dz-icon {
-        font-size: 32px;
-        color: #adb5bd;
-        display: block;
-        margin-bottom: 8px;
-    }
-
-    .img-drop-zone .dz-label {
-        font-size: 12.5px;
-        color: #6c757d;
-        font-weight: 500;
-    }
-
-    .img-drop-zone .dz-sub {
-        font-size: 11px;
-        color: #adb5bd;
-        margin-top: 4px;
-    }
-
-    #imgPreview {
+    .img-edit-box img#imgPreview {
         width: 100%;
-        height: 160px;
+        height: 170px;
         object-fit: cover;
-        border-radius: 8px;
         display: none;
     }
 
-    #imgPlaceholder { pointer-events: none; }
-
-    #removeImg {
-        display: none;
+    .img-edit-box .img-overlay {
         position: absolute;
-        top: 8px;
-        right: 8px;
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        background: rgba(220,53,69,.85);
-        border: none;
-        color: #fff;
-        font-size: 13px;
-        cursor: pointer;
+        inset: 0;
+        background: rgba(0, 0, 0, .45);
         display: none;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .img-edit-box:hover .img-overlay {
+        display: flex;
+    }
+
+    #changeImgBtn {
+        background: rgba(255, 255, 255, .9);
+        border: none;
+        border-radius: 8px;
+        padding: 7px 14px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: #1a1a2e;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: background .15s;
+    }
+
+    #changeImgBtn:hover {
+        background: #fff;
+    }
+
+    .img-no-image {
+        width: 100%;
+        height: 170px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #adb5bd;
+        cursor: pointer;
+        transition: background .2s;
+    }
+
+    .img-no-image:hover {
+        background: #e9ecef;
+    }
+
+    .img-no-image iconify-icon {
+        font-size: 36px;
+    }
+
+    .img-no-image span {
+        font-size: 12px;
+        font-weight: 500;
     }
 
     /* ── Publish Toggle ── */
@@ -373,6 +381,10 @@
     }
 
     .note-toolbar { background: #f8f9fb !important; border-bottom: 1px solid #e9ecef !important; }
+
+    .invalid-feedback { display:block; font-size:11px; color:#dc3545; margin-top:4px; font-weight:500; }
+    .form-control.is-invalid, .form-select.is-invalid { border-color:#dc3545 !important; background-image:none !important; }
+    .img-drop-zone.is-invalid { border-color: #dc3545 !important; background-color: #fff8f8; }
 </style>
 
 @section('content')
@@ -387,19 +399,9 @@
     </a>
 </div>
 
-@if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show mb-24" role="alert">
-        <strong>Please fix the following errors:</strong>
-        <ul class="mb-0 mt-1">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
 
-<form action="{{ route('admin.blogs.store') }}" method="POST" enctype="multipart/form-data">
+
+<form action="{{ route('admin.blogs.store') }}" method="POST" enctype="multipart/form-data" novalidate>
     @csrf
     <div class="blog-create-wrap">
 
@@ -416,8 +418,9 @@
                 <div class="panel-card__body">
                     <div class="field-group">
                         <label class="field-label" for="blog_title">Post Title <span class="req">*</span></label>
-                        <input type="text" id="blog_title" name="title" class="form-control"
+                        <input type="text" id="blog_title" name="title" class="form-control @error('title') is-invalid @enderror"
                             placeholder="Enter a compelling post title…" value="{{ old('title') }}" required>
+                        @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="field-group">
@@ -432,13 +435,15 @@
 
                     <div class="field-group">
                         <label class="field-label" for="excerpt">Excerpt / Summary <span class="req">*</span></label>
-                        <textarea name="excerpt" id="excerpt" rows="3" class="form-control"
+                        <textarea name="excerpt" id="excerpt" rows="3" class="form-control @error('excerpt') is-invalid @enderror"
                             placeholder="A short, compelling summary of this post (shown on listing pages)…" required>{{ old('excerpt') }}</textarea>
+                        @error('excerpt')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="field-group">
                         <label class="field-label">Post Body <span class="req">*</span></label>
-                        <textarea name="body" id="body" required>{{ old('body') }}</textarea>
+                        <textarea name="body" id="body" class="@error('body') is-invalid @enderror" required>{{ old('body') }}</textarea>
+                        @error('body')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
             </div>
@@ -460,24 +465,27 @@
                     {{-- Feature Image --}}
                     <div class="field-group">
                         <label class="field-label">Feature Image <span class="req">*</span></label>
-                        <input type="file" name="image" id="feature_image" accept="image/*" required style="display:none;">
-                        <div id="imageDropZone" class="img-drop-zone">
-                            <button type="button" id="removeImg">
-                                <iconify-icon icon="solar:close-outline"></iconify-icon>
-                            </button>
+                        <input type="file" name="image" id="feature_image" accept="image/*" style="display:none;">
+                        <div class="img-edit-box @error('image') is-invalid @enderror">
+                            <div class="img-no-image" id="imgPlaceholder" onclick="document.getElementById('feature_image').click()">
+                                <iconify-icon icon="solar:gallery-add-outline"></iconify-icon>
+                                <span>Click to upload image</span>
+                            </div>
                             <img id="imgPreview" src="" alt="Preview">
-                            <div id="imgPlaceholder">
-                                <iconify-icon icon="solar:gallery-add-outline" class="dz-icon"></iconify-icon>
-                                <div class="dz-label">Click to upload image</div>
-                                <div class="dz-sub">PNG, JPG, WEBP, SVG · max 5 MB</div>
+                            <div class="img-overlay" id="imgOverlay">
+                                <button type="button" id="changeImgBtn">
+                                    <iconify-icon icon="solar:camera-outline"></iconify-icon> Change Image
+                                </button>
                             </div>
                         </div>
+                        @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <span class="field-hint"><iconify-icon icon="solar:info-circle-outline"></iconify-icon> Recommended Size: 800x550px</span>
                     </div>
 
                     {{-- Category --}}
                     <div class="field-group">
                         <label class="field-label" for="category_id">Category <span class="req">*</span></label>
-                        <select name="category_id" id="category_id" class="form-select" required>
+                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
                             <option value="" disabled {{ old('category_id') == '' ? 'selected' : '' }}>— Select Category —</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -485,6 +493,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        @error('category_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     {{-- Tags --}}

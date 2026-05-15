@@ -44,6 +44,9 @@
 .status-pill.published{background:#d4edda;color:#155724;}
 .status-pill.draft{background:#fff3cd;color:#856404;}
 .status-pill .dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;}
+
+.invalid-feedback { display:block; font-size:11px; color:#dc3545; margin-top:4px; font-weight:500; }
+.form-control.is-invalid, .form-select.is-invalid { border-color:#dc3545 !important; background-image:none !important; }
 </style>
 <div class="d-flex align-items-center justify-content-between mb-24">
   <div>
@@ -60,22 +63,9 @@
     </a>
   </div>
 </div>
-@if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show mb-24 radius-12" role="alert">
-        <div class="d-flex align-items-center gap-2">
-            <iconify-icon icon="solar:danger-circle-outline" style="font-size: 20px;"></iconify-icon>
-            <strong>Validation Error</strong>
-        </div>
-        <ul class="mb-0 mt-8 text-sm">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
 
-<form action="{{ route('admin.services.update', $service->id) }}" method="POST" enctype="multipart/form-data">
+
+<form action="{{ route('admin.services.update', $service->id) }}" method="POST" enctype="multipart/form-data" novalidate>
     @csrf
     @method('PUT')
     
@@ -92,7 +82,8 @@
                     <div class="row gy-28">
                         <div class="col-12">
                             <label class="svc-field-label">Service Title <span class="req">*</span></label>
-                            <input type="text" id="service_title" name="title" class="form-control radius-10" value="{{ old('title', $service->title) }}" placeholder="e.g., In-Vitro Fertilization (IVF)" required>
+                            <input type="text" id="service_title" name="title" class="form-control radius-10 @error('title') is-invalid @enderror" value="{{ old('title', $service->title) }}" placeholder="e.g., In-Vitro Fertilization (IVF)" required>
+                            @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-12">
                             <label class="svc-field-label">Slug / URL Path</label>
@@ -115,11 +106,13 @@
                     <div class="row gy-24">
                         <div class="col-12">
                             <label class="svc-field-label">The Clinical Approach <span class="req">*</span></label>
-                            <textarea name="approach_text" id="approach_text">{{ old('approach_text', $service->approach_text) }}</textarea>
+                            <textarea name="approach_text" id="approach_text" class="@error('approach_text') is-invalid @enderror">{{ old('approach_text', $service->approach_text) }}</textarea>
+                            @error('approach_text')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-12">
                             <label class="svc-field-label">Safety & Ethics Standards <span class="req">*</span></label>
-                            <textarea name="safety_text" id="safety_text">{{ old('safety_text', $service->safety_text) }}</textarea>
+                            <textarea name="safety_text" id="safety_text" class="@error('safety_text') is-invalid @enderror">{{ old('safety_text', $service->safety_text) }}</textarea>
+                            @error('safety_text')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
                 </div>
@@ -216,7 +209,7 @@
                         </div>
                         <div class="col-12">
                             <label class="svc-field-label">Clinical Category <span class="req">*</span></label>
-                            <select name="service_category_id" class="form-select radius-10" required>
+                            <select name="service_category_id" class="form-select radius-10 @error('service_category_id') is-invalid @enderror" required>
                                 <option value="">Select Category</option>
                                 @foreach($categories as $cat)
                                     <option value="{{ $cat->id }}" {{ old('service_category_id', $service->service_category_id) == $cat->id ? 'selected' : '' }}>
@@ -224,10 +217,12 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('service_category_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-12">
                             <label class="svc-field-label">Category Badge Text <span class="req">*</span></label>
-                            <input type="text" name="category_tag" class="form-control radius-10" value="{{ old('category_tag', $service->category_tag) }}" placeholder="e.g., FERTILITY" required>
+                            <input type="text" name="category_tag" class="form-control radius-10 @error('category_tag') is-invalid @enderror" value="{{ old('category_tag', $service->category_tag) }}" placeholder="e.g., FERTILITY" required>
+                            @error('category_tag')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             <span style="font-size:11px;color:#94a3b8;margin-top:6px;display:block;">Short tag shown on cards (usually caps)</span>
                         </div>
                         <div class="col-12">
@@ -243,7 +238,8 @@
                         </div>
                         <div class="col-12">
                             <label class="svc-field-label">Display Order</label>
-                            <input type="number" name="order" class="form-control radius-10" value="{{ old('order', $service->order) }}">
+                            <input type="number" name="order" class="form-control radius-10 @error('order') is-invalid @enderror" value="{{ old('order', $service->order) }}">
+                            @error('order')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
                 </div>
@@ -296,19 +292,21 @@
                         <div class="col-12">
                             <label class="svc-field-label">Thumbnail Image</label>
                             <input type="file" id="listing_file" name="listing_image" accept="image/*" style="display:none;">
-                            <div class="img-thumb-wrap" style="height: 110px;">
+                            <div class="img-thumb-wrap @error('listing_image') border-danger @enderror" style="height: 110px;">
                                 <img id="listing_preview" src="{{ $service->listing_image ? asset('storage/' . $service->listing_image) : 'https://placehold.co/600x400/f8f9fb/adb5bd?text=No+Thumbnail' }}" alt="">
                                 <div class="img-change-overlay"><button type="button" class="img-change-btn" onclick="document.getElementById('listing_file').click()"><iconify-icon icon="solar:camera-outline"></iconify-icon> Change</button></div>
                             </div>
+                            @error('listing_image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             <div id="listing_badge" class="mt-8 text-success text-xs fw-bold" style="display:none;"><iconify-icon icon="solar:check-circle-outline"></iconify-icon> New selection ready</div>
                         </div>
                         <div class="col-12">
                             <label class="svc-field-label">Hero Banner Image</label>
                             <input type="file" id="hero_file" name="hero_image" accept="image/*" style="display:none;">
-                            <div class="img-thumb-wrap" style="height: 110px;">
+                            <div class="img-thumb-wrap @error('hero_image') border-danger @enderror" style="height: 110px;">
                                 <img id="hero_preview" src="{{ $service->hero_image ? asset('storage/' . $service->hero_image) : 'https://placehold.co/1200x600/f8f9fb/adb5bd?text=No+Hero+Banner' }}" alt="">
                                 <div class="img-change-overlay"><button type="button" class="img-change-btn" onclick="document.getElementById('hero_file').click()"><iconify-icon icon="solar:camera-outline"></iconify-icon> Change</button></div>
                             </div>
+                            @error('hero_image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             <div id="hero_badge" class="mt-8 text-success text-xs fw-bold" style="display:none;"><iconify-icon icon="solar:check-circle-outline"></iconify-icon> New selection ready</div>
                         </div>
                     </div>
@@ -329,7 +327,8 @@
                         </div>
                         <div class="col-12">
                             <label class="svc-field-label">Hero Lead Text <span class="req">*</span></label>
-                            <textarea name="hero_lead" rows="2" class="form-control radius-10" placeholder="A strong opening headline for the hero section..." required>{{ old('hero_lead', $service->hero_lead) }}</textarea>
+                            <textarea name="hero_lead" rows="2" class="form-control radius-10 @error('hero_lead') is-invalid @enderror" placeholder="A strong opening headline for the hero section..." required>{{ old('hero_lead', $service->hero_lead) }}</textarea>
+                            @error('hero_lead')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-12">
                             <label class="svc-field-label">Meta Title</label>

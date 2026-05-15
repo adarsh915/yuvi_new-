@@ -47,6 +47,30 @@
         justify-content: center;
         gap: 6px;
     }
+    /* ── Toggle Row ── */
+    .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 14px;
+        background: #f8f9fb;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all .15s;
+        margin: 0;
+        height: 42px;
+    }
+    .toggle-row:hover { background: #fff; border-color: #dee2e6; }
+    .toggle-row .tr-label { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+    .toggle-row .form-check { padding: 0; margin: 0; display: flex; align-items: center; }
+    .toggle-row .form-check-input {
+        width: 38px !important;
+        height: 20px !important;
+        cursor: pointer;
+        margin: 0 !important;
+        flex-shrink: 0;
+    }
 </style>
 
 <div class="row gy-4">
@@ -77,9 +101,17 @@
                     <label class="form-label mb-8">Video URL (If Video)</label>
                     <input type="text" name="video_url" class="form-control" placeholder="YouTube/Vimeo link">
                 </div>
-                <div class="mb-20 d-flex align-items-center gap-2">
-                    <input type="checkbox" name="is_active" id="is_active" class="form-check-input" checked>
-                    <label class="form-label mb-0" for="is_active">Active</label>
+                <div class="mb-20">
+                    <label class="form-label mb-8">Display Order</label>
+                    <input type="number" name="order" class="form-control" placeholder="Optional" min="0">
+                </div>
+                <div class="mb-20">
+                    <label class="toggle-row" for="is_active">
+                        <span class="tr-label">Active Status</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" checked>
+                        </div>
+                    </label>
                 </div>
                 <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
                     <iconify-icon icon="solar:check-circle-outline"></iconify-icon>
@@ -206,9 +238,13 @@
                         <label class="form-label mb-8">Order</label>
                         <input type="number" name="order" id="edit_order" class="form-control" min="0">
                     </div>
-                    <div class="mb-20 d-flex align-items-center gap-2">
-                        <input type="checkbox" name="is_active" id="edit_is_active" class="form-check-input">
-                        <label class="form-label mb-0" for="edit_is_active">Active</label>
+                    <div class="mb-20">
+                        <label class="toggle-row" for="edit_is_active">
+                            <span class="tr-label">Active Status</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="is_active" id="edit_is_active" value="1">
+                            </div>
+                        </label>
                     </div>
                 </div>
                 <div class="modal-footer border-top bg-light">

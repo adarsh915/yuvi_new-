@@ -30,10 +30,17 @@ class FrontendController extends Controller
         return view('frontend.about');
     }
 
-    public function blog()
+    public function blog(Request $request)
     {
-        $blogs = \App\Models\Blog::with('category_rel')->where('is_active', true)->orderBy('created_at', 'desc')->get();
+        $blogs = \App\Models\Blog::with('category_rel')->where('is_active', true)->orderBy('created_at', 'desc')->paginate(4);
         
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('frontend.partials.blog_cards', compact('blogs'))->render(),
+                'has_more' => $blogs->hasMorePages()
+            ]);
+        }
+
         // Fetch categories from Category model with active blog counts
         $categories = \App\Models\Category::whereHas('blogs', function($q) {
             $q->where('is_active', true);
@@ -155,9 +162,17 @@ class FrontendController extends Controller
         return view('frontend.faq', compact('faqs', 'categories'));
     }
 
-    public function gallery()
+    public function gallery(Request $request)
     {
-        $galleries = \App\Models\Gallery::where('is_active', true)->orderBy('order')->get();
+        $galleries = \App\Models\Gallery::where('is_active', true)->orderBy('order')->paginate(9);
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('frontend.partials.gallery_cards', compact('galleries'))->render(),
+                'has_more' => $galleries->hasMorePages()
+            ]);
+        }
+
         return view('frontend.gallery', compact('galleries'));
     }
 
@@ -182,8 +197,17 @@ class FrontendController extends Controller
 
         // Optionally compute a local yes count for messaging, but do not store or expose it.
         $yesCount = 0;
-        foreach ($request->answers as $ans) {
+        $snapshot = [];
+        $questions = QuizQuestion::whereIn('id', array_keys($request->answers))->get()->keyBy('id');
+
+        foreach ($request->answers as $questionId => $ans) {
             if ($ans === 'Yes') $yesCount++;
+            
+            $questionText = isset($questions[$questionId]) ? $questions[$questionId]->question : 'Unknown Question';
+            $snapshot[] = [
+                'question' => $questionText,
+                'answer'   => $ans
+            ];
         }
 
         $submission = QuizSubmission::create([
@@ -191,7 +215,7 @@ class FrontendController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'city' => $request->city,
-            'answers_json' => $request->answers,
+            'answers_json' => $snapshot,
         ]);
 
         $resultMsg = '';
@@ -217,17 +241,41 @@ class FrontendController extends Controller
         return view('frontend.service-detail', compact('service', 'allServices', 'settings'));
     }
 
-    public function services()
+    public function services(Request $request)
     {
-        $services = \App\Models\Service::where('is_active', true)->orderBy('order')->get();
+        $services = \App\Models\Service::where('is_active', true)->orderBy('order')->paginate(6);
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('frontend.partials.service_cards', compact('services'))->render(),
+                'has_more' => $services->hasMorePages()
+            ]);
+        }
+
         return view('frontend.services', compact('services'));
     }
 
-    public function successStories()
+    public function successStories(Request $request)
     {
-        $stories = \App\Models\SuccessStory::with('treatmentType')->where('is_active', true)->orderBy('order')->get();
+        $stories = \App\Models\SuccessStory::with('treatmentType')->where('is_active', true)->orderBy('order')->paginate(6);
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('frontend.partials.story_cards', compact('stories'))->render(),
+                'has_more' => $stories->hasMorePages()
+            ]);
+        }
+
         $testimonials = \App\Models\Testimonial::where('is_active', true)->orderBy('order')->get();
-        return view('frontend.success-stories', compact('stories', 'testimonials'));
+        
+        // Get categories and counts for sidebar
+        $categories = \App\Models\TreatmentType::whereHas('stories', function($q) {
+            $q->where('is_active', true);
+        })->withCount(['stories' => function($q) {
+            $q->where('is_active', true);
+        }])->get();
+
+        return view('frontend.success-stories', compact('stories', 'testimonials', 'categories'));
     }
 
     public function team()
@@ -235,11 +283,33 @@ class FrontendController extends Controller
         return view('frontend.team');
     }
 
-    public function media()
+    public function media(Request $request)
     {
-        $podcasts = \App\Models\MediaPodcast::where('is_active', true)->orderBy('order')->get();
-        $events = \App\Models\MediaEvent::where('is_active', true)->orderBy('order')->get();
-        $highlights = \App\Models\MediaHighlight::where('is_active', true)->orderBy('order')->get();
+        $podcasts = \App\Models\MediaPodcast::where('is_active', true)->orderBy('order')->paginate(4, ['*'], 'podcasts_page');
+        
+        if ($request->ajax() && $request->has('podcasts_page')) {
+            return response()->json([
+                'html' => view('frontend.partials.podcast_cards', compact('podcasts'))->render(),
+                'has_more' => $podcasts->hasMorePages()
+            ]);
+        }
+
+        $events = \App\Models\MediaEvent::where('is_active', true)->orderBy('order')->paginate(6, ['*'], 'events_page');
+        if ($request->ajax() && $request->has('events_page')) {
+            return response()->json([
+                'html' => view('frontend.partials.event_cards', compact('events'))->render(),
+                'has_more' => $events->hasMorePages()
+            ]);
+        }
+
+        $highlights = \App\Models\MediaHighlight::where('is_active', true)->orderBy('order')->paginate(6, ['*'], 'highlights_page');
+        if ($request->ajax() && $request->has('highlights_page')) {
+            return response()->json([
+                'html' => view('frontend.partials.highlight_cards', compact('highlights'))->render(),
+                'has_more' => $highlights->hasMorePages()
+            ]);
+        }
+
         $settings = \App\Models\SiteSetting::all()->pluck('value', 'key');
 
         return view('frontend.media', compact('podcasts', 'events', 'highlights', 'settings'));

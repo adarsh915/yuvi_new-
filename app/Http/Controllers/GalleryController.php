@@ -20,6 +20,7 @@ class GalleryController extends Controller
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'order' => 'nullable|integer|min:0|unique:galleries,order',
         ]);
 
         $imagePath = null;
@@ -44,6 +45,7 @@ class GalleryController extends Controller
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'order' => 'required|integer|min:0|unique:galleries,order,' . $gallery->id,
         ]);
 
         $imagePath = $gallery->image;

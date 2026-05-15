@@ -24,14 +24,21 @@ class FaqController extends Controller
             'question' => 'required',
             'answer' => 'required',
             'faq_category_id' => 'nullable|exists:faq_categories,id',
-            'order' => 'nullable|integer|unique:faqs,order',
+            'order' => 'nullable|integer|min:0',
         ]);
+
+        $order = $request->order ?: (Faq::max('order') + 1);
+
+        // Shift if this order is already taken
+        if (Faq::where('order', $order)->exists()) {
+            Faq::where('order', '>=', $order)->increment('order');
+        }
 
         Faq::create([
             'question' => $request->question,
             'answer' => $request->answer,
             'faq_category_id' => $request->faq_category_id,
-            'order' => $request->order ?: (Faq::max('order') + 1),
+            'order' => $order,
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -44,14 +51,22 @@ class FaqController extends Controller
             'question' => 'required',
             'answer' => 'required',
             'faq_category_id' => 'nullable|exists:faq_categories,id',
-            'order' => 'required|integer|unique:faqs,order,' . $faq->id,
+            'order' => 'required|integer|min:0',
         ]);
+
+        $newOrder = (int)$request->order;
+
+        if ($newOrder !== $faq->order) {
+            if (Faq::where('order', $newOrder)->where('id', '!=', $faq->id)->exists()) {
+                Faq::where('order', '>=', $newOrder)->where('id', '!=', $faq->id)->increment('order');
+            }
+        }
 
         $faq->update([
             'question' => $request->question,
             'answer' => $request->answer,
             'faq_category_id' => $request->faq_category_id,
-            'order' => $request->order,
+            'order' => $newOrder,
             'is_active' => $request->has('is_active'),
         ]);
 

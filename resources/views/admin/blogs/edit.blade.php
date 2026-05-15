@@ -457,6 +457,10 @@
         background: #f8f9fb !important;
         border-bottom: 1px solid #e9ecef !important;
     }
+
+    .invalid-feedback { display:block; font-size:11px; color:#dc3545; margin-top:4px; font-weight:500; }
+    .form-control.is-invalid, .form-select.is-invalid { border-color:#dc3545 !important; background-image:none !important; }
+    .img-edit-box.is-invalid { border-color: #dc3545 !important; background-color: #fff8f8; }
 </style>
 
 @section('content')
@@ -478,19 +482,9 @@
         </div>
     </div>
 
-    @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show mb-24" role="alert">
-            <strong>Please fix the following errors:</strong>
-            <ul class="mb-0 mt-1">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
-    <form action="{{ route('admin.blogs.update', $blog->id) }}" method="POST" enctype="multipart/form-data">
+
+    <form action="{{ route('admin.blogs.update', $blog->id) }}" method="POST" enctype="multipart/form-data" novalidate>
         @csrf
         @method('PUT')
 
@@ -509,8 +503,9 @@
 
                         <div class="field-group">
                             <label class="field-label" for="blog_title">Post Title <span class="req">*</span></label>
-                            <input type="text" id="blog_title" name="title" class="form-control"
+                            <input type="text" id="blog_title" name="title" class="form-control @error('title') is-invalid @enderror"
                                 value="{{ old('title', $blog->title) }}" required>
+                            @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="field-group">
@@ -525,13 +520,15 @@
 
                         <div class="field-group">
                             <label class="field-label" for="excerpt">Excerpt / Summary <span class="req">*</span></label>
-                            <textarea name="excerpt" id="excerpt" rows="3" class="form-control"
+                            <textarea name="excerpt" id="excerpt" rows="3" class="form-control @error('excerpt') is-invalid @enderror"
                                 required>{{ old('excerpt', $blog->excerpt) }}</textarea>
+                            @error('excerpt')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="field-group">
                             <label class="field-label">Post Body <span class="req">*</span></label>
-                            <textarea name="body" id="body" required>{{ old('body', $blog->body) }}</textarea>
+                            <textarea name="body" id="body" class="@error('body') is-invalid @enderror" required>{{ old('body', $blog->body) }}</textarea>
+                            @error('body')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                     </div>
@@ -556,7 +553,7 @@
                             <label class="field-label">Feature Image</label>
                             <input type="file" name="image" id="feature_image" accept="image/*" style="display:none;">
 
-                            <div class="img-edit-box">
+                            <div class="img-edit-box @error('image') is-invalid @enderror">
                                 @if($blog->image)
                                     <img id="imgPreview" src="{{ asset('storage/' . $blog->image) }}" alt="Current Image">
                                 @else
@@ -574,20 +571,21 @@
                                     <span id="newImgBadge">NEW IMAGE SELECTED</span>
                                 </div>
                             </div>
-                            <span class="field-hint">Hover over image and click to replace · PNG, JPG, WEBP · max 5
-                                MB</span>
+                            @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            <span class="field-hint">Hover over image and click to replace · <strong>Recommended: 800x550px</strong> · PNG, JPG, WEBP · max 5 MB</span>
                         </div>
 
                         {{-- Category --}}
                         <div class="field-group">
                             <label class="field-label" for="category_id">Category <span class="req">*</span></label>
-                            <select name="category_id" id="category_id" class="form-select" required>
+                            <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}" {{ old('category_id', $blog->category_id) == $category->id ? 'selected' : '' }}>
                                         {{ $category->name }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('category_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         {{-- Tags --}}

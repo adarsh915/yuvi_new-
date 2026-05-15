@@ -72,13 +72,7 @@
         {{-- Lead count summary bar --}}
         <div class="px-24 py-12 border-bottom bg-light d-flex align-items-center gap-3 flex-wrap">
             <span class="text-sm text-secondary-light">
-                Showing <strong class="text-dark">{{ $leads->count() }}</strong>
-                @if(request()->filled('consultation_type'))
-                    {{ ['inclinic_visit' => 'In-Clinic Visit', 'online_consultation' => 'Online Consultation', 'whatsapp' => 'NRI Patients'][request('consultation_type')] ?? request('consultation_type') }}
-                @else
-                    total
-                @endif
-                lead(s)
+                Total Leads: <strong class="text-dark">{{ \App\Models\Lead::count() }}</strong>
             </span>
             @if(request()->hasAny(['q', 'consultation_type', 'preferred_location', 'subject', 'date_from', 'date_to']))
                 <a href="{{ route('admin.leads') }}" class="btn btn-sm btn-outline-secondary"
@@ -120,7 +114,8 @@
                             <option value="">All Concerns</option>
                             @foreach($subjects as $subject)
                                 <option value="{{ $subject }}" {{ request('subject') === $subject ? 'selected' : '' }}>
-                                    {{ $subject }}</option>
+                                    {{ $subject }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -139,7 +134,7 @@
             </form>
 
             <div class="alert alert-info py-2 px-3 mb-20 d-flex gap-4">
-                <span><strong>DB Total:</strong> {{ \App\Models\Lead::count() }}</span>
+                <span><strong>Total Leads:</strong> {{ \App\Models\Lead::count() }}</span>
                 <span><strong>In-Clinic:</strong>
                     {{ \App\Models\Lead::where('consultation_type', 'inclinic_visit')->count() }}</span>
                 <span><strong>Online:</strong>
@@ -173,7 +168,8 @@
                                 </td>
                                 <td>
                                     <div class="fw-semibold text-dark">
-                                        {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '')) ?: '-' }}</div>
+                                        {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '')) ?: '-' }}
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="text-primary-600 fw-medium">{{ $lead->email }}</div>
